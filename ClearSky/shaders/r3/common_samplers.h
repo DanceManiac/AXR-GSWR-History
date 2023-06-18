@@ -11,7 +11,7 @@ sampler 	smp_base;		//	Use D3DTADDRESS_WRAP,	D3DTEXF_ANISOTROPIC, 	D3DTEXF_LINEA
 
 Texture2D 	s_base;		//	smp_base
 #ifdef USE_MSAA
-Texture2DMS<float4, MSAA_SAMPLES>	s_generic;	//	smp_generic
+TEXTURE2DMS(float4, MSAA_SAMPLES) s_generic;	//	smp_generic
 #else
 Texture2D   s_generic;
 #endif
@@ -35,6 +35,11 @@ Texture2D 	s_dn_g;                	//
 Texture2D 	s_dn_b;                	//
 Texture2D 	s_dn_a;                	//
 
+Texture2D 	s_dp_r;                	//
+Texture2D 	s_dp_g;                	//
+Texture2D 	s_dp_b;                	//
+Texture2D 	s_dp_a;                	//
+
 //////////////////////////////////////////////////////////////////////////////////////////
 // Lighting/shadowing phase                     //
 
@@ -42,8 +47,8 @@ sampler 	smp_material;
 
 //uniform sampler2D       s_depth;                //
 #ifdef USE_MSAA
-Texture2DMS<float4, MSAA_SAMPLES>	s_position;	//	smp_nofilter or Load
-Texture2DMS<float4, MSAA_SAMPLES>	s_normal;	//	smp_nofilter or Load
+TEXTURE2DMS(float4, MSAA_SAMPLES) s_position;	//	smp_nofilter or Load
+TEXTURE2DMS(float4, MSAA_SAMPLES) s_normal;	//	smp_nofilter or Load
 #else
 Texture2D	s_position;	//	smp_nofilter or Load
 Texture2D	s_normal;	//	smp_nofilter or Load
@@ -51,13 +56,17 @@ Texture2D	s_normal;	//	smp_nofilter or Load
 Texture2D	s_lmap;		// 2D/???cube projector lightmap
 Texture3D	s_material;	//	smp_material
 //uniform sampler1D       s_attenuate;        	//
+Texture2D 	s_blur_2;
+Texture2D 	s_blur_4;
+Texture2D 	s_blur_8;
 
+Texture2D 	s_bloom_new;
 
 //////////////////////////////////////////////////////////////////////////////////////////
 // Combine phase                                //
 #ifdef USE_MSAA
-Texture2DMS<float4, MSAA_SAMPLES>	s_diffuse;	// rgb.a = diffuse.gloss
-Texture2DMS<float4, MSAA_SAMPLES>	s_accumulator;      	// rgb.a = diffuse.specular
+TEXTURE2DMS(float4, MSAA_SAMPLES) s_diffuse;	// rgb.a = diffuse.gloss
+TEXTURE2DMS(float4, MSAA_SAMPLES) s_accumulator;      	// rgb.a = diffuse.specular
 #else
 Texture2D	s_diffuse;	// rgb.a = diffuse.gloss
 Texture2D	s_accumulator;      	// rgb.a = diffuse.specular

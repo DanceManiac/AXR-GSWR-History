@@ -1032,6 +1032,34 @@ end
 function on_actor_satiety()
 end
 
+--' Жажда
+function on_actor_thirst()
+end
+
+--' Интоксикация
+function on_actor_intoxication()
+end
+
+--' Сонливость
+function on_actor_sleepeness()
+end
+
+--' Алкоголизм
+function on_actor_alcoholism()
+end
+
+--' Похмелье
+function on_actor_hangover()
+end
+
+--' Наркомания
+function on_actor_narcotism()
+end
+
+--' Ломки
+function on_actor_withdrawal()
+end
+
 --' іадиация
 function on_actor_radiation()
 
@@ -1285,3 +1313,9 @@ function change_team_sqaud_group(se_obj, team, squad, group)
 	--printf("_G:TSG: [%s][%s][%s]", tostring(se_obj.team), tostring(se_obj.squad), tostring(se_obj.group))
 end
 
+--//M.F.S. Team
+
+function ReadString(iSec,sLin,fIni)
+	if not fIni then fIni=system_ini() end
+	return fIni:r_string(iSec,sLin)
+end

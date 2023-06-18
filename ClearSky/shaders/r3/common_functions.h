@@ -20,17 +20,20 @@ void tonemap( out float4 low, out float4 high, float3 rgb, float scale)
 
 	const float fWhiteIntensitySQR = fWhiteIntensity*fWhiteIntensity;
 
-//	low		=	(rgb/(rgb + 1)).xyzz;
 	low		=	( (rgb*(1+rgb/fWhiteIntensitySQR)) / (rgb+1) ).xyzz;
 
 	high	=	rgb.xyzz/def_hdr;	// 8x dynamic range
+}
 
-/*
-	rgb		=	rgb*scale;
+void        tonemap_hipri(out float4 low, out float4 high, float3 rgb, half scale)
+{
+        rgb     =      	rgb*scale;
 
-	low		=	rgb.xyzz;
-	high	=	low/def_hdr;	// 8x dynamic range
-*/
+		const float fWhiteIntensity = 1.7;
+
+		const float fWhiteIntensitySQR = fWhiteIntensity*fWhiteIntensity;
+        low		=   float4(((rgb*(1+rgb/fWhiteIntensitySQR))/(rgb+1) ),0);
+		high	= 	float4(rgb/def_hdr,0);
 }
 
 float4 combine_bloom( float3  low, float4 high)	
@@ -122,6 +125,7 @@ float3	calc_reflection( float3 pos_w, float3 norm_w )
 #define USABLE_BIT_15               uint(0x80000000)
 #define MUST_BE_SET                 uint(0x40000000)   // This flag *must* be stored in the floating-point representation of the bit flag to store
 
+/*
 float2 gbuf_pack_normal( float3 norm )
 {
    float2 res;
@@ -139,6 +143,31 @@ float3 gbuf_unpack_normal( float2 norm )
    res.xy = ( 2.0 * abs( norm ) ) - float2(1,1);
 
    res.z = ( norm.x < 0 ? -1.0 : 1.0 ) * sqrt( abs( 1 - res.x * res.x - res.y * res.y ) );
+
+   return res;
+}
+*/
+
+// Holger Gruen AMD - I change normal packing and unpacking to make sure N.z is accessible without ALU cost
+// this help the HDAO compute shader to run more efficiently
+float2 gbuf_pack_normal( float3 norm )
+{
+   float2 res;
+
+   res.x  = norm.z;
+   res.y  = 0.5f * ( norm.x + 1.0f ) ;
+   res.y *= ( norm.y < 0.0f ? -1.0f : 1.0f );
+
+   return res;
+}
+
+float3 gbuf_unpack_normal( float2 norm )
+{
+   float3 res;
+
+   res.z  = norm.x;
+   res.x  = ( 2.0f * abs( norm.y ) ) - 1.0f;
+   res.y = ( norm.y < 0 ? -1.0 : 1.0 ) * sqrt( abs( 1 - res.x * res.x - res.z * res.z ) );
 
    return res;
 }
@@ -310,6 +339,11 @@ gbuffer_data gbuffer_load_data_offset( float2 tc : TEXCOORD, float2 OffsetTC : T
 }
 
 #endif // GBUFFER_OPTIMIZATION
+
+float rand(float n)
+{
+    return frac(cos(n)*343.42);
+}
 
 //////////////////////////////////////////////////////////////////////////
 //	Aplha to coverage code

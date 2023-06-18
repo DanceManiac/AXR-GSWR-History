@@ -156,18 +156,17 @@ zoom_enabled            = false                                                ;
 ;звуки
 snd_draw                = weapons\ak74_draw
 snd_holster             = weapons\generic_holster
-snd_shoot                                        = weapons\pkm_shot
+snd_shoot                                        = snd_shoot_pkm
+snd_shoot_actor                                    = weapons\pkm_shot
 ;snd_shoot1                                        = weapons\pkm_shot
 ;snd_shoot2                                        = weapons\pkm_shot
 ;snd_shoot3                                        = weapons\pkm_shot
-
 
 snd_empty               = weapons\gen_empty, 0.5
 snd_reload              = weapons\sig550_reload, 0.7, 0.35
 snd_shoot_grenade       = weapons\gen_grenshoot
 snd_reload_grenade      = weapons\gen_grenload, 1.0, 0.8
 snd_switch              = weapons\groza_switch, 1.0, 0.5
-
 
 ;настройки для глушителя
 silencer_hit_power      = 0.55, 0.55, 0.55, 0.55
@@ -234,6 +233,12 @@ lean_hud_offset_rot        = 0,0,0
 
 aim_hud_offset_pos_16x9   = -0.032000,-0.185000,0.102500
 aim_hud_offset_rot_16x9  = 1.300000,8.400014,-6.450007
+
+hud_collision_enabled			= true
+hud_collision_offset_pos		= 0,-0.5,0
+hud_collision_offset_pos_16x9		= 0,-0.5,0
+hud_collision_offset_rot		= -0.8,0,0
+hud_collision_offset_rot_16x9		= -0.8,0,0
 
 
 ;********************************************************

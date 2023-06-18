@@ -1,4 +1,5 @@
 #include "common.h"
+#include "rainbow_draw.h"
 
 struct         v2p
 {
@@ -10,6 +11,7 @@ struct        _out
 {
 	float4	low		: SV_Target0;
 	float4	high	: SV_Target1;
+	
 };
 
 
@@ -30,8 +32,20 @@ _out main( v2p I )
 	// final tone-mapping
 	_out			o;
 
-	o.low        	=		sky.xyzz		;
-	o.high        	=		o.low/def_hdr	;
+	o.low        	=		sky.xyzz;
+	o.high        	=		o.low/def_hdr;
+
+float diff_green_red = L_sun_color.g - L_sun_color.r;
+float diff_green_blue = L_sun_color.g - L_sun_color.b;
+float amount = (diff_green_red-RB_GREENREDDIFF)+(diff_green_blue-RB_GREENBLUEDIFF);
+#ifdef WINTER_MODE
+	if (I.tc0.z >= RB_VIEWANGLE.x && I.tc0.z <= RB_VIEWANGLE.y && I.tc0.y >= RB_VIEWANGLE.z && I.tc0.y <= RB_VIEWANGLE.w && amount > 0 && rain_params.x > 0)
+	{	
+		float sun_intensity = saturate((L_sun_color.r + L_sun_color.g + L_sun_color.b)*RB_SUNFACTOR/3);
+		bool white = false;
+		o.low += draw_rainbow(I.tc0.xy, RB_POSITION, 1, true, white) * amount * RB_COF;
+	}
+#endif //WINTER_MODE
 
 	return        	o;
 }
