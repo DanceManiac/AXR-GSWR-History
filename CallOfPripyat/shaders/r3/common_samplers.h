@@ -35,6 +35,11 @@ Texture2D 	s_dn_g;                	//
 Texture2D 	s_dn_b;                	//
 Texture2D 	s_dn_a;                	//
 
+Texture2D 	s_dp_r;                	//
+Texture2D 	s_dp_g;                	//
+Texture2D 	s_dp_b;                	//
+Texture2D 	s_dp_a;                	//
+
 //////////////////////////////////////////////////////////////////////////////////////////
 // Lighting/shadowing phase                     //
 
@@ -51,7 +56,11 @@ Texture2D	s_normal;	//	smp_nofilter or Load
 Texture2D	s_lmap;		// 2D/???cube projector lightmap
 Texture3D	s_material;	//	smp_material
 //uniform sampler1D       s_attenuate;        	//
+Texture2D 	s_blur_2;
+Texture2D 	s_blur_4;
+Texture2D 	s_blur_8;
 
+Texture2D 	s_bloom_new;
 
 //////////////////////////////////////////////////////////////////////////////////////////
 // Combine phase                                //
