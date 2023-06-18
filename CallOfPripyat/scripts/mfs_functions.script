@@ -19,6 +19,16 @@ function ReadPolterDieMode()
    end
 end
 
+-- 'Проверка включена ли система навыков героя.
+function ReadSkillsSystemEnabled()
+   local ltx = ini_file("mfs_team\\mfs_adv_xr_params.ltx")
+   if ltx:line_exist("gameplay","actor_skills_enabled") then
+      return ltx:r_bool("gameplay","actor_skills_enabled")
+   else
+      return false
+   end
+end
+
 -- 'Уложить героя спать на 5 часов, если он слишком давно не спал
 function put_the_actor_to_sleep()
 	local hours = tonumber(5)
@@ -63,4 +73,24 @@ function generate_phantoms()
 			end
 		end
 	end
+end
+
+-- 'Апдейтер похмелья
+function on_actor_hangover()
+
+end
+
+-- 'Апдейтер ломки
+function on_actor_withdrawal()
+
+end
+
+-- 'Апдейтер наркотического опьянения
+function on_actor_drugs()
+
+end
+
+-- 'Для команды g_task. Не трогать!
+function g_task_script(task)
+		task_manager.get_task_manager():give_task(task)
 end

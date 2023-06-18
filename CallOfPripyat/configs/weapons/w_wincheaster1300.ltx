@@ -166,18 +166,15 @@ scope_zoom_factor	    	= 55
 ;звуки
 snd_draw					= weapons\generic_draw
 snd_holster					= weapons\generic_holster
-snd_shoot					= weapons\n_spas12_shot
+snd_shoot					= snd_shoot_spas12
+snd_shoot_actor         	= weapons\n_spas12_shot
 snd_empty					= weapons\generic_empty
 snd_reload					= weapons\spas12_reload_end
-snd_shoot_duplet			= weapons\n_spas12_shot
+snd_shoot_duplet			= snd_shoot_spas12
 
 snd_open_weapon            = weapons\draw_silent
 snd_add_cartridge			= weapons\spas12_reload
 snd_close_weapon        = weapons\spas12_reload_end
-
-snd_shoot_dist		= true
-snd_shoot_distant	= mfs_team\weapons\distant_sounds\shoot_distant_150_3
-snd_shoot_distant_far	= mfs_team\weapons\distant_sounds\shoot_distant_250_3
 
 [wpn_winchester1300_hud]:hud_base
 
@@ -213,8 +210,8 @@ aim_hud_offset_rot_16x9				= 0.067500,0.022500,-0.017500
 ;aim_hud_offset_rot_16x9				= 0.032500,0.002500,0.000000
 
 hud_collision_enabled			= true
-hud_collision_offset_pos		= 0,-0.25,0
-hud_collision_offset_pos_16x9		= 0,-0.25,0
+hud_collision_offset_pos		= 0,-0.5,0
+hud_collision_offset_pos_16x9		= 0,-0.5,0
 hud_collision_offset_rot		= -0.8,0,0
 hud_collision_offset_rot_16x9		= -0.8,0,0
 

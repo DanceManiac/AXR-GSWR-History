@@ -1,15 +1,13 @@
 --[[ -----------------------------------------------------------------------------------------------
  File		 : level_weathers.script
- Description : level weather manager
- Copyright	 : 2004 © GSC Game World & 2020 © M.F.S. Team 
+ Description : Weather manager
+ Copyright	 : 2004 © GSC Game World & 2022 © M.F.S. Team 
  Author		 : GSC Game World
- Modified    : for G.S.W.R. by ggGhosTt
+ Modified    : SWE by ggGhosTt & = MayLay2k = v. for G.S.W.R.
 --]] -----------------------------------------------------------------------------------------------
 --/											  Variables
 --]] -----------------------------------------------------------------------------------------------
 local weather_manager = nil
-local weather_name = utils.cfg_get_string(ini_file("game.ltx"), 
-	level.name(), "weathers", db.actor, false, "", "")
 local winter_mode = utils.cfg_get_bool(ini_file("mfs_team\\mfs_weather_params.ltx"),
 	"environment","winter_mode", db.actor, false)
 --]] -----------------------------------------------------------------------------------------------
@@ -32,11 +30,13 @@ function WeatherManager:__init()
 	self.graphs = {}
 end
 -- Called after load(). Weather state is already loaded.
-function WeatherManager:reset()	
-    self.levelWeather = weather_name -- Getting section, checking for winter mode.
-	self.weather_list = xr_logic.parse_condlist(db.actor, level.name(), "weather", weather_name) 
+function WeatherManager:reset()
+	local weather =
+		utils.cfg_get_string(ini_file("game.ltx"), level.name(), "weathers", db.actor, false, "", "[default]")
+	self.levelWeather = weather -- Getting section, checking for winter mode.
+	self.weather_list = xr_logic.parse_condlist(db.actor, level.name(), "weather", weather)
 	-- Reading period hours if level is not underground.
-    if weather_name == "outdoor" then
+    if self:check_if_outdoor() then
 	    -- self.tweaks = xr_s.parse_ini_section_to_array(self.graphs_ini, level.name().."_periods_length")
 		self.tweaks = xr_s.parse_ini_section_to_array(self.graphs_ini, "periods_length")
 	    self.next_period_change_hour = self:get_next_period_change_hour(self.period)
@@ -44,6 +44,14 @@ function WeatherManager:reset()
     -- End reading period hours.
 	self.last_hour = level.get_time_hours()
     self:select_weather(true)
+end
+
+function WeatherManager:check_if_outdoor()
+	if string.sub(self.levelWeather, 1, 7) == "outdoor" then
+		return true
+	else
+		return false
+	end
 end
 
 function WeatherManager:get_next_period_change_hour(period)
@@ -107,8 +115,8 @@ function WeatherManager:update()
 			st.current_state = st.next_state
 			st.next_state = get_next_state(st.graph,st.current_state)
 		end
- -- Changing period if weather is not undeground.
-		if weather_name == "outdoor" then
+		-- Changing period if weather is not undeground.
+		if self:check_if_outdoor() then
 			self:change_period()
 		end
  -- End changing period.

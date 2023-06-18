@@ -58,7 +58,7 @@
 	<string id="ui_mfs_LexAddon">
 		<text>Lex Addon</text>
 	</string>
-	<string id="ui_mfs_rezkiy">
+	<string id="ui_mfs_rezkiy2">
 		<text>Вадим "Резкий" Кулагин</text>
 	</string>
 	<string id="ui_mfs_Scava">
@@ -178,7 +178,7 @@
 		<text>Пожертвовал: 100р</text>
 	</string>
 	<string id="ui_mfs_vadim_kulagin_donate_descr">
-		<text>Пожертвовал: 100р</text>
+		<text>Пожертвовал: 1100р</text>
 	</string>
 	<string id="ui_mfs_artyom_menshikov_donate_descr">
 		<text>Пожертвовал: 130р</text>
