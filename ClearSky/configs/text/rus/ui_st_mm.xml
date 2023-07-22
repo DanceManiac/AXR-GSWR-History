@@ -421,7 +421,7 @@
 		<text>Динамическая музыка</text>
 	</string>
 	<string id="ui_mm_eax">
-		<text>EAX</text>
+		<text>EFX</text>
 	</string>
 	<string id="ui_mm_fullscreen">
 		<text>Полный экран</text>

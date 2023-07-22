@@ -153,11 +153,12 @@ scope_zoom_factor	    			= 55
 ;звуки
 snd_draw				            = weapons\generic_draw
 snd_holster			            = weapons\generic_holster
-snd_shoot			            = weapons\n_bm16_shot
+snd_shoot			            = snd_shoot_bm16
+snd_shoot_actor         		= weapons\n_bm16_shot
 snd_empty			            = weapons\generic_empty
 snd_reload			            = weapons\bm16_reload_lr		;reload both
-snd_shoot_duplet					= weapons\n_bm16_shot
-snd_shoot_1			            = weapons\n_bm16_shot
+snd_shoot_duplet					= snd_shoot_bm16
+snd_shoot_1			            = snd_shoot_bm16
 
 snd_reload_1		            = weapons\bm16_reload_l		;reload left
 
@@ -232,3 +233,9 @@ gl_hud_offset_rot					= 0,0,0
 
 lean_hud_offset_pos				= 0,0,0
 lean_hud_offset_rot				= 0,0,0
+
+hud_collision_enabled			= true
+hud_collision_offset_pos		= 0,-0.5,0
+hud_collision_offset_pos_16x9		= 0,-0.5,0
+hud_collision_offset_rot		= -0.8,0,0
+hud_collision_offset_rot_16x9		= -0.8,0,0

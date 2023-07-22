@@ -9,6 +9,8 @@ surge_activated = false
 start_surge = false
 weather_surge = true
 time_before_surge = 0
+last_surge_hour = 0
+surge_freq = utils.cfg_get_number(ini_file("environment\\dynamic_weather_graphs.ltx"), "weather_settings", "surge_freq", db.actor, false)
 initialization_time = game.get_game_time()
 phase = 0
 local state_tbl = {"wait", "sit", "sit_ass", "sit_knee"}
@@ -16,14 +18,14 @@ base_prop = 15
 cur_prop = 15
 local add_prop = 10
 levels_surge_table = {
---	                    marsh       = {condlist="{+mar_story_go_to_escape_done} true", surge_time=30},
-											escape      = {condlist="{+esc_bring_habar_complete} true", surge_time=40},
-											garbage     = {condlist="{+gar_story_got_info_from_digger -val_deliver_pda_done} true, {+agr_garbage_end} true", surge_time=45},
-											darkvalley  = {condlist="{+val_deliver_pda_done} true", surge_time=45},
-											agroprom    = {condlist="{+agru_go_out_end_task_complete} true", surge_time=30},
-											red_forest  = {condlist="{+red_strelok_task_end -red_bridge_scene_begin} true, {+red_bridge_finished} true, {+red_bridge_actor_fail} true", surge_time=30},
-											military    = {condlist="{+mil_actor_go_to_limansk} true", surge_time=30},
-										 }
+	marsh       = {condlist="{+mar_story_go_to_escape_done} true", surge_time=50},
+	escape      = {condlist="{+esc_bring_habar_complete} true", surge_time=50},
+	garbage     = {condlist="{+gar_story_got_info_from_digger -val_deliver_pda_done} true, {+agr_garbage_end} true", surge_time=50},
+	darkvalley  = {condlist="{+val_deliver_pda_done} true", surge_time=50},
+	agroprom    = {condlist="{+agru_go_out_end_task_complete} true", surge_time=50},
+	red_forest  = {condlist="{+red_strelok_task_end -red_bridge_scene_begin} true, {+red_bridge_finished} true, {+red_bridge_actor_fail} true", surge_time=50},
+	military    = {condlist="{+mil_actor_go_to_limansk} true", surge_time=50},
+}
 
 ---------------------------------------------------------------------------------------------------------------------
 --Evaluators
@@ -302,6 +304,7 @@ function save(package)
 	package:w_bool(start_surge)
 --	package:w_bool(weather_surge)
 	package:w_u32(time_before_surge)
+	package:w_u32(last_surge_hour)
 	utils.w_CTime(package, initialization_time)
 	package:w_u8(phase)
 	package:w_u8(cur_prop)
@@ -317,6 +320,7 @@ function load(reader)
 		weather_surge = false
 	end
 	time_before_surge = reader:r_u32()
+	last_surge_hour = reader:r_u32()
 	initialization_time = utils.r_CTime(reader)
 	phase = reader:r_u8()
 	cur_prop = reader:r_u8()
@@ -328,21 +332,23 @@ function activate_surge(time)
 		if time==nil  then
 			abort("Surge time is not set!")
 		end
-		if level.name() == "marsh" then
-			level.set_weather_fx("marsh_fx_surge_day_1")
+		--[[if (level.get_time_hours() >= 5 and level.get_time_hours() <= 22) then
+			level.set_weather_fx("fx_blowout_day")
 		else
-			level.set_weather_fx("fx_surge_day_1")
-		end
+			level.set_weather_fx("fx_blowout_night")
+		end]]--
+		
         initialization_time = game.get_game_time()
         time_before_surge = tonumber(time)
+		last_surge_hour = level.get_time_hours()
         start_surge = true
         phase = 1
     elseif phase == 1 then
         weather_surge = false
         xr_sound.set_sound_play(db.actor:id(), "blowout_begin")
-        level.add_cam_effector("camera_effects\\shell_shock.anm", 20080501, false, "")
-        level.add_pp_effector("snd_shock.ppe", 20080401, false)
-        level.set_pp_effector_factor(20080401, 0, 1)
+        --level.add_cam_effector("camera_effects\\shell_shock.anm", 20080501, false, "")
+        --level.add_pp_effector("snd_shock.ppe", 20080401, false)
+        --level.set_pp_effector_factor(20080401, 0, 1)
         phase = 2
 	elseif phase == 2 then
 		phase = 3
@@ -385,7 +391,7 @@ function activate_surge(time)
 
         local task = task_manager.get_task_manager():select_task("hide_from_surge", nearest_cover_id, db.actor:character_community())
         if task and task.status~="selected" then
-            task.wait_time = time*60
+            task.wait_time = 218--time*60
             task:give_task(db.actor:character_community())
             surge_finished = false
             surge_activated = true
@@ -411,4 +417,16 @@ function surge_can_be_started(level)
 		end
 	end
 	return nil
+end
+
+function update()
+    if last_surge_hour > 23 then
+        last_surge_hour = last_surge_hour - 24
+    end
+	
+	if has_alife_info("mar_tutorial_returned_to_base") and not surge_activated then
+		if level.get_time_hours()>=last_surge_hour+surge_freq then
+			activate_surge(1)
+		end
+	end
 end
