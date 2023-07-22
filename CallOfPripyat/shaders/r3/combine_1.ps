@@ -7,6 +7,29 @@
 #include "lmodel.h"
 #include "hmodel.h"
 
+float compute_height_fog(float3 P_view)
+{
+    //Settings
+    float height = lowland_fog_params.x;    //Fog height    
+    float density = lowland_fog_params.y;    //Fog density (keep it low, it's exponential fog without any distance attenuation)
+	float base_height = lowland_fog_params.z; //Fog base height (base height of lowland fog, for current level)
+    
+    //Transform view space position into world space
+    float3 P_world = mul(m_v2w, float4(P_view, 1.f)).xyz;
+    
+    //Calculate height factor
+    float height_factor = base_height + height - P_world.y;    
+    
+    //Get length of view space position
+    float P_dist = length(P_view.xyz) * height_factor;
+    
+    //Calculate exponential fog
+    float fog = 1.0 - exp(-P_dist * density);
+
+    //Output
+    return saturate(fog);
+}
+
 uniform	Texture2D					s_half_depth;
 
 //#include "ssao_blur.ps"
@@ -56,6 +79,9 @@ Texture2D<float> s_occ;
 #ifdef	USE_HBAO
 #include "ssao_hbao.ps"
 #endif	//	USE_HBAO
+#ifdef	USE_SSDO
+#include "ssao_ssdo.ps"
+#endif	//	USE_SSDO
 #endif // USE_HDAO
 
 struct	_input
@@ -159,6 +185,9 @@ _out main ( _input I, uint iSample : SV_SAMPLEINDEX )
 #else // USE_HBAO
 	float occ = calc_ssao( CS_P(P, N, I.tc0, I.tcJ, I.pos2d, ISAMPLE ) );
 #endif
+#ifdef USE_SSDO
+    occ                 = calc_ssdo(P, N, I.tc0);
+#endif //USE SSDO
 #endif // USE_HDAO
 	
 	hmodel	(hdiffuse, hspecular, mtl, N.w, D.w, P.xyz, N.xyz);
@@ -173,7 +202,7 @@ _out main ( _input I, uint iSample : SV_SAMPLEINDEX )
         float4         light       = float4         (L.rgb + hdiffuse, L.w)        ;
         float4         C           = D*light       ;                             // rgb.gloss * light(diffuse.specular)
 //        float3         spec        = (C.rgb*.5h + .5h)*C.w + hspecular + hspecular + hspecular;			// replicated specular
-	float3         spec        = C.www         + hspecular;      // replicated specular
+		float3 spec 				= C.www * L.rgb + hspecular * C.rgba; // replicated specular
 
 #ifdef         USE_SUPER_SPECULAR
                       spec      = (C.rgb*.5h + .5h)*C.w + hspecular        ;
@@ -216,7 +245,9 @@ _out main ( _input I, uint iSample : SV_SAMPLEINDEX )
         float3        	pos        		= P.xyz;
         float         	distance		= length		(pos);
         float         	fog				= saturate		(distance*fog_params.w + fog_params.x); //
-                      	color			= lerp     		(color,fog_color,fog);        			//
+		                color			= lerp     		(color, fog_color, fog);        		//
+						color 			= lerp			(color, fog_color, compute_height_fog(P.xyz));
+
         float        	skyblend		= saturate		(fog*fog);
 
 #ifdef         DBG_TMAPPING

@@ -31,7 +31,7 @@
 // #define USE_TDETAIL                	//- shader defined
 // #define USE_LM_HEMI                	//- shader defined
 // #define USE_DISTORT                	//- shader defined
-// #define USE_SUNMASK                		//- shader defined
+ #define USE_SUNMASK                		//- shader defined
 // #define DBG_TMAPPING
 //////////////////////////////////////////////////////////////////////////////////////////
 #ifndef SMAP_size
@@ -39,6 +39,7 @@
 #endif
 #define PARALLAX_H 0.02
 #define parallax float2(PARALLAX_H, -PARALLAX_H/2)
+#define SKY_DEPTH	float(10000.f)
 
 #ifdef        USE_R2_STATIC_SUN
 #  define xmaterial half(1.0h/4.h)
@@ -46,6 +47,8 @@
 #  define xmaterial half(L_material.w)
 #endif
 //////////////////////////////////////////////////////////////////////////////////////////
+uniform half4 				 u_weather; // .xyz - sky color, .w - rain line param
+uniform half4 				 lowland_fog_params; // x - low fog height, y - low fog density, z - base height, w - null
 uniform half4                hemi_cube_pos_faces;
 uniform half4                hemi_cube_neg_faces;
 uniform half4                L_material;                            // 0,0,0,mid
@@ -209,6 +212,11 @@ uniform sampler2D       s_dn_r;                	//
 uniform sampler2D       s_dn_g;                	//
 uniform sampler2D       s_dn_b;                	//
 uniform sampler2D       s_dn_a;                	//
+
+uniform sampler2D 		s_dp_r;                	//
+uniform sampler2D 		s_dp_g;                	//
+uniform sampler2D 		s_dp_b;                	//
+uniform sampler2D 		s_dp_a;                	//
 
 //////////////////////////////////////////////////////////////////////////////////////////
 // Lighting/shadowing phase                     //
