@@ -12,7 +12,6 @@
 		<command id="kb_right_strafe"			exe="rstrafe"/>
 		<command id="kb_jump"						  exe="jump"/>
 		<command id="kb_crouch"						exe="crouch"/>
-		<command id="kb_crouch_toggle"		exe="crouch_toggle"/>
 		<command id="kb_always_run"				exe="accel"/>
 		<command id="kb_sprint"						exe="sprint_toggle"/>		
 		<command id="kb_left_lookout"			exe="llookout"/>
@@ -26,14 +25,20 @@
 		<command id="kb_weapon5"					exe="wpn_5"/>
 		<command id="kb_weapon6"					exe="wpn_6"/>
 		<command id="kb_wpn_next"					exe="wpn_next"/>
-		<command id="kb_next_slot"				exe="next_slot"/>
-		<command id="kb_prev_slot"				exe="prev_slot"/>
-		<command id="kb_fire"						  exe="wpn_fire"/>
-		<command id="kb_zoom"						  exe="wpn_zoom"/>
+		<command id="kb_next_slot"					exe="next_slot"/>
+		<command id="kb_prev_slot"					exe="prev_slot"/>
+		<command id="kb_fire"						exe="wpn_fire"/>
+		<command id="kb_zoom"						exe="wpn_zoom"/>
 		<command id="kb_reload"						exe="wpn_reload"/>
-		<command id="kb_func"						  exe="wpn_func"/>
-		<command id="kb_firemode_next"		exe="wpn_firemode_next"/>
-		<command id="kb_firemode_prev"		exe="wpn_firemode_prev"/>		
+		<command id="kb_func"						exe="wpn_func"/>
+		<command id="kb_firemode_next"				exe="wpn_firemode_next"/>
+		<command id="kb_firemode_prev"				exe="wpn_firemode_prev"/>
+		<command id="kb_laser_on"					exe="laser_on"/>
+		<command id="kb_flashlight_on"				exe="flashlight"/>
+	</group>
+	<group name="kb_grp_auto">
+		<command id="kb_turn_engine"				exe="turn_engine"/>
+		<command id="kb_switch_horn"					exe="switch_horn"/>	
 	</group>
 	<group name="kb_grp_inventory">
 		<command id="kb_inventory"				exe="inventory"/>
@@ -54,6 +59,9 @@
 		<command id="kb_console"					exe="console"/>
 		<command id="ui_mm_save_game"			exe="quick_save"/>
 		<command id="ui_mm_load_game"			exe="quick_load"/>
+		<command id="camera_1"					exe="cam_1"/>
+		<command id="camera_2"					exe="cam_2"/>
+		<command id="camera_3"					exe="cam_3"/>
 	</group>
 	<group name="kb_grp_multiplayer">
 		<command id="kb_artefact"					exe="artefact"/>

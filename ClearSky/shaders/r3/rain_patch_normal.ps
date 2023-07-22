@@ -3,12 +3,10 @@
 #include "shadow.h"
 
 
-float3x4 m_sunmask;	// ortho-projection
 //Texture2D	s_water;
 Texture3D	s_water;
-Texture3D	s_waterFall;
+Texture2D	s_waterFall;
 float4	RainDensity;	//	float
-float4	RainFallof;		//	float2
 float4	WorldX;	//	Float3	
 float4	WorldZ;	//	Float3	
 
@@ -33,16 +31,15 @@ float3	GetNVNMap( Texture3D s_texture, float2 tc, float time)
 }
 
 
-float3	GetWaterNMap( Texture3D s_texture, float2 tc, float time)
+float3	GetWaterNMap( Texture2D s_texture, float2 tc)
 {
 	//	Unpack normal map
 //	float4 water = s_texture.SampleLevel( smp_base, float3(tc, time), 0 );
-	float4 water = s_texture.Sample( smp_base, float3(tc, time));
+	float4 water = s_texture.Sample( smp_base, tc);
 	water.xyz = (water.xzy-0.5)*2;
 
 //	water.xyz *= 3;
 
-	water.xyz *= 0.3;
 
 	water.y = 0;
 
@@ -88,28 +85,21 @@ float4 main ( float2 tc : TEXCOORD0, float2 tcJ : TEXCOORD1 ) : SV_Target
 
 	_N.xyz = normalize(_N.xyz);
 
+	_P.xyz += _N.xyz * 0.15f;
 	float4 PS = mul( m_shadow,  _P );
 
 	float3 WorldP	= mul( m_sunmask, _P );
 	float3 WorldN	= mul( m_sunmask, _N.xyz );
 
-	//	floor ???? instead of step?
-	//float	delta = sin(WorldP.z*30);
-	//float	deltaX = step(0, sin(WorldP.z*30));
-	//float	deltaX = step(0, sin(WorldP.z*(2.0*3.14)/(1+frac(WorldP.x + WorldP.y)) ));
-
-	//float	deltaY = step(0, sin(WorldP.z*10+3));
-	//float	deltaY = deltaX;
-
-	//deltaX *= 0.05;
-	//deltaY *= 0.05;
-
-	//float s	= shadow_rain( PS, WorldP.xz*2 + float2(deltaX, deltaY) );
-	float s	= shadow_rain( PS, WorldP.xz*2 );
+	// Read rain projection with some jetter. Also adding pixel normal 
+	// factor to jitter to make rain strips more realistic.
+	float s		= shadow_hw(PS) * saturate(gbd.hemi * 10.0f);
 
 	//	Apply distance falloff
 	//float	fAtten = 1 - smoothstep( 10, 30, length( _P.xyz ));
-	float	fAtten = 1 - smoothstep( RainFallof.x, RainFallof.y, length( _P.xyz ));
+	// Using fixed fallof factors according to float16 depth coordinate precision.
+	float	d_len = length( _P.xyz );
+	float	fAtten = 1 - smoothstep( 80, 100, d_len );
 	s	*= fAtten*fAtten;
 
 	//	Apply rain density
@@ -133,12 +123,10 @@ float4 main ( float2 tc : TEXCOORD0, float2 tcJ : TEXCOORD1 ) : SV_Target
 	fAngleFactor = 0.1*ceil(10*fAngleFactor);
 
 	//	Just slow down effect.
-//	fAngleFactor *= 0.25;
-//	fAngleFactor *= 0.5;
-	fAngleFactor *= 1.3;
+	fAngleFactor *= 0.3;
 
-	float3 waterFallX = GetWaterNMap( s_waterFall, float2(tc1.z, tc1.y+timers.x*fAngleFactor), 0.5 );
-	float3 waterFallZ = GetWaterNMap( s_waterFall, float2(tc1.x, tc1.y+timers.x*fAngleFactor), 0.5 );
+	float3 waterFallX = GetWaterNMap( s_waterFall, float2(tc1.z, tc1.y+timers.x*fAngleFactor) );
+	float3 waterFallZ = GetWaterNMap( s_waterFall, float2(tc1.x, tc1.y+timers.x*fAngleFactor) );
 
 	float2 IsDir = (float2(fIsZ, fIsX));
 
@@ -146,7 +134,7 @@ float4 main ( float2 tc : TEXCOORD0, float2 tcJ : TEXCOORD1 ) : SV_Target
 
 	IsDir = normalize(IsDir);
 
-	float3 waterFall = GetWaterNMap( s_waterFall, float2( dot(tc1.xz, IsDir), tc1.y+timers.x), 0.5 );
+	float3 waterFall = GetWaterNMap( s_waterFall, float2( dot(tc1.xz, IsDir), tc1.y+timers.x) );
 	
 //	float WeaponAttenuation = smoothstep( 1.0, 1.1, length( _P.xyz ));
 	float WeaponAttenuation = smoothstep( 0.8, 0.9, length( _P.xyz ));
@@ -166,7 +154,7 @@ float4 main ( float2 tc : TEXCOORD0, float2 tcJ : TEXCOORD1 ) : SV_Target
 
 	_N = normalize(_N);
 
-	s *= dot(D.xyz, float3(0.33, 0.33, 0.33));
+	s *= dot(D.xyz, float3(0.05, 0.05, 0.05));
 //	s *= 0.5*fIsUp+0.5;
 
 	return float4(_N,s);
