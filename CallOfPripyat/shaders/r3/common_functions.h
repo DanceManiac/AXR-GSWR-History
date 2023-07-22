@@ -20,17 +20,20 @@ void tonemap( out float4 low, out float4 high, float3 rgb, float scale)
 
 	const float fWhiteIntensitySQR = fWhiteIntensity*fWhiteIntensity;
 
-//	low		=	(rgb/(rgb + 1)).xyzz;
 	low		=	( (rgb*(1+rgb/fWhiteIntensitySQR)) / (rgb+1) ).xyzz;
 
 	high	=	rgb.xyzz/def_hdr;	// 8x dynamic range
+}
 
-/*
-	rgb		=	rgb*scale;
+void        tonemap_hipri(out float4 low, out float4 high, float3 rgb, half scale)
+{
+        rgb     =      	rgb*scale;
 
-	low		=	rgb.xyzz;
-	high	=	low/def_hdr;	// 8x dynamic range
-*/
+		const float fWhiteIntensity = 1.7;
+
+		const float fWhiteIntensitySQR = fWhiteIntensity*fWhiteIntensity;
+        low		=   float4(((rgb*(1+rgb/fWhiteIntensitySQR))/(rgb+1) ),0);
+		high	= 	float4(rgb/def_hdr,0);
 }
 
 float4 combine_bloom( float3  low, float4 high)	
@@ -337,6 +340,11 @@ gbuffer_data gbuffer_load_data_offset( float2 tc : TEXCOORD, float2 OffsetTC : T
 
 #endif // GBUFFER_OPTIMIZATION
 
+float rand(float n)
+{
+    return frac(cos(n)*343.42);
+}
+
 //////////////////////////////////////////////////////////////////////////
 //	Aplha to coverage code
 #if ( defined( MSAA_ALPHATEST_DX10_1_ATOC ) || defined( MSAA_ALPHATEST_DX10_1 ) )
@@ -471,6 +479,10 @@ uint alpha_to_coverage ( float alpha, float2 pos2d )
 #endif
 #endif
 
-
+float3 vibrance( float3 img, half val )
+{
+    float luminance = dot( float3( img.rgb ), LUMINANCE_VECTOR );
+    return float3( lerp( luminance, float3( img.rgb ), val ));
+}
 
 #endif	//	common_functions_h_included

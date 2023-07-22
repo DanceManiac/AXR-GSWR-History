@@ -66,6 +66,7 @@ float4 main ( v2p_volume I ) : SV_Target
 # ifndef USE_R2_STATIC_SUN
 			m 	= _P.w;
 # endif
+
 	float4	light	= plight_infinity ( m, _P, _N, Ldynamic_dir );
 
 	// ----- shadow
