@@ -16,6 +16,10 @@
 		<text font="letterica18" color="ui_7" align="r"/>
 	</static_cost>
 
+	<static_no_trade x="16" y="60" width="224" height="20">
+		<text align="r" font="letterica16" r="196" g="18" b="18" complex_mode="1"/>
+	</static_no_trade>
+
 	<descr_list x="11" y="63" width="240" height="131" always_show_scroll="0" right_ident="10" left_ident="10" fit_to_height="1">
 		<font font="letterica16" color="ui_6"/>
 	</descr_list>
@@ -118,8 +122,8 @@
     </info_prerequisites>
 
     <properties x="17" y="20" width="233" height="20">
-      <icon x="0"  y="0" width="20"  height="20" />
-      <text x="25" y="3" width="255" height="18" />
+      <icon x="0"  y="0" width="16"  height="19" stretch="1" />
+      <text x="20" y="3" width="255" height="19" />
     </properties>
   </upgrade_info>
   
@@ -128,13 +132,42 @@
 	  <text x="0" y="0" width="24" height="16" font="letterica16" color="ui_2" align="c" vert_align="c"/>
   </cell_item_text>
 
-  <cell_item_mark x="1" y="1" width="13" height="15" stretch="1">
-	<texture a="130">ui_icons_newPDA_perssign_h</texture>
-  </cell_item_mark>
+	<cell_item_custom_text x="1" y="1" width="24" height="16" stretch="1">
+		<text x="2" y="6" width="24" height="16" font="arial_14" color="ui_2" align="r" vert_align="c"/>
+	</cell_item_custom_text>
+
+	<cell_item_quest_mark x="0" y="0" width="11" height="15" stretch="1">
+		<texture>ui_item_mark_quest</texture>
+		<texture_offset x="2" y="1"/>
+	</cell_item_quest_mark>
   
   <cell_item_upgrade x="1" y="1" width="14" height="16" stretch="1">
 	<texture a="180">ui_upgrade_arrow2</texture>
   </cell_item_upgrade>
+
+    <condition_progess_bar x="1" y="1" width="30" height="5" horz="1" min="0" max="1" pos="1">
+	    <background x="0" y="0" width="30" height="5">
+            <texture r="62" g="74" b="74">ui_inGame2_inventory_item_status_bar_cop_16</texture>
+	    </background>
+        <progress>
+            <texture r="142" g="149" b="149">ui_inGame2_inventory_item_status_bar_cop_16</texture>
+        </progress>
+		<min_color r="196" g="18" b="18"/>
+		<middle_color r="255" g="255" b="118"/>
+		<max_color r="107" g="207" b="119"/>
+    </condition_progess_bar>
+	
+    <portions_progess_bar x="1" y="1" width="30" height="5" horz="1" min="0" max="1" pos="1">
+	    <background x="0" y="0" width="30" height="5">
+            <texture r="62" g="74" b="74">ui_inGame2_inventory_item_status_bar_cop_16</texture>
+	    </background>
+        <progress>
+            <texture r="142" g="149" b="149">ui_inGame2_inventory_item_status_bar_cop_16</texture>
+        </progress>
+		<min_color r="196" g="18" b="18"/>
+		<middle_color r="255" g="255" b="118"/>
+		<max_color r="107" g="207" b="119"/>
+    </portions_progess_bar>
 
   <!-- ============================ outfit_info ====================================   -->
   
@@ -323,6 +356,10 @@
 			</static_value>
 		</antigas_filter>
 	</outfit_info>
+	
+		<static_current_charge_level x="0" y="10" width="14" height="18" stretch="1">
+			<texture>ui_item_battery_icon</texture>
+		</static_current_charge_level>
 	
 		<cap_current_charge_level x="0" y="0" width="101" height="8">
 			<text font="letterica16" r="124" g="119" b="115">ui_inv_battery</text>

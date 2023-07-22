@@ -27,10 +27,12 @@ uniform float4 		sky_color; // .xyz - sky color, .w - sky rotation
 uniform float4 		lowland_fog_params; // x - low fog height, y - low fog density, z - base height, w - null
 uniform float4 		screen_res_alt; // .xy - pos_decompression_params2.xy, .zw - screen_res.xy power to -1
 uniform float4 		rain_params; // .x - rain density, .y - wetness accumulator, .zw = 0
+uniform float4 		reflections_distance; // .x - distance, yzw - null
 uniform float4x4	m_view2world;
 uniform float3x4	m_inv_V;
 uniform float4		screen_res;
 uniform float4 		fov;
+uniform float4		debug; // x - ao debug, yzw - null
 
 // Глобальные параметры шейдеров --#SM+#--
 uniform	float4		m_hud_params;	// zoom_rotate_factor, secondVP_zoom_factor, NULL, NULL
@@ -49,5 +51,11 @@ float4 proj_to_screen(float4 proj)
 inline bool isSecondVPActive()
 {
 	return (m_blender_mode.z == 1.f);
+}
+
+// Активен ли дебаггер АО
+inline bool ao_debug()
+{
+	return (debug.x == 1.f);
 }
 #endif

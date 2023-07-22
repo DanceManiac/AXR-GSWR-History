@@ -1,5 +1,5 @@
 <booster_params x="0" y="0" width="260" height="20">
-    <prop_line x="0" y="25" width="208" height="9" stretch="1">
+    <prop_line x="0" y="5" width="208" height="4" stretch="1">
     </prop_line>
 	
 	<descr_list x="13" y="63" width="288" height="131" always_show_scroll="0" right_ident="10" left_ident="20" fit_to_height="1">
@@ -11,7 +11,7 @@
 			<texture>ui_inv_icon_health_restore_speed</texture>
 			<text color="ui_3" font="letterica16" vert_align="c" x="22" y="0"/>
 		</caption>
-		<value x="140" y="0" width="30" height="20" magnitude="10000">
+		<value x="140" y="0" width="30" height="20" magnitude="100">
 			<text font="letterica16" vert_align="c"/>
 		</value>
 	</boost_health_restore>
@@ -22,7 +22,7 @@
 			<text color="ui_3" font="letterica16" vert_align="c" x="22" y="0"/>
 		</caption>
 <!--		<texture_minus>ui_am_prop_radio_restore</texture_minus> -->
-		<value x="140" y="0" width="30" height="20" magnitude="1000">
+		<value x="140" y="0" width="30" height="20" magnitude="100">
 			<text font="letterica16" vert_align="c"/>
 		</value>
 	</boost_radiation_restore>
@@ -42,7 +42,7 @@
 			<texture>ui_inv_icon_power_restore_speed</texture>
 			<text color="ui_3" font="letterica16" vert_align="c" x="22" y="0"/>
 		</caption>
-		<value x="140" y="0" width="30" height="20" magnitude="2000">
+		<value x="140" y="0" width="30" height="20" magnitude="100">
 			<text font="letterica16" vert_align="c"/>
 		</value>
 	</boost_power_restore>
@@ -52,7 +52,7 @@
 			<texture>ui_inv_icon_bleeding_restore_speed</texture>
 			<text color="ui_3" font="letterica16" vert_align="c" x="22" y="0"/>
 		</caption>
-		<value x="140" y="0" width="30" height="20" magnitude="1000">
+		<value x="140" y="0" width="30" height="20" magnitude="100">
 			<text font="letterica16" vert_align="c"/>
 		</value>
 	</boost_bleeding_restore>
@@ -152,10 +152,20 @@
 			<texture>ui_item_repair_kit_icon</texture>
 			<text color="ui_3" font="letterica16" vert_align="c" x="22" y="0"/>
 		</caption>
-		<value x="140" y="0" width="30" height="20" magnitude="10" show_sign="0" unit_str="%">
+		<value x="140" y="0" width="30" height="20" magnitude="10" show_sign="1" unit_str="%">
 			<text font="letterica16" vert_align="c"/>
 		</value>
 	</boost_repair_kit_condition>
+	
+	<boost_psy_health x="0" y="0" width="257" height="20" >
+		<caption x="0" y="0" width="257" height="20" complex_mode="0">
+			<texture>ui_inv_icon_telepatic_immunity</texture>
+			<text color="ui_3" font="letterica16" vert_align="c" x="22" y="0"/>
+		</caption>
+		<value x="140" y="0" width="30" height="20" magnitude="10" show_sign="0" unit_str="%">
+			<text font="letterica16" vert_align="c"/>
+		</value>
+	</boost_psy_health>
 	
 	<item_portions x="0" y="0" width="257" height="20" >
 		<caption x="0" y="0" width="257" height="20" complex_mode="0">
