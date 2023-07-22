@@ -24,8 +24,20 @@
 [outfit_base]
 ; delete full_scale_icon	next update- obsolete, use  full_icon_name instead !!!
 
+burn_protection 			= 0.0
+shock_protection 			= 0.0
+radiation_protection 			= 0.0
+chemical_burn_protection 		= 0.0
+telepatic_protection 			= 0.0
+strike_protection 			= 0.0
+explosion_protection 			= 0.0
+wound_protection			= 0.0
+fire_wound_protection			= 0.0
+
 additional_inventory_weight		= 0		; +max_walk_weight
 additional_inventory_weight2	= 0		;	+40 kg
+filter_degradation_speed = 0.005
+max_filter_condition = 1.0
 full_icon_name					= npc_icon_without_outfit
 
 default_to_ruck     = false
@@ -413,7 +425,7 @@ full_scale_icon		= 12,11			;иконка сталкера в костюме в полный рост
 
 immunities_sect			= sect_scientific_outfit_immunities
 helmet_avaliable	 	= false
-
+has_glass			= true
 
 ; MEDIUM RESISTANCE
 burn_protection 				= 0.0875
@@ -931,6 +943,8 @@ additional_inventory_weight		= 30
 additional_inventory_weight2	= 30
 artefact_count                  = 1
 control_inertion_factor			= 2.5
+has_glass			= true
+use_filter			= true
 
 upgrades                = up_gr_firstab_exo_outfit, up_gr_seconab_exo_outfit, up_gr_thirdab_exo_outfit, up_gr_fourtab_exo_outfit, up_gr_fifthab_exo_outfit
 installed_upgrades      =
@@ -988,15 +1002,19 @@ upgr_icon_width		= 100
 upgr_icon_height   	= 100
 cost			= 1000
 
-burn_protection 			= 0.0
-shock_protection 			= 0.0
+burn_protection 		= 0.0
+shock_protection 		= 0.0
 chemical_burn_protection 	= 0.0
 radiation_protection 		= 0.0
 telepatic_protection 		= 0.0
-strike_protection 			= 0.0
+strike_protection 		= 0.0
 explosion_protection 		= 0.0
-wound_protection			= 0.0
-hit_fraction_actor			= 1.0
+wound_protection		= 0.0
+fire_wound_protection		= 0.0
+hit_fraction_actor		= 1.0
+
+filter_degradation_speed = 0.005
+max_filter_condition = 1.0
 
 immunities_sect 			= sect_helm_immunities
 bones_koeff_protection		= actor_helm_respirator
@@ -1033,6 +1051,9 @@ bones_koeff_protection		= actor_helm_respirator
 telepatic_protection 		= 0.0200
 radiation_protection 		= 0.0015
 chemical_burn_protection 	= 0.0500
+
+has_glass			= true
+use_filter			= true
 
 upgrades                = up_gr_firstab_helm_respirator
 installed_upgrades      =
@@ -1133,6 +1154,8 @@ radiation_protection 		= 0.0025
 chemical_burn_protection 	= 0.0500
 telepatic_protection 		= 0.060
 
+has_glass			= true
+
 upgrades                = up_gr_firstab_helm_protective, up_gr_seconab_helm_protective
 installed_upgrades      =
 upgrade_scheme          = upgrade_scheme_helm_protective
@@ -1176,6 +1199,7 @@ upgr_icon_height   	= 143
 cost			= 7000
 
 nightvision_sect	= effector_nightvision_1
+night_vision_type	= 1
 
 immunities_sect 	= sect_helm_tactic_immunities
 bones_koeff_protection		= actor_helm_tactic
@@ -1186,6 +1210,9 @@ chemical_burn_protection 	= 0.0200
 strike_protection 			= 0.0
 explosion_protection 		= 0.0
 wound_protection			= 0.0
+
+has_glass			= true
+use_filter			= true
 
 ;nearest_enemies_show_dist	= 20
 
@@ -1232,6 +1259,7 @@ upgr_icon_height   	= 143
 cost			= 6000
 
 nightvision_sect	= effector_nightvision_2
+night_vision_type	= 2
 
 immunities_sect 	= sect_helm_battle_immunities
 bones_koeff_protection		= actor_helm_battle
@@ -1242,6 +1270,9 @@ chemical_burn_protection 	= 0.0200
 strike_protection 			= 0.0
 explosion_protection 		= 0.0
 wound_protection			= 0.0
+
+has_glass			= true
+use_filter			= true
 
 upgrades                = up_gr_firstab_helm_battle, up_gr_seconab_helm_battle
 installed_upgrades      =

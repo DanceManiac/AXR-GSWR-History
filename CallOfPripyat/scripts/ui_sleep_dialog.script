@@ -135,7 +135,10 @@ function dream_callback()
 	level.change_game_time(0,hours,0)
 	level_weathers.get_weather_manager():forced_weather_change()
 	surge_manager.get_surge_manager().time_forwarded = true
-	if(surge_manager.is_started() and level_weathers.get_weather_manager().weather_fx) then
+	-- AtmosFear
+	psi_storm_manager.get_psi_storm_manager().time_forwarded = true
+	-- end AtmosFear
+	if(xr_conditions.surge_started() and level_weathers.get_weather_manager().weather_fx) then
 		level.stop_weather_fx()
 --		level_weathers.get_weather_manager():select_weather(true)
 		level_weathers.get_weather_manager():forced_weather_change()

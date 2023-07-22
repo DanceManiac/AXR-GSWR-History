@@ -192,7 +192,8 @@ scopes_sect				= scope_groza, scope_x2.7_groza, scope_live_detector_groza, scope
 ;звуки
 snd_draw                = weapons\generic_draw
 snd_holster             = weapons\generic_holster
-snd_shoot					= weapons\n_groza_shot
+snd_shoot					= snd_shoot_groza
+snd_shoot_actor         	= weapons\n_groza_shot
 ;snd_shoot1					= weapons\n_groza_shot
 ;snd_shoot2					= weapons\n_groza_shot
 ;snd_shoot3					= weapons\n_groza_shot
@@ -295,6 +296,12 @@ gl_hud_offset_rot_16x9				= -0.022500,-0.065000,-0.020000
 
 lean_hud_offset_pos	= 0,0,0
 lean_hud_offset_rot	= 0,0,0
+
+hud_collision_enabled			= true
+hud_collision_offset_pos		= 0,-0.5,0
+hud_collision_offset_pos_16x9		= 0,-0.5,0
+hud_collision_offset_rot		= -0.8,0,0
+hud_collision_offset_rot_16x9		= -0.8,0,0
 
 [scope_groza]
 scope_name 					= wpn_addon_scope
