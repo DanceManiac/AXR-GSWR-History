@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="windows-1251" ?>
 <string_table>
 	<string id="st_game_window_name">
-		<text>Advanced X-Ray 1.3.90</text>
+		<text>Advanced X-Ray 1.4.80</text>
+	</string>
+	<string id="st_discord_menu">
+		<text>Главное Меню</text>
 	</string>
 	<string id="ui_mm_cam_fov">
 		<text>Поле зрения</text>
@@ -173,5 +176,26 @@
 	</string>
 	<string id="kb_switch_horn">
 		<text>Посигналить</text>
+	</string>
+	<string id="ui_inv_battery">
+		<text>Заряд батареи</text>
+	</string>
+	<string id="ui_inv_max_charge">
+		<text>Макс. заряд</text>
+	</string>
+	<string id="ui_inv_uncharge_speed">
+		<text>Расход батареи</text>
+	</string>
+	<string id="st_battery">
+		<text>Батарейка</text>
+	</string>
+	<string id="st_battery_descr">
+		<text>Стандартная пальчиковая батарейка. Повсеместно применяется сталкерами для зарядки различных приборов.</text>
+	</string>
+	<string id="st_charge_item">
+		<text>Зарядить</text>
+	</string>
+	<string id="ui_st_walk_inertion">
+		<text>Инерция ходьбы героя</text>
 	</string>
 </string_table>
