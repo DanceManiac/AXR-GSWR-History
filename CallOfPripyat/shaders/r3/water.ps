@@ -149,7 +149,7 @@ float4 main( vf I ) : SV_Target
 	if (edgeFade > 0.02f)
 		ssr_hit_uv = SSFX_ssr_water_ray(Pv, wreflect, blue_noise, 0);
 
-	if (all(ssr_hit_uv.xy))
+	if (all(ssr_hit_uv.xy) && _P.z < reflections_distance.x)
 	{
 		// Get reflection pixel from scene screen
 		refl_ray = SSFX_get_image(ssr_hit_uv.xy, 0);
@@ -205,7 +205,8 @@ float4 main( vf I ) : SV_Target
 	// Fake Caustics
 	float3 Ca0 = saturate(s_watercaustics.Sample(smp_base, w_b.xz * (0.19f / G_SSR_WATER_CAUSTICS_SCALE) + CausticsT.xy + N_Scr ) - 0.1f );
 	float3 Ca1 = saturate(s_watercaustics.Sample(smp_base, w_b.xz * (0.11f / G_SSR_WATER_CAUSTICS_SCALE) + CausticsT.zw + N_Scr ) - 0.1f );
-	float3 CA = min(Ca0, Ca1) * water_shadows * G_SSR_WATER_CAUSTICS; // Caustics if light hit the water
+	float sun_intensity = saturate((L_sun_color.r + L_sun_color.g + L_sun_color.b)/12);
+	float3 CA = min(Ca0, Ca1) * water_shadows * sun_intensity; // Caustics if light hit the water
 	
 	// Water Depth
 	float waterDepth = w_s.y - w_b.y + eye_position.y;
