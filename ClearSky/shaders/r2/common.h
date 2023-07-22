@@ -31,7 +31,7 @@
 // #define USE_TDETAIL                	//- shader defined
 // #define USE_LM_HEMI                	//- shader defined
 // #define USE_DISTORT                	//- shader defined
-// #define USE_SUNMASK                		//- shader defined
+ #define USE_SUNMASK                		//- shader defined
 // #define DBG_TMAPPING
 //////////////////////////////////////////////////////////////////////////////////////////
 #ifndef SMAP_size
@@ -39,6 +39,7 @@
 #endif
 #define PARALLAX_H 0.02
 #define parallax float2(PARALLAX_H, -PARALLAX_H/2)
+#define SKY_DEPTH	float(10000.f)
 
 #ifdef        USE_R2_STATIC_SUN
 #  define xmaterial half(1.0h/4.h)
@@ -46,6 +47,8 @@
 #  define xmaterial half(L_material.w)
 #endif
 //////////////////////////////////////////////////////////////////////////////////////////
+uniform half4 				 u_weather; // .xyz - sky color, .w - rain line param
+uniform half4 				 lowland_fog_params; // x - low fog height, y - low fog density, z - base height, w - null
 uniform half4                hemi_cube_pos_faces;
 uniform half4                hemi_cube_neg_faces;
 uniform half4                L_material;                            // 0,0,0,mid
@@ -143,29 +146,15 @@ struct         p_bumped        {
         half3       M1                : TEXCOORD2;        // nmap 2 eye - 1
         half3       M2                : TEXCOORD3;        // nmap 2 eye - 2
         half3       M3                : TEXCOORD4;        // nmap 2 eye - 3
-#if defined(USE_PARALLAX) || defined(USE_STEEPPARALLAX)
-        half3       eye                : TEXCOORD5;        // vector to point in tangent space
-  #ifdef USE_TDETAIL
-        float2      tcdbump     : TEXCOORD6;        // d-bump
+#ifdef USE_TDETAIL
+        float2      tcdbump     	: TEXCOORD5;        // d-bump
     #ifdef USE_LM_HEMI
-        float2      lmh                    : TEXCOORD7;        // lm-hemi
+        float2      lmh             : TEXCOORD6;        // lm-hemi
     #endif
-  #else
-    #ifdef USE_LM_HEMI
-        float2      lmh                   : TEXCOORD6;        // lm-hemi
-    #endif
-  #endif
 #else
-  #ifdef USE_TDETAIL
-        float2      tcdbump          : TEXCOORD5;        // d-bump
     #ifdef USE_LM_HEMI
-        float2      lmh                    : TEXCOORD6;        // lm-hemi
+        float2      lmh             : TEXCOORD5;        // lm-hemi
     #endif
-  #else
-    #ifdef USE_LM_HEMI
-        float2      lmh                   : TEXCOORD5;        // lm-hemi
-    #endif
-  #endif
 #endif
 };
 //////////////////////////////////////////////////////////////////////////////////////////
@@ -223,6 +212,11 @@ uniform sampler2D       s_dn_r;                	//
 uniform sampler2D       s_dn_g;                	//
 uniform sampler2D       s_dn_b;                	//
 uniform sampler2D       s_dn_a;                	//
+
+uniform sampler2D 		s_dp_r;                	//
+uniform sampler2D 		s_dp_g;                	//
+uniform sampler2D 		s_dp_b;                	//
+uniform sampler2D 		s_dp_a;                	//
 
 //////////////////////////////////////////////////////////////////////////////////////////
 // Lighting/shadowing phase                     //

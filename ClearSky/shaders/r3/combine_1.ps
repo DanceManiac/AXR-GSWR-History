@@ -1,7 +1,5 @@
 #include "common.h"
 
-//#define HDAO
-
 //#define USE_SUPER_SPECULAR
 //#define USE_ORIGINAL_SSAO
 //#define HBAO_WORLD_JITTER
@@ -9,18 +7,82 @@
 #include "lmodel.h"
 #include "hmodel.h"
 
+float compute_height_fog(float3 P_view)
+{
+    //Settings
+    float height = lowland_fog_params.x;    //Fog height    
+    float density = lowland_fog_params.y;    //Fog density (keep it low, it's exponential fog without any distance attenuation)
+	float base_height = lowland_fog_params.z; //Fog base height (base height of lowland fog, for current level)
+    
+    //Transform view space position into world space
+    float3 P_world = mul(m_v2w, float4(P_view, 1.f)).xyz;
+    
+    //Calculate height factor
+    float height_factor = base_height + height - P_world.y;    
+    
+    //Get length of view space position
+    float P_dist = length(P_view.xyz) * height_factor;
+    
+    //Calculate exponential fog
+    float fog = 1.0 - exp(-P_dist * density);
+
+    //Output
+    return saturate(fog);
+}
+
 uniform	Texture2D					s_half_depth;
 
 //#include "ssao_blur.ps"
 
-#include "ssao.ps"
 #ifdef HDAO
+#define USE_HDAO 1
+#endif
+
+#ifdef SM_5
+Texture2D<float> s_occ;
+#endif // SM_5
+
+//#ifdef SSAO_QUALITY
+//#undef SSAO_QUALITY
+//#define SSAO_QUALITY 4
+//#endif
+
+#if SSAO_QUALITY <=3
+#include "ssao.ps"
+//#ifdef SM_5
+//#undef SM_5
+//#endif
+#else
+#ifndef USE_HDAO
+#define USE_HDAO
+#endif
+#endif
+
+#ifdef USE_HDAO
+#if SSAO_QUALITY > 3
+#include "ssao_hdao_new.ps"
+#endif
 #define USE_HDAO_CODE
+#if SSAO_QUALITY <=3
+#define  g_f2RTSize ( pos_decompression_params2.xy )
+//#define  g_f2RTSize float2( 1280.0f, 1024.0f )
+#ifdef GBUFFER_OPTIMIZATION
+#define g_txDepth s_position
+#define g_txNormal s_position
+#else
+#define g_txDepth s_position
+#define g_txNormal s_normal
+#endif
 #include "ssao_hdao.ps"
 #endif
+#else // USE_HDAO
 #ifdef	USE_HBAO
 #include "ssao_hbao.ps"
 #endif	//	USE_HBAO
+#ifdef	USE_SSDO
+#include "ssao_ssdo.ps"
+#endif	//	USE_SSDO
+#endif // USE_HDAO
 
 struct	_input
 {
@@ -103,15 +165,30 @@ _out main ( _input I, uint iSample : SV_SAMPLEINDEX )
 	float   occ = ssao_blur_ps( texCoord, ISAMPLE );
 #	endif*/
 
+#ifdef USE_HDAO
+#ifdef SM_5
+#if SSAO_QUALITY > 3
+    float occ = s_occ.Sample( smp_nofilter, I.tc0);	
+#else // SSAO_QUALITY > 3
+	float occ = calc_hdao( CS_P(P, N, I.tc0, I.tcJ, I.pos2d, ISAMPLE ) );
+#endif // SSAO_QUALITY > 3
+#else // SM_5
+#if SSAO_QUALITY > 3
+	float occ = calc_new_hdao( CS_P(P, N, I.tc0, I.tcJ, I.pos2d, ISAMPLE ) );
+#else // SSAO_QUALITY > 3
+	float occ = calc_hdao( CS_P(P, N, I.tc0, I.tcJ, I.pos2d, ISAMPLE ) );
+#endif // SSAO_QUALITY > 3
+#endif // SM_5
+#else // USE_HDAO
 #ifdef USE_HBAO
 	float occ = calc_hbao( P.z, N, I.tc0, I.pos2d );
-#else
-#ifdef HDAO
-	float occ = calc_hdao( CS_P(P, N, I.tc0, I.tcJ, I.pos2d, ISAMPLE) );
-#else
-	float occ = calc_ssao( CS_P(P, N, I.tc0, I.tcJ, I.pos2d, ISAMPLE) );
+#else // USE_HBAO
+	float occ = calc_ssao( CS_P(P, N, I.tc0, I.tcJ, I.pos2d, ISAMPLE ) );
 #endif
-#endif
+#ifdef USE_SSDO
+    occ                 = calc_ssdo(P, N, I.tc0);
+#endif //USE SSDO
+#endif // USE_HDAO
 	
 	hmodel	(hdiffuse, hspecular, mtl, N.w, D.w, P.xyz, N.xyz);
 //      hmodel		(hdiffuse, hspecular, mtl, 1, D.w, P.xyz, N.xyz);
@@ -125,7 +202,7 @@ _out main ( _input I, uint iSample : SV_SAMPLEINDEX )
         float4         light       = float4         (L.rgb + hdiffuse, L.w)        ;
         float4         C           = D*light       ;                             // rgb.gloss * light(diffuse.specular)
 //        float3         spec        = (C.rgb*.5h + .5h)*C.w + hspecular + hspecular + hspecular;			// replicated specular
-	float3         spec        = C.www         + hspecular;      // replicated specular
+		float3 spec 				= C.www * L.rgb + hspecular * C.rgba; // replicated specular
 
 #ifdef         USE_SUPER_SPECULAR
                       spec      = (C.rgb*.5h + .5h)*C.w + hspecular        ;
@@ -168,7 +245,9 @@ _out main ( _input I, uint iSample : SV_SAMPLEINDEX )
         float3        	pos        		= P.xyz;
         float         	distance		= length		(pos);
         float         	fog				= saturate		(distance*fog_params.w + fog_params.x); //
-                      	color			= lerp     		(color,fog_color,fog);        			//
+		                color			= lerp     		(color, fog_color, fog);        		//
+						color 			= lerp			(color, fog_color, compute_height_fog(P.xyz));
+
         float        	skyblend		= saturate		(fog*fog);
 
 #ifdef         DBG_TMAPPING
@@ -186,7 +265,7 @@ _out main ( _input I, uint iSample : SV_SAMPLEINDEX )
 //float3 color = (0.5 * (sign( gbd.N - gbd.N_org ) + 1.0 ) );
 //color = float3( abs( gbd.hemi - gbd.hemi_org), 0, abs( gbd.mtl - gbd.mtl_org) );
 //color = abs( gbd.N - gbd.N_org );
-		//color = occ;
+//		color = occ; // holger test
 		//color = gbd.N;
         _out        	o;
         tonemap        	(o.low, o.high, color, tm_scale )	;

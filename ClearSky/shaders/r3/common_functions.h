@@ -122,6 +122,7 @@ float3	calc_reflection( float3 pos_w, float3 norm_w )
 #define USABLE_BIT_15               uint(0x80000000)
 #define MUST_BE_SET                 uint(0x40000000)   // This flag *must* be stored in the floating-point representation of the bit flag to store
 
+/*
 float2 gbuf_pack_normal( float3 norm )
 {
    float2 res;
@@ -139,6 +140,31 @@ float3 gbuf_unpack_normal( float2 norm )
    res.xy = ( 2.0 * abs( norm ) ) - float2(1,1);
 
    res.z = ( norm.x < 0 ? -1.0 : 1.0 ) * sqrt( abs( 1 - res.x * res.x - res.y * res.y ) );
+
+   return res;
+}
+*/
+
+// Holger Gruen AMD - I change normal packing and unpacking to make sure N.z is accessible without ALU cost
+// this help the HDAO compute shader to run more efficiently
+float2 gbuf_pack_normal( float3 norm )
+{
+   float2 res;
+
+   res.x  = norm.z;
+   res.y  = 0.5f * ( norm.x + 1.0f ) ;
+   res.y *= ( norm.y < 0.0f ? -1.0f : 1.0f );
+
+   return res;
+}
+
+float3 gbuf_unpack_normal( float2 norm )
+{
+   float3 res;
+
+   res.z  = norm.x;
+   res.x  = ( 2.0f * abs( norm.y ) ) - 1.0f;
+   res.y = ( norm.y < 0 ? -1.0 : 1.0 ) * sqrt( abs( 1 - res.x * res.x - res.z * res.z ) );
 
    return res;
 }
@@ -192,6 +218,8 @@ f_deffer pack_gbuffer( float4 norm, float4 pos, float4 col, uint imask )
 #ifdef EXTEND_F_DEFFER
    res.mask = imask;
 #endif
+
+res.DWM = float4(0,0,0,0); // For ordinary gbuffer
 
 	return res;
 }

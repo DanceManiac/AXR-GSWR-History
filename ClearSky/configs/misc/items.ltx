@@ -151,7 +151,7 @@ ef_weapon_type		= 0
 
 inv_name			= st_vodka
 inv_name_short		= st_vodka
-inv_weight			= 0.6	;0.2
+inv_weight			= 0.2	;0.2
 
 inv_grid_width		= 1
 inv_grid_height		= 2
@@ -292,7 +292,7 @@ eat_health			= 0.5
 eat_satiety			= 0
 eat_power			= 0.0
 eat_radiation		= -0.05
-wounds_heal_perc	= 0.1
+wounds_heal_perc	= 0.3
 eat_portions_num	= 1
 eat_max_power		= 0.1
 
@@ -326,7 +326,7 @@ eat_health			= 0.75
 eat_satiety			= 0
 eat_power			= 0.0
 eat_radiation		= -0.1
-wounds_heal_perc	= 0.3
+wounds_heal_perc	= 0.5
 eat_portions_num	= 1
 eat_max_power		= 0.1
 
@@ -556,6 +556,9 @@ snd_night_vision_off		= weapons\nv_off
 snd_night_vision_idle		= weapons\nv_loop
 snd_night_vision_broken		= weapons\nv_off
 
+snd_turn_on			= mfs_team\item_use\inv_torch
+snd_turn_off			= mfs_team\item_use\inv_torch
+
 night_vision_recharge_time			= 6		;(c) время зарядки аккамулятора
 night_vision_recharge_time_min		= 2		;(c) мин. время зарядки аккамулятора, после которого уст-во уже может работать
 night_vision_discharge_time			= 20	;(c) время разрядки (работы) устройства после полной зарядки
@@ -564,7 +567,7 @@ default_to_ruck						= false
 sprint_allowed						= true
 control_inertion_factor				= 1
 disabled_maps						= ai_test,ai_test2, andy_test_
-
+light_section			= torch_definition
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
