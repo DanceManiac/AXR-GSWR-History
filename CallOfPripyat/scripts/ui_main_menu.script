@@ -30,9 +30,23 @@ function main_menu:InitControls()
 	self.message_box				= CUIMessageBoxEx()
 	self:Register					(self.message_box, "msg_box")
 
-	local _ver = xml:InitStatic		("static_version",self)
+	--local _ver = xml:InitStatic		("static_version",self)
+	--local mm						= _G.main_menu.get_main_menu()
+	--_ver:TextControl():SetText		("Advanced X-Ray ver. " .. mm:GetGSVer() .. " (" .. mm:GetAxrPlatform() .. ")")
+	
+--/--==game_and_mod_ver==--
+	local _gVer = xml:InitStatic		("static_version",self)
+	local _mfsVer = xml:InitStatic		("mod_version",self)
+	local _mfs_team	= xml:InitStatic("mfs_team_info",self)
 	local mm						= _G.main_menu.get_main_menu()
-	_ver:TextControl():SetText		("ver. " .. mm:GetGSVer())
+	_gVer:TextControl():SetText		("Advanced X-Ray ver. " .. mm:GetGSVer() .. " (" .. mm:GetAxrPlatform() .. ")")
+
+    local ConfVer = utils.cfg_get_string(ini_file("modification_info.ltx"), "modification_info", "version", db.actor, false, "", "")
+    local Year = utils.cfg_get_string(ini_file("modification_info.ltx"), "modification_info", "year", db.actor, false, "", "")
+	
+	_mfsVer:TextControl():SetText("Global Stalker Weather Rework ver: "..ConfVer.." ")
+	_mfs_team:TextControl():SetText("M.F.S. Team "..Year.."©. ")
+--/--==game_and_mod_ver==--
 
     self.l_mgr = mm:GetLoginMngr()
     self.acc_mgr = mm:GetAccountMngr()

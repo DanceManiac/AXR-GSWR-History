@@ -174,10 +174,11 @@ scope_y                 = -1
 ;звуки
 snd_draw					= weapons\generic_draw
 snd_holster					= weapons\generic_holster
-snd_shoot					= weapons\n_spas12_shot
+snd_shoot					= snd_shoot_spas12
+snd_shoot_actor				= weapons\n_spas12_shot
 snd_empty					= weapons\generic_empty
 snd_reload					= weapons\spas12_reload_end
-snd_shoot_duplet			= weapons\n_spas12_shot
+snd_shoot_duplet			= snd_shoot_spas12
 
 snd_open_weapon            = weapons\draw_silent
 snd_add_cartridge			= weapons\spas12_reload
@@ -212,6 +213,12 @@ aim_hud_offset_rot				= -0.012500,0.040000,0.020000
 
 aim_hud_offset_pos_16x9				= -0.195499,0.054500,0.000000
 aim_hud_offset_rot_16x9				= 0.025000,0.085000,0.002500
+
+hud_collision_enabled			= true
+hud_collision_offset_pos		= 0,-0.5,0
+hud_collision_offset_pos_16x9		= 0,-0.5,0
+hud_collision_offset_rot		= -0.8,0,0
+hud_collision_offset_rot_16x9		= -0.8,0,0
 
 anm_show			= protecta_draw
 anm_hide			= protecta_holster
