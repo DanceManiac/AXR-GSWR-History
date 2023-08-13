@@ -2,7 +2,6 @@
 //  All comments by Nivenhbro are preceded by !
 /////////////////////////////////////////////////
 
-
 #ifndef SHARED_COMMON_H
 #define SHARED_COMMON_H
 
@@ -26,7 +25,8 @@ cbuffer	shader_params
 
 cbuffer	static_globals
 {
-	uniform float3x4		m_V;
+	uniform float3x4	m_V;
+	uniform float3x4	m_inv_V;
 	uniform float4x4 	m_P;
 	uniform float4x4 	m_VP;
 
@@ -40,13 +40,34 @@ cbuffer	static_globals
 	uniform float3		L_sun_color;
 	uniform float3		L_sun_dir_w;
 	uniform float4		L_hemi_color;
+	uniform float4 		Ldynamic_dir;
+	uniform float4 		Ldynamic_pos;
+	uniform float4 		Ldynamic_color;
 
 	uniform float3 		eye_position;
 
 	uniform float4 		pos_decompression_params;
 	uniform float4 		pos_decompression_params2;
 
-//	uniform float4		screen_res;		// Screen resolution (x-Width,y-Height, zw - 1/resolution)
+	uniform float4		parallax;
+	uniform float4		screen_res;		// Screen resolution (x-Width,y-Height, zw - 1/resolution)
+	uniform float4		pp_img_corrections;
+	uniform float4		pp_img_cg;
+	
+	uniform float4 		r_color_drag;
+	uniform float4 		sky_color; // .xyz - sky color, .w - sky rotation
+	uniform float4 		lowland_fog_params; // x - low fog height, y - low fog density, z - base height, w - null
+	uniform float4 		screen_res_alt; // .xy - pos_decompression_params2.xy, .zw - screen_res.xy power to -1
+	uniform float4 		rain_params; // .x - rain density, .y - wetness accumulator, .zw = 0
+	uniform float4 		reflections_distance; // .x - distance, yzw - null
+	uniform float3x4	m_v2w;
+	uniform float4x4	m_view2world;
+	uniform float4 		fov;
+	uniform float4		debug; // x - ao debug, yzw - null
+
+	// Глобальные параметры шейдеров --#SM+#--
+	uniform	float4		m_hud_params;	// zoom_rotate_factor, secondVP_zoom_factor, NULL, NULL
+	uniform	float4		m_blender_mode;	
 }
 
 /*
@@ -79,6 +100,5 @@ float2 	calc_xz_wave 	(float2 dir2D, float frac)
 	float2 	ctrl_B	= float2(dir2D.x,	dir2D.y	);
 	return  lerp	(ctrl_A, ctrl_B, frac);			//!This calculates tree wave. No changes made
 }
-
 
 #endif

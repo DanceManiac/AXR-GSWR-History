@@ -32,7 +32,7 @@ float3 SSFX_ssr_water_ray(float3 ray_start_vs, float3 ray_dir_vs, float noise, u
 
 	// Save the original step.x
 	float ori_x = ssr_ray.r_step.x;
-	
+
 	// Depth from the start of the ray
 	float ray_depthstart = SSFX_get_depth(ssr_ray.r_start, iSample);
 
@@ -47,7 +47,7 @@ float3 SSFX_ssr_water_ray(float3 ray_start_vs, float3 ray_dir_vs, float noise, u
 		// Horizontal stretch to avoid borders
 		float2 hor = ssr_ray.r_pos.x > 0.5f ? float2(1.0f, -0.1) : float2(-0.1, 1.0f);
 		ssr_ray.r_step.x = ori_x * lerp(hor.x, hor.y, saturate(ssr_ray.r_pos.x * 2.0f));
-		
+
 		// Ray intersect check ( x = difference | y = depth sample )
 		float2 ray_check = SSFX_ray_intersect(ssr_ray, iSample);
 

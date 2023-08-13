@@ -166,6 +166,12 @@ function opt_video_adv:InitControls(x, y, xml, handler)
 	xml:InitStatic								("video_adv:cap_r2_static_sun",			_st)
 	ctl			= xml:InitCheck					("video_adv:check_r2_static_sun",		_st)
 	handler.m_preconditions[ctl]		= only_2_and_more_mode
+	
+--Псевдо PBR
+	_st				= xml:InitStatic			("video_adv:templ_item",				self.scroll_v)
+	xml:InitStatic								("video_adv:cap_es_pseudo_pbr",			_st)
+	ctl			= xml:InitCheck					("video_adv:check_es_pseudo_pbr",		_st)
+	handler.m_preconditions[ctl]		= only_3_and_more_mode
 
 --Рендеринг бликов
 	_st = xml:InitStatic("video_adv:templ_item", self.scroll_v)
@@ -268,6 +274,13 @@ function opt_video_adv:InitControls(x, y, xml, handler)
 	_st = xml:InitStatic("video_adv:templ_item", self.scroll_v)
 	xml:InitStatic("video_adv:cap_reflections_distance", _st)
 	ctl = xml:InitTrackBar("video_adv:track_reflections_distance", _st)
+	handler.track_reflections_distance = ctl
+	handler.m_preconditions[ctl]		= only_3_and_more_mode
+
+--Дальность намокания
+	_st = xml:InitStatic("video_adv:templ_item", self.scroll_v)
+	xml:InitStatic("video_adv:cap_dynamic_wet_surfaces_far", _st)
+	ctl = xml:InitTrackBar("video_adv:track_dynamic_wet_surfaces_far", _st)
 	handler.track_reflections_distance = ctl
 	handler.m_preconditions[ctl]		= only_3_and_more_mode
 	

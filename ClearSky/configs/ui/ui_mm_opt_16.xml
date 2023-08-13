@@ -95,7 +95,7 @@
 		<cap_renderer x="17" y="20" width="119" height="21" hint = "ui_mm_renderer_hint">
 			<text font="letterica16" color="ui_6">ui_mm_renderer</text>			
 		</cap_renderer>
-		<list_renderer x="162" y="20" width="218" height="21" list_length="5" always_show_scroll="0">
+		<list_renderer x="132" y="20" width="218" height="21" list_length="5" always_show_scroll="0">
 			<options_item entry="renderer" group="mm_opt_video" depend="restart"/>
 			<text_color>
 				<e r="216" g="186" b="140"/>
@@ -108,7 +108,7 @@
 		<cap_preset x="17" y="50" width="119" height="21" hint = "ui_mm_preset_hint">
 			<text font="letterica16" color="ui_6">ui_mm_quality_presets</text>			
 		</cap_preset>
-		<list_presets x="162" y="50" width="218" height="21" list_length="5"  always_show_scroll="0">
+		<list_presets x="132" y="50" width="218" height="21" list_length="5"  always_show_scroll="0">
 			<options_item entry="_preset" group="mm_opt_video_preset" depend="vid"/>
 			<text_color>
 				<e r="216" g="186" b="140"/>
@@ -121,7 +121,7 @@
 		<cap_resolution x="17" y="80" width="119" height="21" hint = "ui_mm_resolution_hint">
 			<text font="letterica16" color="ui_6">ui_mm_resolution</text>
 		</cap_resolution>
-		<list_resolution x="162" y="80" width="218" height="21" list_length="7" always_show_scroll="1">
+		<list_resolution x="132" y="80" width="218" height="21" list_length="7" always_show_scroll="1">
 			<options_item entry="vid_mode" group="mm_opt_video" depend="vid"/>
 			<text_color>
 				<e r="216" g="186" b="140"/>
@@ -134,7 +134,7 @@
 		<cap_clr_drag_preset x="17" y="110" width="119" height="21" hint = "ui_mm_clr_drag_preset_hint">
 			<text font="letterica16" color="ui_6">ui_mm_clr_drag_preset</text>
 		</cap_clr_drag_preset>
-		<combo_clr_drag_preset x="162" y="110" width="218" height="21" list_length="7" always_show_scroll="1">
+		<combo_clr_drag_preset x="132" y="110" width="218" height="21" list_length="7" always_show_scroll="1">
 			<options_item entry="r2_clr_preset" group="mm_opt_video" depend="runtime"/>
 			<text_color>
 				<e r="216" g="186" b="140"/>
@@ -147,28 +147,38 @@
 		<cap_gamma x="17" y="140" width="119" height="21">
 			<text font="letterica16" color="ui_6">ui_mm_gamma</text>
 		</cap_gamma>
-		<track_gamma x="162" y="140" width="218" height="21">
+		<track_gamma x="132" y="140" width="218" height="21">
 			<options_item entry="rs_c_gamma" group="mm_opt_video"/>
 		</track_gamma>
 
 		<cap_contrast x="17" y="170" width="119" height="21">
 			<text font="letterica16" color="ui_6">ui_mm_contrast</text>
 		</cap_contrast>
-		<track_contrast x="162" y="170" width="218" height="21">
+		<track_contrast x="132" y="170" width="218" height="21">
 			<options_item entry="rs_c_contrast" group="mm_opt_video"/>
 		</track_contrast>
 
 		<cap_brightness x="17" y="200" width="119" height="21">
 			<text font="letterica16" color="ui_6">ui_mm_brightness</text>
 		</cap_brightness>
-		<track_brightness x="162" y="200" width="218" height="21">
+		<track_brightness x="132" y="200" width="218" height="21">
 			<options_item entry="rs_c_brightness" group="mm_opt_video"/>
 		</track_brightness>
+		
+		<cap_fps_limit x="17" y="230" width="119" height="21" hint="ui_mm_fps_limit_hint">
+			<text font="letterica16" color="ui_6">ui_mm_fps_limit</text>
+		</cap_fps_limit>
+		<track_fps_limit x="132" y="230" width="218" height="21" min="10.0" max="900.0" step="10.0">
+			<options_item entry="rs_fps_limit" group="mm_opt_video"/>
+				<output_wnd x="215" y="0" width="20" height="20" format="%.0f">
+					<text r="170" g="170" b="170" font="letterica16" align="r" vert_align="c">0</text>
+				</output_wnd>
+		</track_fps_limit>
 
-		<cap_fullscreen x="17" y="230" width="119" height="21">
+		<cap_fullscreen x="17" y="260" width="119" height="21">
 			<text font="letterica16" color="ui_6">ui_mm_fullscreen</text>
 		</cap_fullscreen>
-		<check_fullscreen x="162" y="230" width="27" height="21" stretch="1">
+		<check_fullscreen x="132" y="260" width="27" height="21" stretch="1">
 			<options_item entry="rs_fullscreen" group="mm_opt_video" depend="vid"/>	
 		</check_fullscreen>
 		
@@ -477,7 +487,7 @@
 		<cap_detail_scale x="77" y="0" width="119" height="21" hint = "ui_mm_detail_scale_hint">
         <text font="letterica16" color="ui_6">ui_mm_detail_scale</text>
         </cap_detail_scale>	
-		<track_detail_scale x="200" y="0" width="200" height="21" min="0.2" max="3.0" step="0.1">
+		<track_detail_scale x="200" y="0" width="200" height="21" min="0.2" max="1.6" step="0.1">
         <options_item entry="r__detail_scale" group="mm_opt_video_adv" depend="vid"/>
 			<output_wnd x="200" y="0" width="20" height="20" format="%.1f">
 				<text r="170" g="170" b="170" font="letterica16" align="r" vert_align="c">0</text>
@@ -488,7 +498,8 @@
 			<text font="letterica16" color="ui_6">ui_mm_detail_collision</text>
 		</cap_detail_collision>
 		<check_detail_collision x="200" y="0" width="27" height="21">
-			<options_item entry="r__detail_collision_enabled" group="mm_opt_video_adv"/>
+			<!--options_item entry="r__detail_collision_enabled" group="mm_opt_video_adv"/-->
+			<options_item entry="r4_ss_grass_collision" group="mm_opt_video_adv"/>
 		</check_detail_collision>
 		
 		<cap_detail_collision_radius x="77" y="0" width="119" height="21" hint = "ui_mm_detail_collision_radius_hint">
@@ -752,6 +763,13 @@
     <check_r2_static_sun x="200" y="0" width="27" height="21" stretch="1">
       <options_item entry="r2_static_sun" group="mm_opt_video" depend="restart"/>
     </check_r2_static_sun>
+	
+    <cap_es_pseudo_pbr x="77" y="0" width="119" height="21" hint = "ui_mm_r4_es_pseudo_pbr_hint">
+      <text font="letterica16" color="ui_6">ui_mm_r4_es_pseudo_pbr</text>
+    </cap_es_pseudo_pbr>
+    <check_es_pseudo_pbr x="200" y="0" width="27" height="21" stretch="1">
+      <options_item entry="r4_es_pseudo_pbr" group="mm_opt_video" depend="restart"/>
+    </check_es_pseudo_pbr>
 
     <cap_r1_no_detail_textures x="77" y="0" width="119" height="21" hint = "ui_mm_r1_detail_textures_hint">
       <text font="letterica16" color="ui_6">ui_mm_r1_no_detail_textures</text>
@@ -959,6 +977,16 @@
 			<text r="170" g="170" b="170" font="letterica16" align="r" vert_align="c">0</text>
 		</output_wnd>
     </track_reflections_distance>
+	
+    <cap_dynamic_wet_surfaces_far x="77" y="0" width="119" height="21" hint = "ui_mm_dynamic_wet_surfaces_far_hint">
+      <text font="letterica16" color="ui_6">ui_mm_dynamic_wet_surfaces_far</text>
+    </cap_dynamic_wet_surfaces_far>
+    <track_dynamic_wet_surfaces_far x="200" y="0" width="200" height="21" min="30.0" max="100.0">
+      <options_item entry="r3_dynamic_wet_surfaces_far" group="mm_opt_video_adv"/>
+		<output_wnd x="200" y="0" width="20" height="20" format="%.f">
+			<text r="170" g="170" b="170" font="letterica16" align="r" vert_align="c">0</text>
+		</output_wnd>
+    </track_dynamic_wet_surfaces_far>
 
     <btn_to_simply x="265" y="325" width="111" height="29">
       <text align="c" font="letterica16" r="227" g="199" b="178">ui_mm_simply</text>
