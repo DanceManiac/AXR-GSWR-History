@@ -6,10 +6,10 @@
 #define SKY_EPS float(0.001)
 #define FARPLANE float(180.0)
 
-float normalize_depth(float depth)
+/*float normalize_depth(float depth)
 {
 	return saturate(depth/FARPLANE);
-}
+}*/
 
 static const float2 poisson_disk[12] = {				// aene Ioanniia
 	float2(0.2636057f, 0.4026764f),
@@ -33,7 +33,7 @@ uniform float4 ogse_c_screen;		// x - fFOV, y - fAspect, z - Zf/(Zf-Zn), w - Zn*
 /*uniform float4 ogse_c_jitter;		// x - jitter u, y - jitter v. Test for smaa t2x, don't touch
 uniform float4 ogse_c_rain;			// x - rmap dist, y - flood level, z - wet level, w - rain intensity
 uniform float4 ogse_c_various;		// x - moonroad flag from weather*/
-
+/*
 #ifndef SKY_WITH_DEPTH
 half is_sky(float depth)		{return step(depth, SKY_EPS);}
 half is_not_sky(float depth)	{return step(SKY_EPS, depth);}
@@ -41,7 +41,7 @@ half is_not_sky(float depth)	{return step(SKY_EPS, depth);}
 half is_sky(float depth)		{return step(abs(depth - SKY_DEPTH), SKY_EPS);}
 half is_not_sky(float depth)	{return step(SKY_EPS, abs(depth - SKY_DEPTH));}
 #endif
-
+*/
 //float4 proj_to_screen(float4 proj)
 //{
 //	float4 screen = proj;
@@ -50,7 +50,7 @@ half is_not_sky(float depth)	{return step(SKY_EPS, abs(depth - SKY_DEPTH));}
 //	screen.xy *= 0.5;
 //	return screen;
 //}
-float4 screen_to_proj(float2 screen, float z)
+/*float4 screen_to_proj(float2 screen, float z)
 {
 	float4 proj;
 	proj.w = 1.0;
@@ -58,7 +58,7 @@ float4 screen_to_proj(float2 screen, float z)
 	proj.x = screen.x*2 - proj.w;
 	proj.y = -screen.y*2 + proj.w;
 	return proj;
-}
+}*/
 float is_in_range(float3 args)
 {
 	float mn = (args.x > args.y) ? 1: 0;
