@@ -12,12 +12,26 @@
 		<text align="c" font="graffiti22" r="225" g="225" b="250" a="255" />
 	</quick_info>
 
+	<hud_info>
+		<position x="0" y="0" />
+		<item_name x="0" y1="0.44" y2="0.48" y3="0.55" />
+		<font font="graffiti19" />
+	</hud_info>
+	
 	<icons_scroll_view  x="900" y="350" width="55" height="270" right_ident="2" always_show_scroll="0" vert_interval="16" inverse_dir="1" flip_vert="0"/>
 
 	<weapon_jammed_static x="0" y="0" width="53" height="64" stretch="1">
 		<texture>ui_hud_icon_weapon</texture>
 	</weapon_jammed_static>
 
+    <indicator_psy_health x="980" y="30" width="26" height="35" stretch="1"/>
+    <indicator_filter x="980" y="70" width="26" height="35" stretch="1"/>
+    <indicator_narcotism x="980" y="110" width="26" height="35" stretch="1"/>
+    <indicator_alcoholism x="980" y="150" width="26" height="35" stretch="1"/>
+    <indicator_sleepeness x="980" y="190" width="26" height="35" stretch="1"/>
+    <indicator_intoxication x="980" y="230" width="26" height="35" stretch="1"/>
+    <indicator_thirst x="980" y="270" width="26" height="35" stretch="1"/>
+    <indicator_torch_battery x="980" y="310" width="26" height="35" stretch="1"/>
     <indicator_starvation x="980" y="350" width="26" height="35" stretch="1"/>
     <indicator_helmet_broken x="980" y="390" width="26" height="35" stretch="1"/>
     <indicator_outfit_broken x="980" y="430" width="26" height="35" stretch="1"/>
@@ -50,6 +64,34 @@
     <indicator_booster_rad x="251" y="660" width="24" height="41" stretch="1">
 		<texture>ui_inGame2_shield_radiation_cleanup</texture>
 	</indicator_booster_rad>
+	<indicator_booster_satiety x="16" y="610" width="24" height="41" stretch="1">
+		<texture>ui_inGame2_shield_Satiety</texture>
+	</indicator_booster_satiety>
+	<indicator_booster_thirst x="49" y="610" width="24" height="41" stretch="1">
+		<texture>ui_inGame2_shield_Thirst</texture>
+	</indicator_booster_thirst>
+	<indicator_booster_psy_health x="83" y="610" width="24" height="41" stretch="1">
+		<texture>ui_inGame2_shield_Psy_Health</texture>
+	</indicator_booster_psy_health>
+	<indicator_booster_intoxication x="116" y="610" width="24" height="41" stretch="1">
+		<texture>ui_inGame2_shield_Intoxication</texture>
+	</indicator_booster_intoxication>
+	<indicator_booster_sleepeness x="150" y="610" width="24" height="41" stretch="1">
+		<texture>ui_inGame2_shield_Sleepeness</texture>
+	</indicator_booster_sleepeness>
+	<indicator_booster_alcoholism x="184" y="610" width="24" height="41" stretch="1">
+		<texture>ui_inGame2_shield_Alcoholism</texture>
+	</indicator_booster_alcoholism>
+	<indicator_booster_hangover x="217" y="610" width="24" height="41" stretch="1">
+		<texture>ui_inGame2_shield_Hangover</texture>
+	</indicator_booster_hangover>
+	<indicator_booster_narcotism x="251" y="610" width="24" height="41" stretch="1">
+		<texture>ui_inGame2_shield_Narcotism</texture>
+	</indicator_booster_narcotism>
+	<indicator_booster_withdrawal x="285" y="610" width="24" height="41" stretch="1">
+		<texture>ui_inGame2_shield_Withdrawal</texture>
+	</indicator_booster_withdrawal>
+	
 <!--
 	<radiation_static x="0" y="0" width="53" height="64" stretch="1">
 		<texture>ui_hud_icon_radiation</texture>
@@ -93,12 +135,20 @@
 	</disk_io>
 
 	<flashing_icons>
-		<flashing_icon x="13" y="210" width="48" height="29" type="pda" light_anim="ui_slow_blinking_alpha">
+		<flashing_icon x="13" y="250" width="48" height="29" type="pda" light_anim="ui_slow_blinking_alpha">
+			<texture>ui_hud_icon_PDA</texture>
+		</flashing_icon>
+		<flashing_icon x="13" y="250" width="48" height="29" type="encyclopedia" light_anim="ui_slow_blinking_alpha">
+			<texture>ui_hud_icon_PDA</texture>
+		</flashing_icon>
+		<flashing_icon x="13" y="250" width="48" height="29" type="journal" light_anim="ui_slow_blinking_alpha">
 			<texture>ui_hud_icon_PDA</texture>
 		</flashing_icon>
 	</flashing_icons>
 
-	<pick_up_item x="452" y="400" width="120" height="100"/>
+	<pick_up_item  x="512" y="478" scale="1"/>
+	
+	<artefact_panel x="200" y="710" width="200" height="50" cell_width="50" cell_height="50" scale="0.75"/>
 
 	<new_contact_snd>detectors\contact_1</new_contact_snd>
 

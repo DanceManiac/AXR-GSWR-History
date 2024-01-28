@@ -62,6 +62,10 @@
 #include "localization.ltx"
 #include "smart_cover.ltx"
 
+; M.F.S. Team
+#include "misc\backpacks.ltx"
+#include "misc\sound_layers.ltx"
+
 
 [zone_pick_dof]
 near    = -1500.0
@@ -107,15 +111,15 @@ take_dist   	= 2
 max_weight    	= 50
 max_ruck    	= 56
 max_belt    	= 5 ;16
-slots_count   	= 12 ; count +1 (zero)
+slots_count   	= 17 ; count +1 (zero)
 
 slot_persistent_1   = true   ;knife
 slot_active_1       = true
 
-slot_persistent_2   = false  ;pistol
+slot_persistent_2   = false  ;weapon_slot_1
 slot_active_2       = true
 
-slot_persistent_3   = false  ;automatic
+slot_persistent_3   = false  ;weapon_slot_2
 slot_active_3       = true
 
 slot_persistent_4   = true   ;grenades
@@ -131,7 +135,7 @@ slot_persistent_7   = false  ;outfit
 slot_active_7       = false
 
 slot_persistent_8   = true   ;pda
-slot_active_8       = false
+slot_active_8       = true
 
 slot_persistent_9   = true   ;detector
 slot_active_9       = false
@@ -144,6 +148,22 @@ slot_active_11      = true
 
 slot_persistent_12  = false ;helmet
 slot_active_12      = false
+
+slot_persistent_13  = false ;backpack
+
+slot_active_13      = false
+
+slot_persistent_14  = false ;second helmet
+slot_active_14      = false
+
+slot_persistent_15  = false ;dosimeter
+slot_active_15      = false
+
+slot_persistent_16  = false ;pants
+slot_active_16      = false
+
+slot_persistent_17  = false ;pistol
+slot_active_17      = true
 
 
 [lights_hanging_lamp]
@@ -577,12 +597,19 @@ fatigue         = 0.3,0.6,0.7,0.8,0.9
 
 [tutorial_conditions_thresholds]
 max_power       = 0.75
-power         = 0.1
+power         	= 0.1
 bleeding        = 0.4
 satiety         = 0.5
 radiation       = 0.1
-weapon_jammed     = 0.9
-psy_health        = 0.5
+weapon_jammed   = 0.9
+psy_health      = 0.5
+thirst		= 0.5
+intoxication	= 0.1
+sleepeness	= 0.5
+alcoholism	= 0.0
+hangover	= 1.0
+narcotism	= 0.0
+withdrawal	= 1.0
 
 [squad_manager]
 schedule_min      =   1
