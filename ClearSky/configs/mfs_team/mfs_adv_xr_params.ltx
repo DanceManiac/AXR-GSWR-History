@@ -3,7 +3,7 @@ engine_mode = cs						;; Режим работы движка cop|cs (Зов Припяти|Чистое Небо)
 discord_app_id = 745402574810906675		;; ID приложения для Discord Rich Presense
 discord_show_task = true				;; Выводить в статус Дискорда текущий квест
 ls_tips_enabled = true					;; Включены ли 100 советов по выживанию в Зоне
-developer_mode = false					;; Режим разработчика (больше команд, телепортация в демо рекорде, редактор погоды)
+developer_mode = true					;; Режим разработчика (больше команд, телепортация в демо рекорде, редактор погоды)
 block_console = false					;; Заблокировать использование консоли
 auto_snd_targets = true					;; Автоматическое определение кол-ва источников звука
 
@@ -21,7 +21,8 @@ actor_intoxication_enabled = false		;; Интоксикация ГГ
 actor_sleepeness_enabled = false		;; Потребность гг во сне
 actor_alcoholism_enabled = false		;; Алкогольная зависимость
 actor_narcotism_enabled = false			;; Наркомания
-artefacts_degradation = false			;; Деградация артефактов на поясе
+artefacts_degradation = false			;; Деградация артефактов
+artefacts_degradation_mode = from_belt	;; Режим деградации артефактов (from_belt|from_ruck)
 enable_artefacts_ranks = false			;; Ранги артефактов
 show_wpn_info = true					;; Показывать характеристики оружия
 jump_and_speed_weight_calc = false		;; Снижение скорости передвижений и высоты прыжков от веса в рюкзаке
@@ -30,8 +31,14 @@ stop_actor_sprint_if_shoot = false		;; Останавливать спринт во время стрельбы
 enable_reload_if_sprint = true			;; Разрешить перезарядку во время спринта
 enable_antigas_filters = false			;; Включить использование фильтров для противогазов
 artefacts_infl_mode = from_belt			;; Режим воздействия артефактов (from_belt|from_ruck|from_ruck_only_rad)
-hide_hud_on_master = false			;; Скрывать худ и перекрестие на самой высокой сложности
-actor_skills_enabled = false		;; Система навыков героя
+hide_hud_on_master = false				;; Скрывать худ и перекрестие на самой высокой сложности
+actor_skills_enabled = false			;; Система навыков героя
+enable_limited_inventory = false		;; Лимитированный инвентарь
+items_auto_volume = false				;; Автоматический расчёт объёма вещей для лимитированного инвентаря (экспериментальная опция, могут быть баги)
+enable_food_irradiation = false			;; Облучение пищи
+enable_food_rotting = false				;; Порча еды со временем
+ogse_weapons_zoom_system = false 		;; OGSE система зума
+enable_quick_throw_grenades = true		;; Быстрый бросок гранат
 
 [inventory]
 enable_knife_slot = false				;; Включен ли слот ножа
@@ -50,6 +57,10 @@ colorize_values_red = 255,0,0,255		;; Цвет негативного значения у артефактов, бу
 colorize_values_green = 0,255,0,255		;; Цвет положительного значения у артефактов, бустеров(RBGA)
 colorize_values_neutral = 170,170,170,255 	;; Цвет нейтрального значения у артефактов, бустеров(RBGA)
 hq_icons = false   				;; 100x100 иконки инвентаря (требуются правки в ui_incon_equipment.xml)
+enable_artefact_panel = false		;; Вкл.\выкл. панель артефактов на худе
+enable_hud_used_item_text = true	;; Вкл.\выкл. надпись об использованном предмете на HUD
+enable_pda_info_icons = false		;; Вкл.\выкл. HUD иконку оповещения о новой информации в КПК 
+enable_new_task_icon = false		;; Вкл.\выкл. HUD иконку оповещения при получении квеста 
 
 [hud_movement_layers]; Эффекты камеры при ходьбе из Anomaly
 ;types: 0 = aim_walk, 1 = aim_crouch, 2 = crouch, 3 = walk, 4 = run, 5 = sprint
@@ -83,34 +94,10 @@ clr_zone 			= 4
 clr_warm_tone 		= 5
 clr_blue 			= 6
 
-[variables_modifiers];Модификаторы переменных
-;;Модификаторы команд для DX9 освещения
-mod_tonemap_middlegray	= 0.25	;На DX9 прибавит это значение к установленному в команде
-mod_tonemap_low_lum	= 0.6	;На DX9 убавит это значение у установленного в команде
-mod_sun_lumscale	= 2.0	;На DX9 убавит это значение у установленного в команде
-mod_sun_lumscale_amb	= 0.5	;На DX9 прибавит это значение к установленному в команде
-
 [start_settings];Стартовые значения необходимых настроек
-tonemap_middlegray = 0.25
-tonemap_adaptation = 1.0
-tonemap_low_lum = 0.7
-tonemap_amount = 1.0
-bloom_kernel_g = 3.0
-bloom_kernel_b = 0.7
-bloom_speed = 100.0
-bloom_kernel_scale = 0.7
-bloom_threshold = 0.00001
-sun_lumscale = 3.0
-sun_lumscale_hemi = 1.0
-sun_lumscale_amb = 0.5
-
-;Gloss
-gloss_factor = 0.05
-gloss_min = 0.5
-
 ;FOV
 Camera_FOV = 67.5
-HUD_FOV = 0.45
+HUD_FOV = 0.55
 
 ;Enchanted Shaders color grading
 

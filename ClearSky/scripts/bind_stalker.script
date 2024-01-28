@@ -247,8 +247,6 @@ function actor_binder:update(delta)
 				-- DEBUG slowdown
 --        slowdown.update()
 
-				xr_surge_hide.update()
-
 				local time = time_global()
 
 				game_stats.update (delta, self.object)
@@ -451,6 +449,16 @@ function actor_binder:update(delta)
 	end
 	if guiders.teleported_to_another_level and not guiders.level_changed then
 		guiders.action_teleport_to_point()
+	end
+	
+	if xr_surge_hide.surge_activated then
+		if not game.get_saves_lock_status() then
+			game.set_lock_saves(true)
+		end
+	else
+		if game.get_saves_lock_status() then
+			game.set_lock_saves(false)
+		end	
 	end
 end
 ----------------------------------------------------------------------------------------------------------------------

@@ -15,8 +15,6 @@ local task_types = {
 	insignificant = 2
 }
 
-local task_difficult = nil
-
 local valid_values = {
 	complete 	= true,
 	fail 		= true,
@@ -77,7 +75,7 @@ function CGeneralTask:__init(task_ini, id, type)
 	self.base_prior		= utils.cfg_get_number(task_ini, id, "prior", nil, false, 0)
 	self.prior			= self.base_prior
 	self.text			= utils.cfg_get_string(task_ini, id, "text", nil, false, "", "NO_TEXT")
-	task_difficult		= utils.cfg_get_string(task_ini, id, "task_difficult", nil, false, "", nil)
+	self.task_difficult	= utils.cfg_get_string(task_ini, id, "task_difficult", nil, false, "", "none")
 	self.description	= utils.cfg_get_string(task_ini, id, "description", nil, false, "", "NO_TEXT")
 	self.board			= sim_board.get_sim_board()
 	self.auto_name		= utils.cfg_get_bool(task_ini, id, "auto_name", nil, false, true)
@@ -110,14 +108,14 @@ function CGeneralTask:__init(task_ini, id, type)
 	self.actor_helped = false
 end
 
-function CGeneralTask.get_task_difficult_icon()
+function CGeneralTask.get_task_difficult_icon(difficult)
 	local icon_name = nil
 	
-	if task_difficult == "easy" then
+	if difficult == "easy" then
 		icon_name = "task_icon_easy"
-	elseif task_difficult == "normal" then
+	elseif difficult == "normal" then
 		icon_name = "task_icon_normal"
-	elseif task_difficult == "hard" then
+	elseif difficult == "hard" then
 		icon_name = "task_icon_hard"
 	else
 		icon_name = "none"
@@ -184,9 +182,9 @@ function CGeneralTask:give_task(community)
 
 	t:set_icon_name(self.icon)
 
-	--if task_difficult ~= nil then
-	--	t:set_difficult_icon_name(CGeneralTask.get_task_difficult_icon())
-	--end
+	if self.task_difficult ~= "none" then
+		t:set_difficult_icon_name(CGeneralTask.get_task_difficult_icon(self.task_difficult))
+	end
 	
 	if (type=="take_reward") then
 		t:set_description("")
@@ -1379,9 +1377,6 @@ function CStorylineTask:get_inited_task(obj, faction, entity_id)
 		local sid = tonumber(self.target_story_ids)
 		if(sid) then
 			self.target = id_by_sid(sid)
-			if not(self.target) then
-				abort("Target for storyline task doesnt exist. Story id [%s]", tostring(self.target_story_ids))
-			end
 		else
 			local gulag = nil
 			local param1, param2 = utils.parse_target(self.target_story_ids)
@@ -1392,8 +1387,6 @@ function CStorylineTask:get_inited_task(obj, faction, entity_id)
 			end
 			if(gulag~=nil and self.target ~=nil) then
 				self.target = gulag:idNPCOnJob(param1)
-			else
-				abort("Target job is nil.")
 			end
 		end
 --[[
@@ -1407,9 +1400,6 @@ function CStorylineTask:get_inited_task(obj, faction, entity_id)
 	end
 	self.target = self.target.id
 ]]
-	if self.target == nil then
-		abort("wrong target for storyline quest: %s", tostring(self.target_story_ids))
-	end
 	self.entity_id = entity_id
 	return self
 end
@@ -2221,7 +2211,7 @@ function CHideFromSurgeTask:check_task(tm)
 		end
 	end
 
-	function blowout_hit_with_pp_and_cam_effectors(blowout_hit, cam_effector_id, pp_effector_id)
+	--[[function blowout_hit_with_pp_and_cam_effectors(blowout_hit, cam_effector_id, pp_effector_id)
 		xr_sound.set_sound_play(db.actor:id(), blowout_hit)
 		level.add_cam_effector("camera_effects\\shell_shock.anm", cam_effector_id, false, "")
 		level.add_pp_effector("snd_shock.ppe", pp_effector_id, false)
@@ -2233,7 +2223,7 @@ function CHideFromSurgeTask:check_task(tm)
 		xr_surge_hide.start_surge = false
 		xr_surge_hide.phase = 0
 		xr_surge_hide.surge_activated = false
-	end
+	end]]--
 
 	if(self.t==nil) then
 		self.t = db.actor and db.actor:get_task(tostring(self.entity_id), false) -- "true" used to search only for not finished tasks
@@ -2272,7 +2262,7 @@ function CHideFromSurgeTask:check_task(tm)
 			end
 		-- звук начала выброса -------------------------------------------------------------------------
 		-- для катсцены на болотах ---------------------------------------------------------------------
-			if (diff_sec>=47) and (self.mSteps['wImpact']==nil) and (level.name()=="marsh") then
+			if (diff_sec>=47) and (self.mSteps['wImpact']==nil) and (level.name()=="marsh") and not has_alife_info("mar_tutorial_returned_to_base") then
 				if (rnd_sound % 2) ~= 0 then
 					self:play_blowout_sound("impact01")
 				else
@@ -2280,10 +2270,10 @@ function CHideFromSurgeTask:check_task(tm)
 				end
 				xr_effects.disable_ui(nil, nil)
 				level.add_cam_effector("camera_effects\\shell_shock.anm", 20080501, false, "")
-				level.add_pp_effector("snd_shock.ppe", 20080401, false)
-				level.set_pp_effector_factor(20080401, 0, 1)
+				level.add_pp_effector("snd_shock.ppe", surge_shock_pp_eff, false)
+				level.set_pp_effector_factor(surge_shock_pp_eff, 0, 1)
 				level.add_pp_effector("mar_surge.ppe", 200211, false)
-				--level.remove_pp_effector(surge_shock_pp_eff)
+				level.remove_pp_effector(surge_shock_pp_eff)
 				level.remove_cam_effector(earthquake_cam_eff)
 				xr_sound.stop_sound_looped(db.actor:id(), "blowout_rumble")
 				xr_sound.stop_sound_looped(db.actor:id(), "surge_earthquake_sound_looped")
@@ -2297,8 +2287,8 @@ function CHideFromSurgeTask:check_task(tm)
 					self:play_blowout_sound("impact02")
 				end
 				level.add_cam_effector("camera_effects\\shell_shock.anm", 20080501, false, "")
-				level.add_pp_effector("snd_shock.ppe", 20080401, false)
-				level.set_pp_effector_factor(20080401, 0, 1)
+				level.add_pp_effector("snd_shock.ppe", surge_shock_pp_eff, false)
+				level.set_pp_effector_factor(surge_shock_pp_eff, 0, 1)
 				self.mSteps['wImpact']=true
 				--news_manager.send_tip(db.actor, "Звук начала выброса", 0, "help_play", 5000)
 			end
@@ -2350,10 +2340,10 @@ function CHideFromSurgeTask:check_task(tm)
 			end
 			-- стоп звуков --------------------------------------------------------------------------------------------------
 			if (diff_sec>=215) and (self.mSteps['wRumble']==true) and (self.blowout_sound) and not(self.kill_em_all) then
-				--level.remove_pp_effector(surge_shock_pp_eff)
+				level.remove_pp_effector(surge_shock_pp_eff)
 				level.remove_cam_effector(earthquake_cam_eff)
-				--xr_sound.stop_sound_looped(db.actor:id(), "blowout_rumble")
-				--xr_sound.stop_sound_looped(db.actor:id(), "surge_earthquake_sound_looped")
+				xr_sound.stop_sound_looped(db.actor:id(), "blowout_rumble")
+				xr_sound.stop_sound_looped(db.actor:id(), "surge_earthquake_sound_looped")
 				self.mSteps['wRumble']=false
 				--news_manager.send_tip(db.actor, "Стоп звуков", 0, "help_play", 5000)
 			end
@@ -2381,13 +2371,13 @@ function CHideFromSurgeTask:check_task(tm)
 		xr_surge_hide.start_surge = false
 		xr_surge_hide.phase = 0
 		xr_surge_hide.surge_activated = false
-		--if(self.blowout_sound) then
-		--	xr_sound.stop_sound_looped(db.actor:id(), "blowout_rumble")
-		--end
-		--if(self.second_message_given) then
-		--	xr_sound.stop_sound_looped(db.actor:id(), "surge_earthquake_sound_looped")
-		--end
-		--level.remove_pp_effector(surge_shock_pp_eff)
+		if(self.blowout_sound) then
+			xr_sound.stop_sound_looped(db.actor:id(), "blowout_rumble")
+		end
+		if(self.second_message_given) then
+			xr_sound.stop_sound_looped(db.actor:id(), "surge_earthquake_sound_looped")
+		end
+		level.remove_pp_effector(surge_shock_pp_eff)
 		level.remove_cam_effector(earthquake_cam_eff)
 		self.effector_set 			= false
 		self.second_message_given 	= false

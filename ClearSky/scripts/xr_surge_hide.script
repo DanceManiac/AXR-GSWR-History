@@ -215,8 +215,6 @@ function get_dest_vertex(npc, pp, pos_tbl, npc_pos)
 	 	if(dest_vertex==4294967295) or (dest_vertex==4294967296) then
 	 		if radius >= 1 then
 	 			radius = radius - 0.5
-			else
-				abort("Invalid AI map at kamp[surge_hide] point [%s]", self.path_walk)
 	 		end
 	 	end
  	end
@@ -420,12 +418,8 @@ function surge_can_be_started(level)
 end
 
 function update()
-    if last_surge_hour > 23 then
-        last_surge_hour = last_surge_hour - 24
-    end
-	
 	if has_alife_info("mar_tutorial_returned_to_base") and not surge_activated then
-		if level.get_time_hours()>=last_surge_hour+surge_freq then
+		if not level.name()=="agroprom_underground" and not level.name()=="limansk" and not level.name()=="stancia_2" then
 			activate_surge(1)
 		end
 	end

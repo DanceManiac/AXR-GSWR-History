@@ -39,7 +39,10 @@ float4 main(p_volume I, float4 pos2d : SV_Position ) : SV_Target
 	// Fix Flora ilumination ( Align normal to light )
 #ifdef SSFX_FLORAFIX
 	if(abs(m - MAT_FLORA) <= 0.05)
+	{
 		_N.rgb = -normalize(_P - Ldynamic_pos.xyz);
+		_C.w *= 0.3f;
+	}
 #endif
 
 	// ----- light-model
@@ -47,7 +50,15 @@ float4 main(p_volume I, float4 pos2d : SV_Position ) : SV_Target
 	float4      		light = plight_local(m, _P, _N, _C, Ldynamic_pos, Ldynamic_pos.w, rsqr );
 
 	// ----- shadow
-	float4        		P4 = float4(_P.x, _P.y, _P.z, 1);
+	float3 Offset = 0;
+	
+#ifdef SSFX_SHADOWS
+	// Biasing ( Use the nDotL from plight_local... )
+	float bias_int = (1.0 - saturate(dot(_N, -normalize(_P - Ldynamic_pos.xyz)))) * rsqr * Ldynamic_pos.w;
+	Offset = _N * (0.025f + bias_int * ssfx_shadow_bias.x);
+#endif
+
+	float4 				P4 = float4(_P.xyz + Offset, 1);
 	float4       		PS = mul(m_shadow, P4 );
 	float s = 1.h;
 	#ifdef  USE_SHADOW
@@ -63,10 +74,15 @@ float4 main(p_volume I, float4 pos2d : SV_Position ) : SV_Target
 			#endif
 
 			//	Can use linear with mip point
-			lightmap = s_lmap.SampleLevel(smp_rtlinear, PS.xy / PS.w, 0 );        //
+			
+			#ifdef SSFX_FLORAFIX
+				lightmap = s_lmap.SampleLevel(smp_rtlinear, PS.xy / PS.w, 0 );        //
+			#else
+				lightmap = s_lmap.Sample( smp_rtlinear, PS.xy / PS.w );        //
+			#endif
 	#endif
 
-#ifdef SSFX_ENHANCED_SHADERS
+#if defined(ENCHANTED_SHADERS_ENABLED) && defined(SSFX_FLORAFIX)
 		return  float4(SRGBToLinear(Ldynamic_color.rgb * lightmap.rgb * s.xxx),1) * light;
 #else
 		return  float4( Ldynamic_color * light * s * lightmap);
