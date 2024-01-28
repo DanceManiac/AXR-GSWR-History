@@ -29,6 +29,20 @@ holder_fov_modifier		= 0.7              ; во сколько раз увеличивается eye_fov
 tri_state_reload			= on
 
 cost					 	= 1250
+
+misfire_probability        = 0.005 ;вероятность осечки при максимальном износе  !!!old - now not working
+;изношенность, при которой появляется шанс осечки
+misfire_start_condition		= 0.6
+;изношеность при которой шанс осечки становится константным
+misfire_end_condition		= 0.1
+;шанс осечки при изношености больше чем misfireStartCondition
+misfire_start_prob	     	= 0
+;шанс осечки при изношености больше чем misfireEndCondition
+misfire_end_prob	     	= 0
+;увеличение изношености при одиночном выстреле
+condition_shot_dec      	= 0.003
+;увеличение изношености при выстреле очередью
+condition_queue_shot_dec	= 0.0035
 weapon_class			 	= shotgun
 
 
@@ -65,9 +79,6 @@ zoom_cam_max_angle_horz		= 10.0
 zoom_cam_step_angle_horz	= 3.0
 
 fire_dispersion_condition_factor = 10	;увеличение дисперсии в процентах при максимальном износе
-misfire_probability 		= 0.0	    ;вероятность осечки при максимальном износе
-misfire_condition_k			= 0.0
-condition_shot_dec 			= 0.0005	;увеличение износа при каждом выстреле
 ;-------------------------------------------------------------------------------
 
 position                 	= -0.024, -0.097, 0.
@@ -154,10 +165,11 @@ scope_zoom_factor	    	= 55
 ;звуки
 snd_draw					= weapons\generic_draw
 snd_holster					= weapons\generic_holster
-snd_shoot					= weapons\n_spas12_shot
+snd_shoot					= snd_shoot_spas12
+snd_shoot_actor         	= weapons\n_spas12_shot
 snd_empty					= weapons\generic_empty
 snd_reload					= weapons\spas12_reload_end
-snd_shoot_duplet			= weapons\n_spas12_shot
+snd_shoot_duplet			= snd_shoot_spas12
 
 snd_open_weapon            = weapons\draw_silent
 snd_add_cartridge			= weapons\spas12_reload
@@ -195,6 +207,12 @@ aim_hud_offset_pos_16x9				= -0.100500,0.115500,0.000000
 aim_hud_offset_rot_16x9				= 0.067500,0.022500,-0.017500
 ;aim_hud_offset_pos_16x9				= -0.044000,0.077000,0.000000
 ;aim_hud_offset_rot_16x9				= 0.032500,0.002500,0.000000
+
+hud_collision_enabled			= true
+hud_collision_offset_pos		= 0,-0.25,0
+hud_collision_offset_pos_16x9		= 0,-0.25,0
+hud_collision_offset_rot		= -0.8,0,0
+hud_collision_offset_rot_16x9		= -0.8,0,0
 
 anm_show			= winchester1300_draw
 anm_hide			= winchester1300_holster

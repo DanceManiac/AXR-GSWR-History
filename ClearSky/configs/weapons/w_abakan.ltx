@@ -36,8 +36,23 @@ cost				= 6000            ; the price of the item
 weapon_class        = assault_rifle      ; the type of the box that will be used in buy-menu in multiplayer mode
 
 ammo_limit			= 210          ; obsolete
+base_dispersioned_bullets_count	= 2           	;количество пуль, выстреленных с базовой дисперсией без отдачи
+base_dispersioned_bullets_speed	= 600          ;начальная скорость пуль, выстреленных с базовой дисперсией без отдачи
 ammo_elapsed        = 30           ; obsolete
-ammo_elapsed       	= 30
+
+misfire_probability        = 0.005 ;вероятность осечки при максимальном износе  !!!old - now not working
+;изношенность, при которой появляется шанс осечки
+misfire_start_condition		= 0.6
+;изношеность при которой шанс осечки становится константным
+misfire_end_condition		= 0.1
+;шанс осечки при изношености больше чем misfireStartCondition
+misfire_start_prob	     	= 0.0037
+;шанс осечки при изношености больше чем misfireEndCondition
+misfire_end_prob	     	= 0.05
+;увеличение изношености при одиночном выстреле
+condition_shot_dec      	= 0.0012
+;увеличение изношености при выстреле очередью
+condition_queue_shot_dec	= 0.0013
 
 ammo_mag_size        = 30           ; clip (magazine) size
 fire_modes           = 1, 2, -1
@@ -90,8 +105,6 @@ zoom_cam_max_angle_horz      = 5.0
 zoom_cam_step_angle_horz     = 0.5
 
 fire_dispersion_condition_factor = 15        ;увеличение дисперсии в процентах при максимальном износе
-misfire_probability        = 0.005 ;вероятность осечки при максимальном износе
-condition_shot_dec         = 0.0002 ;увеличение износа при каждом вvстреле
 ;-------------------------------------------------------------------------------
 
 
@@ -181,7 +194,8 @@ grenade_launcher_y         = 24
 ;звуки
 snd_draw                = weapons\ak74_draw
 snd_holster             = weapons\generic_holster
-snd_shoot               = weapons\n_abakan_shot
+snd_shoot               = snd_shoot_abakan
+snd_shoot_actor         = weapons\n_abakan_shot
 
 snd_empty               = weapons\gen_empty, 0.5
 snd_reload              = weapons\groza_reload, 0.7
@@ -189,7 +203,6 @@ snd_shoot_grenade       = weapons\gen_grenshoot
 snd_reload_grenade      = weapons\gen_grenload, 1.0, 0.8
 snd_switch              = weapons\groza_switch, 1.0, 0.5
 snd_bore		= weapons\abakan_bore, 0.7
-
 
 ;настройки для глушителя
 silencer_hit_power      = 0.55, 0.55, 0.55, 0.55
@@ -281,6 +294,12 @@ gl_hud_offset_rot_16x9    	= 0,0,0;0.052500,0.045000,-0.010000
 
 lean_hud_offset_pos        = 0,0,0
 lean_hud_offset_rot        = 0,0,0
+
+hud_collision_enabled			= true
+hud_collision_offset_pos		= 0,-0.5,0
+hud_collision_offset_pos_16x9		= 0,-0.5,0
+hud_collision_offset_rot		= -0.8,0,0
+hud_collision_offset_rot_16x9		= -0.8,0,0
 
 ;-----------------------------------------------------------------------------
 ; Уникальнvе

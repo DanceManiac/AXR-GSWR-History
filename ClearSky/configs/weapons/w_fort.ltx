@@ -31,6 +31,20 @@ cost					= 600
 
 ammo_limit		 		= 120
 ammo_current		 	= 90
+
+misfire_probability        = 0.005 ;вероятность осечки при максимальном износе  !!!old - now not working
+;изношенность, при которой появляется шанс осечки
+misfire_start_condition		= 0.6
+;изношеность при которой шанс осечки становится константным
+misfire_end_condition		= 0.1
+;шанс осечки при изношености больше чем misfireStartCondition
+misfire_start_prob	     	= 0.0075
+;шанс осечки при изношености больше чем misfireEndCondition
+misfire_end_prob	     	= 0.075
+;увеличение изношености при одиночном выстреле
+condition_shot_dec      	= 0.0036
+;увеличение изношености при выстреле очередью
+condition_queue_shot_dec	= 0.0036
 ammo_elapsed		 	= 12
 
 ammo_mag_size		 	= 12
@@ -74,8 +88,6 @@ cam_max_angle_horz		= 5.0	;(degree) maximum shot horizontal degree
 cam_step_angle_horz		= 1.0	;(degree) size of step camera moved in horizontal position while shooting
 
 fire_dispersion_condition_factor = 5	;увеличение дисперсии в процентах при максимальном износе
-misfire_probability 		= 0.025	;вероятность осечки при максимальном износе
-condition_shot_dec 			= 0.0008 ;увеличение износа при каждом выстреле
 
 ;-------------------------------------------------------------------------------
 ; ttc
@@ -154,7 +166,8 @@ scope_zoom_factor	    		= 55
 ;звуки
 snd_draw							= weapons\fort_draw
 snd_holster						= weapons\generic_holster
-snd_shoot						= weapons\n_fort_shot
+snd_shoot						= snd_shoot_fort
+snd_shoot_actor         		= weapons\n_fort_shot
 snd_empty						= weapons\pistol_empty
 snd_reload						= weapons\pistol_reload, 0.8
 snd_close						= weapons\generic_close
@@ -248,6 +261,12 @@ lean_hud_offset_rot			= 0,0,0
 
 aim_hud_offset_pos_16x9				= -0.108000,0.066500,0.000000
 aim_hud_offset_rot_16x9				= 0.035000,0.040000,0.010000
+
+hud_collision_enabled			= true
+hud_collision_offset_pos		= 0,-0.5,0
+hud_collision_offset_pos_16x9		= 0,-0.5,0
+hud_collision_offset_rot		= -0.8,0,0
+hud_collision_offset_rot_16x9		= -0.8,0,0
 
 ;-----------------------------------------------------------------------------
 ; Уникальные

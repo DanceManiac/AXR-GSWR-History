@@ -45,7 +45,6 @@
 #include "mp\teamdeathmatch_game.ltx"
 #include "mp\artefacthunt_game.ltx"
 #include "mp\capturetheartefact_game.ltx"
-#include "mp\anticheat_active_params.ltx"
 
 #include "evaluation.ltx"
 #include "fonts.ltx"
@@ -64,6 +63,10 @@
 #include "localization.ltx"
 
 #include "smart_cover.ltx"
+
+; M.F.S. Team
+#include "misc\backpacks.ltx"
+#include "misc\sound_layers.ltx"
 
 [zone_pick_dof]
 near 	= -70.0
@@ -110,8 +113,8 @@ take_dist   = 2
 max_weight    = 50
 max_ruck    = 56
 max_belt    = 5 ;16
-slots     = 11
-slots_count   = 12
+slots     = 14
+slots_count   = 15
 
 slot_persistent_1  	= true   ;knife
 slot_active_1  		= true
@@ -135,13 +138,13 @@ slot_persistent_7  	= false  ;outfit
 slot_active_7  		= false
 
 slot_persistent_8  	= true   ;pda
-slot_active_8  		= false
+slot_active_8  		= true
 
 slot_persistent_9  	= true   ;detector
 slot_active_9  		= false
 
 slot_persistent_10  	= true  ;torch
-slot_active_10  	= fasle
+slot_active_10  	= false
 
 slot_persistent_11  	= false ;artefact
 slot_active_11  	= true
@@ -149,6 +152,15 @@ slot_active_11  	= true
 slot_persistent_12  	= false ;flare
 slot_active_12  	= false
 
+slot_persistent_13  	= false ;backpack
+
+slot_active_13      	= false
+
+slot_persistent_14  	= false ;dosimeter
+slot_active_14      	= false
+
+slot_persistent_15  	= false ;pants
+slot_active_15      	= false
 
 [lights_hanging_lamp]
 GroupControlSection = spawn_group
@@ -395,7 +407,6 @@ GroupControlSection =
 $spawn      = "ai\level changer"
 ;$prefetch    = 4
 class     = LVL_CHNG
-script_binding  = bind_level_changer.bind
 
 shape_transp_color    = 255, 255, 255, 100
 shape_edge_color    = 32, 32, 32, 255
@@ -460,7 +471,8 @@ snd_new_contact         = detectors\contact_1
 snd_new_contact1        = detectors\contact_8
 
 [hud_sound]
-hud_sound_vol_k		= 0.85f
+hud_sound_vol_k			= 0.85
+hud_step_sound_vol_k 	= 0.21
 
 [attachable_item]
 GroupControlSection   = spawn_group
@@ -565,6 +577,13 @@ satiety         = 0.5
 radiation       = 0.1
 weapon_jammed     = 0.9
 psy_health        = 0.5
+thirst		= 0.5
+intoxication	= 0.1
+sleepeness	= 0.5
+alcoholism	= 0.0
+hangover	= 1.0
+narcotism	= 0.0
+withdrawal	= 1.0
 
 [squad_manager]
 schedule_min      =   1

@@ -8,25 +8,27 @@
 //	Used for RGBA texture too ?!
 Texture2D	s_smap : register(ps,t0);		// 2D/cube shadowmap
 
-Texture2D<float>	s_smap_minmax;		// 2D/cube shadowmap
+Texture2D<float> s_smap_minmax;		// 2D/cube shadowmap
 #include "gather.ps"
 
-SamplerComparisonState		smp_smap;	//	Special comare sampler
-sampler		smp_jitter;
+SamplerComparisonState smp_smap;	//	Special comare sampler
+sampler smp_jitter;
 
-Texture2D	jitter0;
-Texture2D	jitter1;
-//uniform sampler2D	jitter2;
-//uniform sampler2D	jitter3;
-//uniform float4 		jitterS;
-
-Texture2D	jitterMipped;
+uniform float4 ssfx_shadow_bias;
+Texture2D jitter0;
+Texture2D jitter1;
+Texture2D jitterMipped;
 
 #ifndef USE_ULTRA_SHADOWS
-#define	KERNEL	0.6f
+	#define	KERNEL	0.6f
 #else
-#define	KERNEL	1.0f
+	#define	KERNEL	1.0f
 #endif
+
+#define PCSS_PIXEL int(4)
+#define PCSS_STEP int(2)
+#define PCSS_PIXEL_MIN float(1.0)
+#define PCSS_SUN_WIDTH float(150.0)
 
 float modify_light( float light )
 {
@@ -40,8 +42,6 @@ float sample_hw_pcf (float4 tc,float4 shift)
 {
 	static const float 	ts = KERNEL / float(SMAP_size);
 
-//	return tex2Dproj( s_smap, tc + tc.w * shift * ts ).x;
-	
 	tc.xyz 	/= tc.w;
 	tc.xy 	+= shift.xy * ts;
 
@@ -56,126 +56,6 @@ float shadow_hw( float4 tc )
   	float	s3		= sample_hw_pcf( tc, float4( +1, +1, 0, 0) );
 
 	return	(s0+s1+s2+s3)/4.h;
-}
-
-
-#ifdef SM_4_1
-
-float pcf( float4 s, float2 fc, float z ) 
-{
-  return ( lerp( lerp( (z) <= (s).w, (z) <= (s).z, (fc).x ), lerp( (z) <= (s).x, (z) <= (s).y, (fc).x ), (fc).y ) );
-}
-
-float dx10_1_hw_hq_7x7( float3 tc )
-{
-   float s;
-   float z = tc.z;
-
-   static const float scale = float( SMAP_size );
-   float2 fc = frac( tc.xy * scale );
-
-   float4 s_3_0, s_1_0, s1_0, s3_0;
-   float4 s_3_1, s_1_1, s1_1, s3_1;
-
-   // row -3
-   s_3_0 = s_smap.Gather( smp_nofilter, tc, int2( -3, -3 ) ); 
-   s_1_0 = s_smap.Gather( smp_nofilter, tc, int2( -1, -3 ) );
-   s1_0  = s_smap.Gather( smp_nofilter, tc, int2(  1, -3 ) ); 
-   s3_0  = s_smap.Gather( smp_nofilter, tc, int2(  3, -3 ) );
-   
-   s  = pcf( s_3_0, fc, z ) + 
-	pcf( s_1_0, fc, z ) + 
-	pcf( s1_0, fc, z ) + 
-	pcf( s3_0, fc, z ) + 
-        pcf( float4( s_3_0.y, s_1_0.xw, s_3_0.z ), fc, z ) + 
-        pcf( float4( s_1_0.y, s1_0.xw,  s_1_0.z ), fc, z ) + 
-        pcf( float4( s1_0.y,  s3_0.xw,  s1_0.z ), fc, z );
-
-   // row -2
-   s_3_1 = s_smap.Gather( smp_nofilter, tc, int2( -3, -1 ) ); 
-   s_1_1 = s_smap.Gather( smp_nofilter, tc, int2( -1, -1 ) );
-   s1_1  = s_smap.Gather( smp_nofilter, tc, int2(  1, -1 ) ); 
-   s3_1  = s_smap.Gather( smp_nofilter, tc, int2(  3, -1 ) );
-   s += pcf( float4( s_3_1.wz, s_3_0.yx ), fc, z ) + 
-        pcf( float4( s_3_1.z, s_1_1.w, s_1_0.x, s_3_0.y ), fc, z ) + 
-        pcf( float4( s_1_1.wz, s_1_0.yx ), fc, z ) + 
-        pcf( float4( s_1_1.z, s1_1.w, s1_0.x, s_1_0.y ), fc, z ) + 
-        pcf( float4( s1_1.wz, s1_0.yx ), fc, z ) + 
-        pcf( float4( s1_1.z, s3_1.w, s3_0.x, s1_0.y ), fc, z ) +
-	pcf( float4( s3_1.wz, s3_0.yx ), fc, z );
-
-   // row -1
-   s_3_0 = s_3_1; s_1_0 = s_1_1; s1_0 = s1_1; s3_0 = s3_1;
-   s += pcf( s_3_0, fc, z ) + 
-	pcf( s_1_0, fc, z ) + 
-	pcf( s1_0, fc, z ) + 
-	pcf( s3_0, fc, z ) + 
-        pcf( float4( s_3_0.y, s_1_0.xw, s_3_0.z ), fc, z ) + 
-        pcf( float4( s_1_0.y, s1_0.xw,  s_1_0.z ), fc, z ) + 
-        pcf( float4( s1_0.y,  s3_0.xw,  s1_0.z ), fc, z );
-
-   // row 0
-   s_3_1 = s_smap.Gather( smp_nofilter, tc, int2( -3, 1 ) ); 
-   s_1_1 = s_smap.Gather( smp_nofilter, tc, int2( -1, 1 ) );
-   s1_1  = s_smap.Gather( smp_nofilter, tc, int2(  1, 1 ) ); 
-   s3_1  = s_smap.Gather( smp_nofilter, tc, int2(  3, 1 ) );
-   s += pcf( float4( s_3_1.wz, s_3_0.yx ), fc, z ) + 
-        pcf( float4( s_3_1.z, s_1_1.w, s_1_0.x, s_3_0.y ), fc, z ) + 
-        pcf( float4( s_1_1.wz, s_1_0.yx ), fc, z ) + 
-        pcf( float4( s_1_1.z, s1_1.w, s1_0.x, s_1_0.y ), fc, z ) + 
-        pcf( float4( s1_1.wz, s1_0.yx ), fc, z ) + 
-        pcf( float4( s1_1.z, s3_1.w, s3_0.x, s1_0.y ), fc, z ) +
-	pcf( float4( s3_1.wz, s3_0.yx ), fc, z );
-
-   // row 1
-   s_3_0 = s_3_1; s_1_0 = s_1_1; s1_0 = s1_1; s3_0 = s3_1;
-   s += pcf( s_3_0, fc, z ) + 
-	pcf( s_1_0, fc, z ) + 
-	pcf( s1_0, fc, z ) + 
-	pcf( s3_0, fc, z ) + 
-        pcf( float4( s_3_0.y, s_1_0.xw, s_3_0.z ), fc, z ) + 
-        pcf( float4( s_1_0.y, s1_0.xw,  s_1_0.z ), fc, z ) + 
-        pcf( float4( s1_0.y,  s3_0.xw,  s1_0.z ), fc, z );
-
-   // row 2
-   s_3_1 = s_smap.Gather( smp_nofilter, tc, int2( -3, 3 ) ); 
-   s_1_1 = s_smap.Gather( smp_nofilter, tc, int2( -1, 3 ) );
-   s1_1  = s_smap.Gather( smp_nofilter, tc, int2(  1, 3 ) ); 
-   s3_1  = s_smap.Gather( smp_nofilter, tc, int2(  3, 3 ) );
-   s += pcf( float4( s_3_1.wz, s_3_0.yx ), fc, z ) + 
-        pcf( float4( s_3_1.z, s_1_1.w, s_1_0.x, s_3_0.y ), fc, z ) + 
-        pcf( float4( s_1_1.wz, s_1_0.yx ), fc, z ) + 
-        pcf( float4( s_1_1.z, s1_1.w, s1_0.x, s_1_0.y ), fc, z ) + 
-        pcf( float4( s1_1.wz, s1_0.yx ), fc, z ) + 
-        pcf( float4( s1_1.z, s3_1.w, s3_0.x, s1_0.y ), fc, z ) +
-	pcf( float4( s3_1.wz, s3_0.yx ), fc, z );
-
-   // row 3
-   s_3_0 = s_3_1; s_1_0 = s_1_1; s1_0 = s1_1; s3_0 = s3_1;
-   s += pcf( s_3_0, fc, z ) + 
-	pcf( s_1_0, fc, z ) + 
-	pcf( s1_0, fc, z ) + 
-	pcf( s3_0, fc, z ) + 
-        pcf( float4( s_3_0.y, s_1_0.xw, s_3_0.z ), fc, z ) + 
-        pcf( float4( s_1_0.y, s1_0.xw,  s_1_0.z ), fc, z ) + 
-        pcf( float4( s1_0.y,  s3_0.xw,  s1_0.z ), fc, z );
-
-   return s/49.0;
-}
-#endif
-
-float dx10_0_hw_hq_7x7( float4 tc )
-{
-   float s = 0;
-   for( int i = -3; i <= 3; ++i )
-   {
-      for( int j = -3; j <= 3; ++j )
-      {
-         s += sample_hw_pcf( tc, float4( j , i , 0, 0) ); 
-      }
-   }
-
-	return	s/49.0;
 }
 
 
@@ -217,7 +97,166 @@ bool cheap_reject( float3 tc, inout bool full_light )
    }
 }
 
+//Sunshafts
+float shadow_dx10_1_sunshafts( float4 tc, float2 pos2d ) 
+{
+   float3 t         = tc.xyz / tc.w;
+   float minmax     = s_smap_minmax.SampleLevel( smp_nofilter, t, 0 ).x;
+   bool   umbra     = ( ( minmax.x < 0 ) && ( t.z > -minmax.x ) );
+
+   [branch] if( umbra )
+   {
+      return 0.0;
+   }
+   else
+   {
+      return shadow_hw( tc ); 
+   }
+}
 #endif	//	SM_MINMAX
+
+
+
+	//PCSS shadows
+static const float2 poissonDisk[32] = {
+	float2(0.0617981, 0.07294159),
+	float2(0.6470215, 0.7474022),
+	float2(-0.5987766, -0.7512833),
+	float2(-0.693034, 0.6913887),
+	float2(0.6987045, -0.6843052),
+	float2(-0.9402866, 0.04474335),
+	float2(0.8934509, 0.07369385),
+	float2(0.1592735, -0.9686295),
+	float2(-0.05664673, 0.995282),
+	float2(-0.1203411, -0.1301079),
+	float2(0.1741608, -0.1682285),
+	float2(-0.09369049, 0.3196758),
+	float2(0.185363, 0.3213367),
+	float2(-0.1493771, -0.3147511),
+	float2(0.4452095, 0.2580113),
+	float2(-0.1080467, -0.5329178),
+	float2(0.1604507, 0.5460774),
+	float2(-0.4037193, -0.2611179),
+	float2(0.5947998, -0.2146744),
+	float2(0.3276062, 0.9244621),
+	float2(-0.6518704, -0.2503952),
+	float2(-0.3580975, 0.2806469),
+	float2(0.8587891, 0.4838005),
+	float2(-0.1596546, -0.8791054),
+	float2(-0.3096867, 0.5588146),
+	float2(-0.5128918, 0.1448544),
+	float2(0.8581337, -0.424046),
+	float2(0.1562584, -0.5610626),
+	float2(-0.7647934, 0.2709858),
+	float2(-0.3090832, 0.9020988),
+	float2(0.3935608, 0.4609676),
+	float2(0.3929337, -0.5010948),
+};
+
+	//Quality tokens --Fine
+#if !defined(SUN_QUALITY)
+	#define PCSS_NUM_SAMPLES int(1)
+#elif SUN_QUALITY==1
+	#define PCSS_NUM_SAMPLES int(8)
+#elif SUN_QUALITY==2
+	#define PCSS_NUM_SAMPLES int(12)
+#elif SUN_QUALITY==3
+	#define PCSS_NUM_SAMPLES int(20)
+#elif (SUN_QUALITY==4 || SUN_QUALITY==5)
+	#define PCSS_NUM_SAMPLES int(32)
+#endif
+
+float shadow_pcss( float4 tc )
+{
+	// - Small modification to fix flickering and black squares.
+	// - Added a extra performance option with lower SUN_QUALITY settings.
+	// - Extended the blocker search from 3x3 to 4x4 for better results.
+	// https://www.moddb.com/mods/stalker-anomaly/addons/screen-space-shaders/
+
+	tc.xyz /= tc.w;
+
+#if SUN_QUALITY > 3 // Blocker search ( Penumbra ) and filter
+
+	int3 uv = int3(tc.xy * float(SMAP_size), 0);
+	float zBlock = tc.z - 0.0001;
+	float avgBlockerDepth = 0.0;
+	float blockerCount = 0.0;
+
+	[unroll] 
+	for( int row = -PCSS_PIXEL; row <= PCSS_PIXEL; row += PCSS_STEP )
+	{
+		[unroll] 
+		for( int col = -PCSS_PIXEL; col <= PCSS_PIXEL; col += PCSS_STEP )
+		{
+			float shadowMapDepth = s_smap.Load( uv, int2( col, row ) ).x;
+			float b1 = ( shadowMapDepth < zBlock ) ? 1.0 : 0.0;
+			blockerCount += b1;
+			avgBlockerDepth += shadowMapDepth * b1;
+		}
+	}
+
+	if(blockerCount < 1)
+		return 1.0;
+
+	avgBlockerDepth /= blockerCount;
+	float fRatio = saturate( ( ( tc.z - avgBlockerDepth ) * PCSS_SUN_WIDTH ) / avgBlockerDepth );
+	fRatio *= fRatio;
+	fRatio = max(PCSS_PIXEL_MIN, fRatio * float(PCSS_PIXEL)) / float(SMAP_size);
+
+	float s = 0.0;
+	[unroll] 
+	for( uint i = 0; i < PCSS_NUM_SAMPLES; ++i )
+	{
+		float2 offset = poissonDisk[i] * fRatio;
+		s += s_smap.SampleCmpLevelZero( smp_smap, tc.xy + offset, tc.z ).x;
+	}
+	return s / PCSS_NUM_SAMPLES;
+
+#else // No blocker search ( Penumbra ), just filter
+
+	float fRatio = 4.0f / float(SMAP_size);
+
+	float s = 0.0;
+	[unroll] 
+	for( uint i = 0; i < PCSS_NUM_SAMPLES; ++i )
+	{
+		float2 offset = poissonDisk[i] * fRatio;
+		float test = s_smap.SampleCmpLevelZero( smp_smap, tc.xy + offset, tc.z ).x;
+		s += test;
+	}
+	return s / PCSS_NUM_SAMPLES;
+
+#endif
+
+}
+
+//////////////////////////////////////////////////////////////////////////////////////////
+//	D24X8+PCF
+//////////////////////////////////////////////////////////////////////////////////////////
+
+float4 test (float4 tc, float2 offset)
+{
+	tc.xyz 	/= tc.w;
+	tc.xy 	+= offset;
+	return s_smap.SampleCmpLevelZero( smp_smap, tc.xy, tc.z).x;
+}
+
+half 	shadowtest_sun 	(float4 tc, float4 tcJ)			// jittered sampling
+{
+	half4	r;
+	const 	float 	scale 	= (0.7/float(SMAP_size));
+
+	float2 	tc_J	= frac(tc.xy/tc.w*SMAP_size/4.0 )*0.5;
+	float4	J0		= jitter0.Sample(smp_jitter,tc_J)*scale;
+
+	const float k = 0.5/float(SMAP_size);
+	r.x 	= test 	(tc, J0.xy+half2(-k,-k)).x;
+	r.y 	= test 	(tc, J0.wz+half2( k,-k)).y;
+	r.z		= test	(tc,-J0.xy+half2(-k, k)).z;
+	r.w		= test	(tc,-J0.wz+half2( k, k)).x;
+
+	return	dot(r,1.0/4.0);
+}
 
 float shadow_hw_hq( float4 tc )
 {
@@ -234,125 +273,35 @@ float shadow_hw_hq( float4 tc )
    }
    else
    {
-//#ifndef SM_4_1
-      return dx10_0_hw_hq_7x7( tc ); 
-//#else
-//      return dx10_1_hw_hq_7x7( tc.xyz / tc.w ); // does not compiler because of HLSL compiler bug
-///#endif
+      return shadow_pcss(tc);
    }
 #else //	SM_MINMAX
-#ifndef SM_4_1
-   return dx10_0_hw_hq_7x7( tc );
-#else
-   return dx10_1_hw_hq_7x7( tc.xyz / tc.w );
-#endif
+      return shadow_pcss(tc);
 #endif //	SM_MINMAX
 }
 
-//////////////////////////////////////////////////////////////////////////////////////////
-//	D24X8+PCF
-//////////////////////////////////////////////////////////////////////////////////////////
 float shadow( float4 tc ) 
 {
 #ifdef USE_ULTRA_SHADOWS
-	return modify_light( shadow_hw_hq( tc ) ); 
+	#ifdef SM_MINMAX
+		return modify_light( shadow_hw_hq( tc ) ); 
+	#else
+		return shadow_hw_hq( tc ); 
+	#endif
 #else
-	return shadow_hw( tc ); 
+	return shadow_pcss(tc);
 #endif
 }
-
-#ifdef SM_MINMAX
-
-//////////////////////////////////////////////////////////////////////////////////////////
-// hardware + PCF
-//////////////////////////////////////////////////////////////////////////////////////////
-
-float shadow_dx10_1( float4 tc, float2 tcJ, float2 pos2d ) 
-{
-   return shadow( tc ); 
-}
-
-float shadow_dx10_1_sunshafts( float4 tc, float2 pos2d ) 
-{
-   float3 t         = tc.xyz / tc.w;
-   float minmax     = s_smap_minmax.SampleLevel( smp_nofilter, t, 0 ).x;
-   bool   umbra     = ( ( minmax.x < 0 ) && ( t.z > -minmax.x ) );
-
-   [branch] if( umbra )
-   {
-      return 0.0;
-   }
-   else
-   {
-      return shadow_hw( tc ); 
-   }
-}
-
-#endif
-
 
 //////////////////////////////////////////////////////////////////////////////////////////
 // testbed
 
-//uniform sampler2D	jitter0;
-//uniform sampler2D	jitter1;
-float4 	test 		(float4 tc, float2 offset)
-{
-
-//	float4	tcx	= float4 (tc.xy + tc.w*offset, tc.zw);
-//	return 	tex2Dproj (s_smap,tcx);
-
-	tc.xyz 	/= tc.w;
-	tc.xy 	+= offset;
-	return s_smap.SampleCmpLevelZero( smp_smap, tc.xy, tc.z).x;
-}
-
-float 	shadowtest 	(float4 tc, float4 tcJ)				// jittered sampling
+float shadow_rain(float4 tc, float2 tcJ)			// jittered sampling
 {
 	float4	r;
 
-	const 	float 	scale 	= (2.7f/float(SMAP_size));
+	const 	float 	scale 	= (4.0/float(SMAP_size));
 
-//	float4	J0 	= tex2Dproj	(jitter0,tcJ)*scale;
-//	float4	J1 	= tex2Dproj	(jitter1,tcJ)*scale;
-	tcJ.xy		/=	tcJ.w;
-	float4	J0 	= jitter0.Sample( smp_jitter, tcJ )*scale;
-	float4	J1 	= jitter1.Sample( smp_jitter, tcJ )*scale;
-
-		r.x 	= test 	(tc,J0.xy).x;
-		r.y 	= test 	(tc,J0.wz).y;
-		r.z		= test	(tc,J1.xy).z;
-		r.w		= test	(tc,J1.wz).x;
-
-	return	dot(r,1.h/4.h);
-}
-
-float 	shadowtest_sun 	(float4 tc, float2 tcJ)			// jittered sampling
-{
-	float4	r;
-
-//	const 	float 	scale 	= (2.0f/float(SMAP_size));
-	const 	float 	scale 	= (0.7f/float(SMAP_size));
-//	float4	J0 	= tex2D	(jitter0,tcJ)*scale;
-//	float4	J1 	= tex2D	(jitter1,tcJ)*scale;
-	float4	J0 	= jitter0.Sample( smp_jitter, tcJ )*scale;
-	float4	J1 	= jitter1.Sample( smp_jitter, tcJ )*scale;
-
-		r.x 	= test 	(tc,J0.xy).x;
-		r.y 	= test 	(tc,J0.wz).y;
-		r.z		= test	(tc,J1.xy).z;
-		r.w		= test	(tc,J1.wz).x;
-
-	return	dot(r,1.h/4.h);
-}
-
-float 	shadow_rain 	(float4 tc, float2 tcJ)			// jittered sampling
-{
-	float4	r;
-
-	const 	float 	scale 	= (4.0f/float(SMAP_size));
-//	float4	J0 	= jitter0.Sample( smp_jitter, tcJ )*scale;
-//	float4	J1 	= jitter1.Sample( smp_jitter, tcJ )*scale;
 	float4	J0 	= jitter0.Sample( smp_linear, tcJ )*scale;
 	float4	J1 	= jitter1.Sample( smp_linear, tcJ )*scale;
 
@@ -360,15 +309,7 @@ float 	shadow_rain 	(float4 tc, float2 tcJ)			// jittered sampling
 	r.y 	= test 	(tc,J0.wz).y;
 	r.z		= test	(tc,J1.xy).z;
 	r.w		= test	(tc,J1.wz).x;
-
-//	float4	J0 	= jitterMipped.Sample( smp_base, tcJ )*scale;
-
-//	r.x 	= test 	(tc,J0.xy).x;
-//	r.y 	= test 	(tc,J0.wz).y;
-//	r.z		= test	(tc,J0.yz).z;
-//	r.w		= test	(tc,J0.xw).x;
-
-	return	dot(r,1.h/4.h);
+	return	dot(r,1.0/4.0);
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////
@@ -377,11 +318,10 @@ float3x4 m_sunmask;	// ortho-projection
 float sunmask( float4 P )
 {
 	float2 		tc	= mul( m_sunmask, P );		//
-//	return 		tex2D( s_lmap, tc ).w;			// A8 
-	return 		s_lmap.Sample( smp_linear, tc ).w;	// A8 	
+	return 		s_lmap.SampleLevel( smp_linear, tc, 0 ).w;	//Hemi map - ambient occlusion	
 }
 #else
-float sunmask( float4 P ) { return 1.h; }		// 
+float sunmask( float4 P ) { return 1.0; }		// 
 #endif
 //////////////////////////////////////////////////////////////////////////////////////////
 uniform float4x4	m_shadow;

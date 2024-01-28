@@ -18,6 +18,7 @@ uniform sampler2D 	s_distort;
 uniform half4 		e_barrier;	// x=norm(.8f), y=depth(.1f), z=clr
 uniform half4 		e_weights;	// x=norm, y=depth, z=clr
 uniform half4 		e_kernel;	// x=norm, y=depth, z=clr
+uniform half4 		r_color_drag;
 #define	EPSDEPTH	0.001
 //////////////////////////////////////////////////////////////////////////////////////////
 // Pixel
@@ -38,6 +39,7 @@ half4 	main		( v2p I )	: COLOR
 	half3	img	= dof(center);
 	half4 	bloom	= tex2D		(s_bloom, center);
 	
+	if (!isSecondVPActive())
 			img 	= mblur		(center,tex2D(s_position,I.tc0),img.rgb);
 
 #ifdef 	USE_DISTORT
@@ -45,7 +47,12 @@ half4 	main		( v2p I )	: COLOR
 			img		= lerp	(img,blurred,distort.z);
 #endif
 
- 	return 	combine_bloom		(img,bloom);
+ 	float4 final =	combine_bloom		(img,bloom);
+	
+	float luma = dot(final.xyz, LUMINANCE_VECTOR);
+	final.xyz = lerp(final.xyz, luma, -r_color_drag.w) * r_color_drag.xyz;
+	return final;
+	
 }
 /**/
 /*
