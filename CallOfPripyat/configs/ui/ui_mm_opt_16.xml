@@ -4,7 +4,7 @@
 		    <texture>ui_inGame2_opt_background</texture>
 	    </auto_static>
      <auto_static x="253" y="250" width="269" height="176" stretch="1">
-        <texture x="1" y="1" width="335" height="174">ui\ui_actor_options_background</texture>
+        <texture x="1" y="1" width="335" height="174">ui\video_window</texture>
       </auto_static>
       <auto_static x="0" y="0" width="102" height="768" stretch="1">
 		    <texture>ui_inGame2_opt_left_widepanel</texture>
@@ -234,19 +234,8 @@
         </cap_detail_collision>
         <check_detail_collision x="183" y="0" width="35" stretch="1" height="29">
 	        <texture>ui_inGame2_checkbox</texture>
-			<!--options_item entry="r__detail_collision_enabled" group="mm_opt_video_adv"/-->
 			<options_item entry="r4_ss_grass_collision" group="mm_opt_video_adv"/>
         </check_detail_collision>
-		
-        <cap_detail_collision_radius x="65" y="3" width="108" height="24" hint = "ui_mm_detail_collision_radius_hint">
-            <text r="170" g="170" b="170" font="letterica16" align="r" vert_align="c">ui_mm_detail_collision_radius</text>
-        </cap_detail_collision_radius>
-        <track_detail_collision_radius x="182" y="6" width="158" height="16" min="5.0" max="70.0">
-            <options_item entry="r__detail_collision_visible_radius" group="mm_opt_video_adv"/>
-			<output_wnd x="160" y="0" width="20" height="20" format="%.f">
-				<text r="170" g="170" b="170" font="letterica16" align="r" vert_align="c">0</text>
-			</output_wnd>
-        </track_detail_collision_radius>
 		
         <cap_ssr_quality x="65" y="3" width="108" height="24" hint = "ui_mm_ssr_quality_hint">
             <text r="170" g="170" b="170" font="letterica16" align="r" vert_align="c">ui_mm_ssr_quality</text>
@@ -385,6 +374,16 @@
 	        <texture>ui_inGame2_checkbox</texture>
             <options_item entry="r2_sun_details" group="mm_opt_video_adv" depend="vid"/>
         </check_sun_details>
+		
+		<cap_grass_shadow_distance x="65" y="3" width="108" height="24" hint = "ui_mm_grass_shadows_dintance_hint">
+			<text r="170" g="170" b="170" font="letterica16" align="r" vert_align="c">ui_mm_grass_shadows_dintance</text>
+        </cap_grass_shadow_distance>	
+		<track_grass_shadow_distance x="182" y="6" width="158" height="16" min="0.01" max="1.0" step="0.01">
+        <options_item entry="r_grass_shadows_dintance" group="mm_opt_video_adv"/>
+			<output_wnd x="160" y="0" width="20" height="20" format="%.1f">
+				<text r="170" g="170" b="170" font="letterica16" align="r" vert_align="c">0</text>
+			</output_wnd>
+        </track_grass_shadow_distance>
 		
         <cap_r2_aa_mode x="65" y="3" width="108" height="24" hint = "ui_mm_r2_aa_mode_hint">
             <text r="170" g="170" b="170" font="letterica16" align="r" vert_align="c">ui_mm_r2_aa_mode</text>
@@ -536,6 +535,78 @@
             <options_item entry="r2_static_sun" group="mm_opt_video" depend="restart"/>
         </check_r2_static_sun>
 		
+		<cap_screen_space_shaders x="65" y="3" width="108" height="24" hint = "ui_mm_screen_space_shaders_hint">
+            <text r="170" g="170" b="170" font="letterica16" align="r" vert_align="c">ui_mm_screen_space_shaders</text>
+        </cap_screen_space_shaders>
+        <check_screen_space_shaders x="183" y="0" width="35" stretch="1" height="29">
+	        <texture>ui_inGame2_checkbox</texture>
+			<options_item entry="r4_screen_space_shaders" group="mm_opt_video_adv" depend="restart"/>
+        </check_screen_space_shaders>
+		
+		<cap_sss_sky_debanding x="65" y="3" width="108" height="24" hint = "ui_mm_sss_sky_debanding_hint">
+            <text r="170" g="170" b="170" font="letterica16" align="r" vert_align="c">ui_mm_sss_sky_debanding</text>
+        </cap_sss_sky_debanding>
+        <check_sss_sky_debanding x="183" y="0" width="35" stretch="1" height="29">
+	        <texture>ui_inGame2_checkbox</texture>
+			<options_item entry="r4_ss_sky_debanding" group="mm_opt_video_adv" depend="restart"/>
+        </check_sss_sky_debanding>
+		
+		<cap_sss_flora_fix x="65" y="3" width="108" height="24" hint = "ui_mm_sss_flora_fix_hint">
+            <text r="170" g="170" b="170" font="letterica16" align="r" vert_align="c">ui_mm_sss_flora_fix</text>
+        </cap_sss_flora_fix>
+        <check_sss_flora_fix x="183" y="0" width="35" stretch="1" height="29">
+	        <texture>ui_inGame2_checkbox</texture>
+			<options_item entry="r4_ss_flora_fix" group="mm_opt_video_adv" depend="restart"/>
+        </check_sss_flora_fix>
+		
+		<cap_sss_fog x="65" y="3" width="108" height="24" hint = "ui_mm_sss_fog_hint">
+            <text r="170" g="170" b="170" font="letterica16" align="r" vert_align="c">ui_mm_sss_fog</text>
+        </cap_sss_fog>
+        <check_sss_fog x="183" y="0" width="35" stretch="1" height="29">
+	        <texture>ui_inGame2_checkbox</texture>
+			<options_item entry="r4_ss_fog" group="mm_opt_video_adv" depend="restart"/>
+        </check_sss_fog>
+		
+		<cap_sss_indirect_light x="65" y="3" width="108" height="24" hint = "ui_mm_sss_indirect_light_hint">
+            <text r="170" g="170" b="170" font="letterica16" align="r" vert_align="c">ui_mm_sss_indirect_light</text>
+        </cap_sss_indirect_light>
+        <check_sss_indirect_light x="183" y="0" width="35" stretch="1" height="29">
+	        <texture>ui_inGame2_checkbox</texture>
+			<options_item entry="r4_ss_indirect_light" group="mm_opt_video_adv" depend="restart"/>
+        </check_sss_indirect_light>
+		
+		<cap_sss_screen_space_shadows x="65" y="3" width="108" height="24" hint = "ui_mm_sss_screen_space_shadows_hint">
+            <text r="170" g="170" b="170" font="letterica16" align="r" vert_align="c">ui_mm_sss_screen_space_shadows</text>
+        </cap_sss_screen_space_shadows>
+        <check_sss_screen_space_shadows x="183" y="0" width="35" stretch="1" height="29">
+	        <texture>ui_inGame2_checkbox</texture>
+			<options_item entry="r4_screen_space_shadows" group="mm_opt_video_adv" depend="restart"/>
+        </check_sss_screen_space_shadows>
+		
+		<cap_sss_shadows x="65" y="3" width="108" height="24" hint = "ui_mm_sss_shadows_hint">
+            <text r="170" g="170" b="170" font="letterica16" align="r" vert_align="c">ui_mm_sss_shadows</text>
+        </cap_sss_shadows>
+        <check_sss_shadows x="183" y="0" width="35" stretch="1" height="29">
+	        <texture>ui_inGame2_checkbox</texture>
+			<options_item entry="r4_ss_shadows" group="mm_opt_video_adv" depend="restart"/>
+        </check_sss_shadows>
+		
+		<cap_sss_wind x="65" y="3" width="108" height="24" hint = "ui_mm_sss_wind_hint">
+            <text r="170" g="170" b="170" font="letterica16" align="r" vert_align="c">ui_mm_sss_wind</text>
+        </cap_sss_wind>
+        <check_sss_wind x="183" y="0" width="35" stretch="1" height="29">
+	        <texture>ui_inGame2_checkbox</texture>
+			<options_item entry="r4_ss_wind" group="mm_opt_video_adv" depend="restart"/>
+        </check_sss_wind>
+		
+		<cap_enchanted_shaders x="65" y="3" width="108" height="24" hint = "ui_mm_enchanted_shaders_hint">
+            <text r="170" g="170" b="170" font="letterica16" align="r" vert_align="c">ui_mm_enchanted_shaders</text>
+        </cap_enchanted_shaders>
+        <check_enchanted_shaders x="183" y="0" width="35" stretch="1" height="29">
+	        <texture>ui_inGame2_checkbox</texture>
+			<options_item entry="r4_enchanted_shaders" group="mm_opt_video_adv" depend="restart"/>
+        </check_enchanted_shaders>
+		
         <cap_es_pseudo_pbr x="65" y="3" width="108" height="24" hint = "ui_mm_r4_es_pseudo_pbr_hint">
             <text r="170" g="170" b="170" font="letterica16" align="r" vert_align="c">ui_mm_r4_es_pseudo_pbr</text>
         </cap_es_pseudo_pbr>
@@ -626,7 +697,7 @@
         <cap_particles_distance x="65" y="3" width="108" height="24" hint = "ui_mm_particles_distance_hint">
             <text r="170" g="170" b="170" font="letterica16" align="r" vert_align="c">ui_mm_sun_quality</text>
         </cap_particles_distance>
-        <track_particles_distance x="182" y="6" width="158" height="16" min="0.5" max="1.0" step="0.1">
+        <track_particles_distance x="182" y="6" width="158" height="16" min="0.5" max="3.0" step="0.1">
             <options_item entry="r2_ls_squality" group="mm_opt_video_adv"/>
 				<output_wnd x="160" y="0" width="20" height="20" format="%.1f">
 					<text r="170" g="170" b="170" font="letterica16" align="r" vert_align="c">0</text>
@@ -749,7 +820,7 @@
         <cap_optimize_static_geom x="65" y="3" width="108" height="24" hint = "ui_mm_optimize_static_geom_hint">
             <text r="170" g="170" b="170" font="letterica16" align="r" vert_align="c">ui_mm_optimize_static_geom</text>
         </cap_optimize_static_geom>
-        <track_optimize_static_geom x="182" y="6" width="158" height="16" min="0" max="4" step="1" is_integer="1">
+        <track_optimize_static_geom x="182" y="6" width="158" height="16" min="0" max="2" step="1" is_integer="1">
             <options_item entry="r__optimize_static_geom" group="mm_opt_video_adv"/>
 			<output_wnd x="160" y="0" width="20" height="20" format="%d">
 				<text r="170" g="170" b="170" font="letterica16" align="r" vert_align="c">0</text>
@@ -807,7 +878,7 @@
         <cap_dynamic_wet_surfaces_far x="65" y="3" width="108" height="24" hint = "ui_mm_dynamic_wet_surfaces_far_hint">
             <text r="170" g="170" b="170" font="letterica16" align="r" vert_align="c">ui_mm_dynamic_wet_surfaces_far</text>
         </cap_dynamic_wet_surfaces_far>
-        <track_dynamic_wet_surfaces_far x="182" y="6" width="158" height="16" min="30.0" max="100.0">
+        <track_dynamic_wet_surfaces_far x="182" y="6" width="158" height="16" min="30.0" max="300.0">
             <options_item entry="r3_dynamic_wet_surfaces_far" group="mm_opt_video_adv"/>
 			<output_wnd x="160" y="0" width="20" height="20" format="%.f">
 				<text r="170" g="170" b="170" font="letterica16" align="r" vert_align="c">0</text>
@@ -1081,10 +1152,16 @@
         <track_mousesens x="140" y="6" width="188" height="16" step="0.01">
             <options_item entry="mouse_sens" group="mm_opt_controls"/>
         </track_mousesens>
-        <cap_check_mouseinvert x="12" y="33" width="108" height="24">
+		<cap_svp_mousesens x="12" y="23" width="108" height="24">
+            <text r="170" g="170" b="170" font="letterica16" align="r" vert_align="c">ui_mm_svp_mouse_sense</text>
+        </cap_svp_mousesens>
+        <track_svp_mousesens x="140" y="26" width="188" height="16" step="0.01">
+            <options_item entry="svp_mouse_sens" group="mm_opt_controls"/>
+        </track_svp_mousesens>
+        <cap_check_mouseinvert x="12" y="43" width="108" height="24">
             <text r="170" g="170" b="170" font="letterica16" align="r" vert_align="c">ui_mm_invert_mouse</text>
         </cap_check_mouseinvert>
-        <check_mouseinvert x="129" y="30" width="35" stretch="1" height="29">
+        <check_mouseinvert x="129" y="40" width="35" stretch="1" height="29">
 	        <texture>ui_inGame2_checkbox</texture>
             <options_item entry="mouse_invert" group="mm_opt_controls"/>
         </check_mouseinvert>

@@ -28,6 +28,7 @@ function register(object_factory)
 	cs_register	(object_factory, "smart_cover_object",			"se_smart_cover.se_smart_cover",		"SMRT_C_S", 		"smartcover_s")
 	cs_register	(object_factory, "CDestroyablePhysicsObject", 	"se_item.se_physic", 					"O_DSTR_S", 		"destrphys_s")
 	cs_register	(object_factory, "hanging_lamp", 				"se_item.se_lamp", 						"SO_HLAMP", 		"hlamp_s")
+	cs_register (object_factory, "CCar", 						"se_car.se_car", 						"SCRPTCAR", 		"car_s")
 
 	-- ARTEFACTS --------------------------------------------------------------------------------------------------------------------------
 
@@ -63,13 +64,15 @@ function register(object_factory)
 	cs_register	(object_factory, "CScope",						"se_item.se_item",						"WP_SCOPE",			"wpn_scope_s")
 	cs_register	(object_factory, "CSilencer",	  				"se_item.se_item",						"WP_SILEN",			"wpn_silencer_s")
 	cs_register	(object_factory, "CGrenadeLauncher",			"se_item.se_item",						"WP_GLAUN",			"wpn_grenade_launcher_s")
+	cs_register	(object_factory, "CLaserDesignator",	  		"se_item.se_item",						"WP_LASER",			"wpn_laser_designator_s")
+	cs_register	(object_factory, "CTacticalTorch",	  			"se_item.se_item",						"WP_TORCH",			"wpn_tactical_torch_s")
 	cs_register	(object_factory, "CDetectorAnomaly",          	"se_item.se_detector",					"DET_ANOM",			"device_detector_anomaly_s")
 
 	-- OUTFITS ----------------------------------------------------------------------------------------------------------------------------
 
 	cs_register	(object_factory, "CStalkerOutfit",  			"se_item.se_outfit",					"E_STLK",			"equ_stalker_s")
 	cs_register	(object_factory, "CHelmet",  					"se_item.se_helmet",					"E_HLMET",			"equ_helmet_s")
-	cs_register	(object_factory, "CBackpack",  					"se_item.se_item",						"E_BKPK",			"equ_backpack_s")
+	cs_register	(object_factory, "CCustomBackpack",  			"se_item.se_item",						"E_BKPK",			"equ_backpack_s")
 
 	-- WEAPONS ----------------------------------------------------------------------------------------------------------------------------
 
@@ -125,6 +128,8 @@ function register(object_factory)
 	cs_register	(object_factory, "CBattery",  					"se_item.se_item",						"S_BATTE",			"obj_battery_s")
 	cs_register	(object_factory, "CAntigasFilter",  			"se_item.se_item",						"S_FILTE",			"obj_filter_s")
 	cs_register	(object_factory, "CRepairKit",  				"se_item.se_item",						"S_REPKI",			"obj_remkit_s")
+	cs_register	(object_factory, "CArtefactContainer",  		"se_item.se_item",						"S_AFCON",			"obj_af_container_s")
+	cs_register	(object_factory, "CSleepingBag",  				"se_item.se_item",						"S_SLBAG",			"obj_sleeping_bag_s")
 	-- INVENTORY BOX ---------------------------------------------------------------------------------------------------------------------
 
 	cs_register (object_factory, "CInventoryBox",				"se_item.se_invbox",					"S_INVBOX",			"inventory_box_s")

@@ -1,3 +1,4 @@
+#include "check_screenspace.h"
 #include "settings_screenspace_PUDDLES.h"
 #include "settings_screenspace_SSR.h"
 
@@ -15,6 +16,20 @@ Texture2D s_rainsplash;
 
 #if defined(USE_TDETAIL) && defined(USE_4_DETAIL)
 #	define	USE_4_BUMP
+
+float2 UpdateTerrainTC(in p_bumped I, in Texture2D s_dp)
+{
+	float3	 eye = mul (float3x3(I.M1.x, I.M2.x, I.M3.x,
+								 I.M1.y, I.M2.y, I.M3.y,
+								 I.M1.z, I.M2.z, I.M3.z), -I.position.xyz);
+								 
+	float	height	= s_dp.Sample( smp_base, I.tcdbump).w;	//
+			height	= height*(parallax.x) + (parallax.y);	//
+	float2	new_tc  = I.tcdbump + height * normalize(eye);	//
+
+	return new_tc;
+}
+
 #endif
 
 #ifdef USE_4_BUMP
@@ -35,12 +50,17 @@ f_deffer 	main	( p_flat I 		)
 	float4	mask= s_mask.Sample ( smp_base, I.tcdh);
 	float 	mag	= dot 		(mask,1);
 			mask= mask/mag	;
+			
+	float2 tc_r = UpdateTerrainTC(I, s_dp_r);
+	float2 tc_g = UpdateTerrainTC(I, s_dp_g);
+	float2 tc_b = UpdateTerrainTC(I, s_dp_b);
+	float2 tc_a = UpdateTerrainTC(I, s_dp_a);
 
   #ifdef USE_4_BUMP
- 	 float4	n_Rt = s_dn_r.Sample ( smp_base, I.tcdbump).wzyx;
-	 float4	n_Gt = s_dn_g.Sample ( smp_base, I.tcdbump).wzyx;
-	 float4	n_Bt = s_dn_b.Sample ( smp_base, I.tcdbump).wzyx;
-	 float4	n_At = s_dn_a.Sample ( smp_base, I.tcdbump).wzyx;
+ 	 float4	n_Rt = s_dn_r.Sample ( smp_base, tc_r).wzyx;
+	 float4	n_Gt = s_dn_g.Sample ( smp_base, tc_g).wzyx;
+	 float4	n_Bt = s_dn_b.Sample ( smp_base, tc_b).wzyx;
+	 float4	n_At = s_dn_a.Sample ( smp_base, tc_a).wzyx;
 	 
  	 float3	n_R = (n_Rt-0.5)*mask.r; 
 	 float g_R=n_Rt.w*mask.r;
@@ -111,26 +131,27 @@ f_deffer 	main	( p_flat I 		)
 	// Base ripples Normal
 	float3 WN0 = s_puddles_normal.Sample(smp_base, I.tcdh * ripples_scale + float2(0, ripples_anim));
 	float3 WN1 = s_puddles_normal.Sample(smp_base, I.tcdh * ripples_scale - float2(0.33f, ripples_anim));
-	float3 ripplesNormal = ((WN0 * 2 - 1) + (WN1 * 2 - 1)) / 2.0f;
+	float3 ripplesNormal = ((WN0 + WN1) * 0.5f) * 2.0f - 1.0f;
 
 	// Rain Ripples
-	float3 rainRipples = SSFX_ripples( s_rainsplash, I.tcdh * ripples_scale * 2.8f / G_PUDDLES_RAIN_RIPPLES_SCALE ) * 2 - 1;
+	float2 ripplesUV = I.tcdh * ripples_scale * 1.3f / G_PUDDLES_RAIN_RIPPLES_SCALE;
+	float2 rainRipples = ssfx_rain_ripples( s_rainsplash, ripplesUV, float3(0.85f, 1.0f, 10.0f), I.position.z);
 
 	// Rain ripples intensity... ( Rain intensity * Depth fadeout * Intensity )
-	rainRipples *= clamp(1.5f - I.position.z * 0.15f, 0.3f, 1.0f) * rain_params.x * 3.0f * G_PUDDLES_RAIN_RIPPLES_INTENSITY;
+	rainRipples *= rain_params.x * 3.0f * G_PUDDLES_RAIN_RIPPLES_INTENSITY;
 
 	// Base ripples Intensity
-	ripplesNormal *= (0.05f + rain_int * G_PUDDLES_RIPPLES_RAINING_INT) * G_PUDDLES_RIPPLES_INTENSITY;
+	ripplesNormal *= saturate(0.05f + rain_int * G_PUDDLES_RIPPLES_RAINING_INT * G_PUDDLES_RIPPLES_INTENSITY);
 	
 	// Mix ripples
-	ripplesNormal = ( ripplesNormal * 0.666f ) + ( rainRipples * 0.333f );
+	ripplesNormal = ripplesNormal * 0.666f + float3(rainRipples * 0.333f, 0);
 
 #else
 	float3 ripplesNormal = 0;
 #endif
 
 	// Normal Up and ripples for puddles
-	float3 MirrorUp	= mul(m_V,  float3(ripplesNormal.x, 1.0f, ripplesNormal.y));
+	float3 MirrorUp	= mul(m_V,  float3(ripplesNormal.x, 1.0, ripplesNormal.y));
 	N = lerp(N, MirrorUp, puddles);
 
 	// Refraction Normal
@@ -140,11 +161,15 @@ f_deffer 	main	( p_flat I 		)
 	N_refra.xy *= 0.15f * smoothstep( 0.6f, 0.8f, wetness_f * puddles ) * G_PUDDLES_REFRACTION_INTENSITY;
 
 	// Detail textures + refraction when needed
-	float2 detail_tc = I.tcdbump + N_refra;
-	float3 d_R = s_dt_r.Sample ( smp_base, detail_tc) * mask.r;
-	float3 d_G = s_dt_g.Sample ( smp_base, detail_tc) * mask.g;
-	float3 d_B = s_dt_b.Sample ( smp_base, detail_tc) * mask.b;
-	float3 d_A = s_dt_a.Sample ( smp_base, detail_tc) * mask.a;
+	float2 detail_tc_r = tc_r + N_refra;
+	float2 detail_tc_g = tc_g + N_refra;
+	float2 detail_tc_b = tc_b + N_refra;
+	float2 detail_tc_a = tc_a + N_refra;
+	
+	float3 d_R = s_dt_r.Sample ( smp_base, detail_tc_r) * mask.r;
+	float3 d_G = s_dt_g.Sample ( smp_base, detail_tc_g) * mask.g;
+	float3 d_B = s_dt_b.Sample ( smp_base, detail_tc_b) * mask.b;
+	float3 d_A = s_dt_a.Sample ( smp_base, detail_tc_a) * mask.a;
 	float3 dt = d_R + d_G + d_B + d_A;
 	D.rgb = 2 * D.rgb * dt;
 
@@ -155,7 +180,9 @@ f_deffer 	main	( p_flat I 		)
 	puddles = clamp(puddles, 0, G_PUDDLES_REFLECTIVITY);
 
 	// Add at the end the extra wetness. Full intensity at 50% of wetness ( rain_params.y )
+#ifndef SSFX_NEWGLOSS
 	puddles = puddles + saturate(rain_params.y * 2.0f) * G_PUDDLES_TERRAIN_EXTRA_WETNESS;
+#endif
 
 	// Add gloss and puddles to the final gloss result
 	G = max(g_R + g_G + g_B + g_A, 0.0f);
@@ -173,9 +200,9 @@ f_deffer 	main	( p_flat I 		)
 
 	// hemi, sun, material
 	float 	ms	= xmaterial	;
-#ifdef USE_R2_STATIC_SUN
-		 	ms 	= L.w		;
-#endif
+//#ifdef USE_R2_STATIC_SUN
+//		 	ms 	= L.w		;
+//#endif
 
   // 2. Standart output
   float4     Ne = float4	(normalize(N), 									D.w			);

@@ -16,6 +16,36 @@ function ReadSkillsSystemEnabled()
 	return ltx and ltx:line_exist("gameplay","actor_skills_enabled") and ltx:r_bool("gameplay","actor_skills_enabled")
 end
 
+-- 'Проверка включен ли ограниченный заряд батареи детекторов артефактов.
+function ReadDetectorsUseBatteryEnabled()
+	local ltx = ini_file("mfs_team\\mfs_adv_xr_params.ltx")
+	return ltx and ltx:line_exist("gameplay","artefact_detector_use_battery") and ltx:r_bool("gameplay","artefact_detector_use_battery")
+end
+
+-- 'Проверка включен ли ограниченный заряд батареи детекторов аномалий.
+function ReadAnomalyDetectorsUseBatteryEnabled()
+	local ltx = ini_file("mfs_team\\mfs_adv_xr_params.ltx")
+	return ltx and ltx:line_exist("gameplay","anomaly_detector_use_battery") and ltx:r_bool("gameplay","anomaly_detector_use_battery")
+end
+
+-- 'Проверка включен ли ограниченный заряд батареи фонарей.
+function ReadTorchUseBatteryEnabled()
+	local ltx = ini_file("mfs_team\\mfs_adv_xr_params.ltx")
+	return ltx and ltx:line_exist("gameplay","torch_use_battery") and ltx:r_bool("gameplay","torch_use_battery")
+end
+
+-- 'Проверка включена ли деградация артефактов.
+function ReadArtefactsDegradationEnabled()
+	local ltx = ini_file("mfs_team\\mfs_adv_xr_params.ltx")
+	return ltx and ltx:line_exist("gameplay","artefacts_degradation") and ltx:r_bool("gameplay","artefacts_degradation")
+end
+
+-- 'Проверка включено ли использование фильтров брони и шлемов.
+function ReadOutfitFiltersEnabled()
+	local ltx = ini_file("mfs_team\\mfs_adv_xr_params.ltx")
+	return ltx and ltx:line_exist("gameplay","enable_antigas_filters") and ltx:r_bool("gameplay","enable_antigas_filters")
+end
+
 -- 'Уложить героя спать на 5 часов, если он слишком давно не спал
 function put_the_actor_to_sleep()
 	level.change_game_time(0,5,0)
@@ -74,7 +104,37 @@ function on_actor_drugs()
 
 end
 
+function devices_check_surge()
+	if surge_manager.is_started() then
+	
+		local m = surge_manager.get_surge_manager()
+		
+		if m.blowout_sound then
+			game.set_devices_psy_factor(game.get_devices_psy_factor() + 0.00075)
+		end
+		
+		return true
+	else
+		game.set_devices_psy_factor(game.get_devices_psy_factor() - 0.0025)
+		return false
+	end
+end
+
+function sleeping_bag_sleep()
+	ui_sleep_dialog.sleep()
+	give_info("sleep_active")
+end
+
 -- 'Для команды g_task. Не трогать!
 function g_task_script(task)
 	task_manager.get_task_manager():give_task(task)
+end
+
+-- 'Для команды kill. Не трогать!
+function get_id_by_sid(story_id_to_kill)
+	local npc = get_story_object(story_id_to_kill)
+
+	if npc then
+		return npc:id()
+	end
 end
