@@ -1205,7 +1205,30 @@ blend_down_time				= 100 ;(сек)
 ;-                                                            MOONS                                                           -
 ;------------------------------------------------------------------------------------------------------------------------------       
 
-[moon_wax_c]
+[moon_phased]
+        blend_down_time                  = 30                               ;(сек)
+        blend_rise_time                  = 30                               ;(сек)
+        blend_time                       = 10                               ;(сек)
+        flare_opacity                    = 0.340, 0.260, 0.300, 0.420, 0.260, 0.260, 0.300, 0.450, 0.250
+        flare_position                   = 1.300, 0.600, 0.500, -0.300, -0.600, -1.000, -1.200, 0.850, 0.770
+        flare_radius                     = 0.080, 0.120, 0.040, 0.080, 0.120, 0.300, 0.250, 0.020, 0.030
+        flare_shader                     = effects\flare
+        flare_textures                   = fx\fx_flare3.tga, fx\fx_flare2.tga, fx\fx_flare1.tga, fx\fx_flare2.tga, fx\fx_flare3.tga, fx\fx_flare3.tga, fx\fx_flare2.tga, fx\fx_flare2.tga, fx\fx_flare1.tga
+        flares                           = off
+        gradient                         = off
+        gradient_opacity                 = 0
+        gradient_radius                  = 0
+        gradient_shader                  = effects\flare
+        gradient_texture                 = fx\fx_gradient.tga
+        sun                              = off
+        sun_ignore_color                 = false
+        sun_radius                       = 0.00
+        sun_shader                       = effects\sun
+        sun_texture                      = fx\fx_moon2.tga
+		
+[moon_phased_0]:moon_phased
+		
+[moon_phased_1]
         blend_down_time                  = 120                             ;(сек)
         blend_rise_time                  = 120                             ;(сек)
         blend_time                       = 10                                ;(сек)
@@ -1226,7 +1249,7 @@ blend_down_time				= 100 ;(сек)
         sun_shader                   	 = effects\sun
         sun_texture                   	 = fx\fx_moon_phase_1.tga       
 
-[moon_1st_q]
+[moon_phased_2]
         blend_down_time                  = 120                             ;(сек)
         blend_rise_time                  = 120                             ;(сек)
         blend_time                       = 10                                ;(сек)
@@ -1247,7 +1270,7 @@ blend_down_time				= 100 ;(сек)
         sun_shader                   	 = effects\sun
         sun_texture                   	 = fx\fx_moon_phase_2.tga
         
-[moon_wax_g]
+[moon_phased_3]
         blend_down_time                  = 120                             ;(сек)
         blend_rise_time                  = 120                             ;(сек)
         blend_time                       = 10                                ;(сек)
@@ -1269,7 +1292,7 @@ blend_down_time				= 100 ;(сек)
         sun_texture                   	 = fx\fx_moon_phase_3.tga
         
 
-[moon_full]
+[moon_phased_4]
         blend_down_time                  = 120                             ;(сек)
         blend_rise_time                  = 120                             ;(сек)
         blend_time                       = 10                                ;(сек)
@@ -1290,7 +1313,7 @@ blend_down_time				= 100 ;(сек)
         sun_shader                   	 = effects\sun
         sun_texture                   	 = fx\fx_moon_phase_4.tga
         
-[moon_wan_g]
+[moon_phased_5]
         blend_down_time                  = 120                             ;(сек)
         blend_rise_time                  = 120                             ;(сек)
         blend_time                       = 10                                ;(сек)
@@ -1311,7 +1334,7 @@ blend_down_time				= 100 ;(сек)
         sun_shader                   	 = effects\sun
         sun_texture                   	 = fx\fx_moon_phase_5.tga
         
-[moon_3rd_q]
+[moon_phased_6]
         blend_down_time                  = 120                             ;(сек)
         blend_rise_time                  = 120                             ;(сек)
         blend_time                       = 10                                ;(сек)
@@ -1332,7 +1355,7 @@ blend_down_time				= 100 ;(сек)
         sun_shader                   	 = effects\sun
         sun_texture                   	 = fx\fx_moon_phase_6.tga
         
-[moon_wan_c]
+[moon_phased_7]
         blend_down_time                  = 120                             ;(сек)
         blend_rise_time                  = 120                             ;(сек)
         blend_time                       = 10                                ;(сек)
@@ -1352,8 +1375,31 @@ blend_down_time				= 100 ;(сек)
         sun_radius                       = 0.3
         sun_shader                   	 = effects\sun
         sun_texture                   	 = fx\fx_moon_phase_7.tga
-        
-[moon_halo_wax_c]
+
+[moon_phased_halo]
+        blend_down_time                  = 30                               ;(сек)
+        blend_rise_time                  = 30                               ;(сек)
+        blend_time                       = 10                               ;(сек)
+        flare_opacity                    = 0.340, 0.260, 0.300, 0.420, 0.260, 0.260, 0.300, 0.450, 0.250
+        flare_position                   = 1.300, 0.600, 0.500, -0.300, -0.600, -1.000, -1.200, 0.850, 0.770
+        flare_radius                     = 0.080, 0.120, 0.040, 0.080, 0.120, 0.300, 0.250, 0.020, 0.030
+        flare_shader                     = effects\flare
+        flare_textures                   = fx\fx_flare3.tga, fx\fx_flare2.tga, fx\fx_flare1.tga, fx\fx_flare2.tga, fx\fx_flare3.tga, fx\fx_flare3.tga, fx\fx_flare2.tga, fx\fx_flare2.tga, fx\fx_flare1.tga
+        flares                           = off
+        gradient                         = off
+        gradient_opacity                 = 0
+        gradient_radius                  = 0
+        gradient_shader                  = effects\flare
+        gradient_texture                 = fx\fx_gradient.tga
+        sun                              = off
+        sun_ignore_color                 = false
+        sun_radius                       = 0.00
+        sun_shader                       = effects\sun
+        sun_texture                      = fx\fx_moon2.tga
+		
+[moon_phased_halo_0]:moon_phased_halo
+		
+[moon_phased_halo_1]
         blend_down_time                  = 120                             ;(сек)
         blend_rise_time                  = 120                             ;(сек)
         blend_time                       = 10                                ;(сек)
@@ -1374,7 +1420,7 @@ blend_down_time				= 100 ;(сек)
         sun_shader                       = effects\sun
         sun_texture                      = fx\fx_moon_halo_phase_1.tga
 
-[moon_halo_1st_q]
+[moon_phased_halo_2]
         blend_down_time                  = 120                             ;(сек)
         blend_rise_time                  = 120                             ;(сек)
         blend_time                       = 10                                ;(сек)
@@ -1395,7 +1441,7 @@ blend_down_time				= 100 ;(сек)
         sun_shader                       = effects\sun
         sun_texture                      = fx\fx_moon_halo_phase_2.tga
         
-[moon_halo_wax_g]
+[moon_phased_halo_3]
         blend_down_time                  = 120                             ;(сек)
         blend_rise_time                  = 120                             ;(сек)
         blend_time                       = 10                                ;(сек)
@@ -1416,7 +1462,7 @@ blend_down_time				= 100 ;(сек)
         sun_shader                       = effects\sun
         sun_texture                      = fx\fx_moon_halo_phase_3.tga
         
-[moon_halo_full]
+[moon_phased_halo_4]
         blend_down_time                  = 120                             ;(сек)
         blend_rise_time                  = 120                             ;(сек)
         blend_time                       = 10                                ;(сек)
@@ -1437,7 +1483,7 @@ blend_down_time				= 100 ;(сек)
         sun_shader                       = effects\sun
         sun_texture                      = fx\fx_moon_halo_phase_4.tga
 
-[moon_halo_wan_g]
+[moon_phased_halo_5]
         blend_down_time                  = 120                             ;(сек)
         blend_rise_time                  = 120                             ;(сек)
         blend_time                       = 10                                ;(сек)
@@ -1458,7 +1504,7 @@ blend_down_time				= 100 ;(сек)
         sun_shader                       = effects\sun
         sun_texture                      = fx\fx_moon_halo_phase_5.tga
         
-[moon_halo_3rd_q]
+[moon_phased_halo_6]
         blend_down_time                  = 120                             ;(сек)
         blend_rise_time                  = 120                             ;(сек)
         blend_time                       = 10                                ;(сек)
@@ -1479,7 +1525,7 @@ blend_down_time				= 100 ;(сек)
         sun_shader                       = effects\sun
         sun_texture                      = fx\fx_moon_halo_phase_6.tga
         
-[moon_halo_wan_c]
+[moon_phased_halo_7]
         blend_down_time                  = 120                             ;(сек)
         blend_rise_time                  = 120                             ;(сек)
         blend_time                       = 10                                ;(сек)

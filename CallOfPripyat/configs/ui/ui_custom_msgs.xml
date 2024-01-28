@@ -1,25 +1,5 @@
 <header>
 
-		<weather_info x="20" y="230" width="500" height="300" complex_mode="1"> 
-				<text font="arial_14" r="255" g="255" b="255" a="255" align="l"/> 
-		</weather_info>
-
-		<godmode_message x="20" y="365" width="500" height="50" complex_mode="1"> 
-				<text font="arial_14" r="255" g="255" b="255" a="255" align="l"/> 
-		</godmode_message>
-
-		<faq_notes x="20" y="380" width="500" height="200" complex_mode="1"> 
-				<text font="arial_14" r="255" g="255" b="255" a="255" align="l"/> 
-		</faq_notes>
-
-		<textec x="400" y="500" width="500" height="200" complex_mode="1"> 
-				<text font="arial_14" r="255" g="255" b="255" a="255" align="l"/> 
-		</textec>
-		
-		<textec_hmh x="560" y="500" width="500" height="200" complex_mode="1"> 
-				<text font="arial_14" r="255" g="1" b="1" a="255" align="l"/> 
-		</textec_hmh>
-
         <hud_timer  x="869" y="0" width="155" height="66">
                 <text x="-15" y="23it" font="graffiti32" r="238" g="155" b="23" a="255" align="r"/>
                 <texture>ui_hud_timer_games</texture>
@@ -93,32 +73,44 @@
     <text font="graffiti32"  r="240" g="217" b="182" a="255" align="l"/>
   </cs_arena_kills>
 
-		<game_saved x="100" y="730" width="800" height="30" ttl="3">
-			<text font="graffiti22" r="240" g="217" b="182" a="255" align="c"/>
+		<game_saved x="540" y="27" width="800" height="30" ttl="6">
+			<text font="arial_14" r="240" g="217" b="182" a="255" align="c"/>
 		</game_saved>
 
-        <autosave  x="100" y="730" width="800" height="30" ttl="3">
-                <text font="graffiti22"  r="240" g="217" b="182" a="255" align="c">st_autosave</text>
+		<game_saved_icon x="1000" y="32" width="32" height="36" ttl="6" alignment="c" stretch="1">
+			<texture>mfs_team\ui\quicksave_icon\ui_quicksave_icon</texture>
+		</game_saved_icon>
+		
+		<game_save_blocked_icon x="1000" y="32" width="32" height="36" light_anim="ui_slow_blinking" ttl="6" alignment="c" stretch="1">
+			<texture>mfs_team\ui\quicksave_icon\ui_quicksave_icon_blocked</texture>
+		</game_save_blocked_icon>
+		
+		<game_save_blocked_text x="540" y="27" width="800" height="30" ttl="6">
+			<text font="arial_14" r="240" g="217" b="182" a="255" align="c"/>
+		</game_save_blocked_text>
+
+        <autosave  x="-350" y="680" width="800" height="30" ttl="3">
+                <text font="arial_14"  r="240" g="217" b="182" a="255" align="c">st_autosave</text>
         </autosave>
 
-        <item_used  x="100" y="700" width="800" height="30" ttl="3">
-                <text font="graffiti22"  r="240" g="217" b="182" a="255" align="c"/>
+        <item_used  x="16" y="630" width="800" height="30" ttl="3">
+                <text font="arial_14"  r="240" g="217" b="182" a="255"/>
         </item_used>
 
-        <gun_jammed x="200" y="70" width="600" height="50" ttl="3">
-                <text font="graffiti32"  r="240" g="217" b="182" a="255" align="c">gun_jammed</text>
+        <gun_jammed x="16" y="640" width="600" height="30" ttl="3">
+                <text font="arial_14"  r="240" g="217" b="182" a="255">gun_jammed</text>
         </gun_jammed>
 
-        <can_use_weapon_now x="200" y="70" width="600" height="50" ttl="3">
-                <text font="graffiti32"  r="240" g="217" b="182" a="255" align="c">can_use_weapon_now</text>
+        <can_use_weapon_now x="16" y="650" width="600" height="30" ttl="3">
+                <text font="arial_14"  r="240" g="217" b="182" a="255">can_use_weapon_now</text>
         </can_use_weapon_now>
 
-        <cant_walk x="200" y="650" width="600" height="30" ttl="3">
-                <text font="graffiti22"  r="240" g="217" b="182" a="255" align="c">cant_walk</text>
+        <cant_walk x="16" y="660" width="600" height="30" ttl="3">
+                <text font="arial_14"  r="240" g="217" b="182" a="255">cant_walk</text>
         </cant_walk>
 
-        <cant_walk_weight x="200" y="650" width="600" height="30" ttl="3">
-                <text font="graffiti22"  r="240" g="217" b="182" a="255" align="c">cant_walk_weight</text>
+        <cant_walk_weight x="16" y="670" width="600" height="30" ttl="3">
+                <text font="arial_14"  r="240" g="217" b="182" a="255">cant_walk_weight</text>
         </cant_walk_weight>
 
         <not_enough_money_mine  x="100" y="100" width="800" height="60">
@@ -128,6 +120,10 @@
         <not_enough_money_other  x="100" y="100" width="800" height="60">
                 <text font="graffiti32"  r="240" g="217" b="182" a="255" align="c">st_not_enough_money_npc</text>
         </not_enough_money_other>
+		
+		<backpack_full x="16" y="680" width="800" height="30" ttl="3">
+			<text font="arial_14" r="240" g="0" b="0" a="255"/>
+		</backpack_full>
 
   <max_ping_warn_1 x="512" y="300" width="360" height="64" alignment="c" ttl="10">
     <texture x="0" y="0" width="360" height="64" a="30">ui\ui_cm_connection_error</texture>

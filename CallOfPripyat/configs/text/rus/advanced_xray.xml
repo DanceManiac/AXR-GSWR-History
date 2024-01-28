@@ -565,7 +565,7 @@
 		<text>Эта настройка включает или выключает коллизию мёртвых тел. Если опция включена, трупы становятся реальным препятствием и главный герой не проходит сквозь них. ВНИМАНИЕ! Данная опция может вызвать проблемы проходимости в закрытых помещениях.</text>
 	</string>
 	<string id="ui_mm_walk_inertion_hint">
-		<text>Данная опция включает симуляцию инерции ходьбы героя. То есть, когда мы движемся вперёт и останавливаемся - камера ещё немного продвинется вперёд и после, отодвинется обратно на исходную позицию.</text>
+		<text>Данная опция включает симуляцию инерции ходьбы героя. То есть, когда мы движемся вперёд и останавливаемся - камера ещё немного продвинется вперёд и после, отодвинется обратно на исходную позицию.</text>
 	</string>
 	<string id="ui_mm_loading_stages_hint">
 		<text>Эта настройка включает или выключает стадии загрузки игры в загрузочном экране.</text>
@@ -579,12 +579,6 @@
 	<string id="ui_mm_detail_collision_hint">
 		<text>Эта опция включает применание травы героем и персонажами.\n \n %c[pda_green] • Нагрузка: Низкая</text>
 	</string>
-	<string id="ui_mm_detail_collision_radius">
-		<text>Дальность коллизии травы</text>
-	</string>
-	<string id="ui_mm_detail_collision_radius_hint">
-		<text>Эта опция позволяет настраивать радиус обработки коллизии травы.\n \n %c[pda_green] • Нагрузка: Низкая</text>
-	</string>
 	<string id="ui_mm_chromatic_aberration">
 		<text>Хроматическая аберрация</text>
 	</string>
@@ -596,6 +590,60 @@
 	</string>
 	<string id="ui_mm_film_grain_hint">
 		<text>Эта опция включает эффект зернистости в игре.\n \n %c[pda_green] • Нагрузка: Низкая</text>
+	</string>
+	<string id="ui_mm_screen_space_shaders">
+		<text>Screen Space Shaders</text>
+	</string>
+	<string id="ui_mm_screen_space_shaders_hint">
+		<text>Данная опция включает аддон Screen Space Shaders. \n \n %c[pda_red] • Нагрузка: Высокая</text>
+	</string>
+	<string id="ui_mm_sss_sky_debanding">
+		<text>SSS: Сглаживание неба</text>
+	</string>
+	<string id="ui_mm_sss_sky_debanding_hint">
+		<text>Данная опция сглаживает текстуры неба, делая переходы между пикселями более плавными. \n \n %c[pda_green] • Нагрузка: Низкая</text>
+	</string>
+	<string id="ui_mm_sss_flora_fix">
+		<text>SSS: Улучш. осв. флоры</text>
+	</string>
+	<string id="ui_mm_sss_flora_fix_hint">
+		<text>Данная опция улучшает взаимодействие кустов, веток и травы с освещением, а также исправляет недочёты. \n \n %c[pda_green] • Нагрузка: Низкая</text>
+	</string>
+	<string id="ui_mm_sss_fog">
+		<text>SSS: Screen Space туман</text>
+	</string>
+	<string id="ui_mm_sss_fog_hint">
+		<text>Эта опция активирует поддержку низинного тумана из Screen Space Shaders. \n \n %c[pda_green] • Нагрузка: Низкая</text>
+	</string>
+	<string id="ui_mm_sss_indirect_light">
+		<text>SSS: Непрямое освещение</text>
+	</string>
+	<string id="ui_mm_sss_indirect_light_hint">
+		<text>Эта опция включает непрямое освещение, которое, попадая на поверхность, отражается от нее в разных направлениях и тем самым освещает другие поверхности вокруг. \n \n %c[pda_green] • Нагрузка: Низкая</text>
+	</string>
+	<string id="ui_mm_sss_screen_space_shadows">
+		<text>SSS: Screen Space тени</text>
+	</string>
+	<string id="ui_mm_sss_screen_space_shadows_hint">
+		<text>Данная опция добавляет тени на оружии и мелких деталей. \n \n %c[pda_green] • Нагрузка: Низкая</text>
+	</string>
+	<string id="ui_mm_sss_shadows">
+		<text>SSS: Смещение теней</text>
+	</string>
+	<string id="ui_mm_sss_shadows_hint">
+		<text>Эта опция включает смещение теней из Screen Space Shaders 19. \n \n %c[pda_green] • Нагрузка: Низкая</text>
+	</string>
+	<string id="ui_mm_sss_wind">
+		<text>SSS: Ветер</text>
+	</string>
+	<string id="ui_mm_sss_wind_hint">
+		<text>Данная опция включает влияние ветра на траву и деревья из Screen Space Shaders 19. Если включить эту опцию, влияние ветра из Advanced X-Ray будет отключено. \n \n %c[pda_green] • Нагрузка: Низкая</text>
+	</string>
+	<string id="ui_mm_enchanted_shaders">
+		<text>Enchanted Shaders</text>
+	</string>
+	<string id="ui_mm_enchanted_shaders_hint">
+		<text>Данная опция включает аддон Enchanted Shaders. \n \n %c[pda_yellow] • Нагрузка: Средняя</text>
 	</string>
 	<string id="ui_mm_death_cam_mode">
 		<text>Камера при смерти</text>
@@ -614,6 +662,9 @@
 	</string>
 	<string id="ui_mm_r1_detail_textures_hint">
 		<text>Эта опция способствует улучшению графики игры, что делает ее более реалистичной и красивой.\n \n %c[pda_yellow] • Нагрузка: Средняя</text>
+	</string>
+	<string id="st_m">
+		<text>i</text>
 	</string>
 	<string id="ui_inv_repair_kit_condition">
 		<text>Прочность</text>
@@ -635,5 +686,87 @@
 	</string>
 	<string id="ui_mm_fps_limit_hint">
 		<text>Данная настройка позволяет ограничить максимальную частоту кадров в игре. Это позволяет более стабильно отображать игру и снижает нагрузку на оборудование и ресурсы системы, обеспечивая более плавный и комфортный игровой процесс.</text>
+	</string>
+
+	<string id="ui_inv_alcohol">
+		<text>Алк. опьянение</text>
+	</string>
+	<string id="ui_inv_drugs">
+		<text>Нарк. опьянение</text>
+	</string>
+	<string id="st_put_to">
+		<text>Положить в</text>
+	</string>
+	<string id="st_take_from">
+		<text>Достать</text>
+	</string>
+	<string id="ui_inv_artefacts_count">
+		<text>Вместительность</text>
+	</string>
+	<string id="st_af_container">
+		<text>Контейнер для артефактов</text>
+	</string>
+	<string id="st_af_container_descr">
+		<text>Свинцово-изолированный металлический контейнер для артефактов представляет собой простой металлический ящик с толстыми стенками, обшитыми пенопластом, а также тяжёлой крышкой с уплотнительными резинками. Разработан специально для транспортировки артефактов. Специальный раствор, в котором содержится артефакт, удерживает его аномальную энергию, а герметичность и свинцовая обшивка позволяет блокировать всё негативное излучение, исходящее от артефактов, обеспечивая тем самым безопасность пользователя. Тем не менее, его нельзя прикрепить к поясу - это означает, что он блокирует как положительные свойства артефактов, так и негативные.</text>
+	</string>
+	<string id="st_addon_laser">
+		<text>Лазерный целеуказатель</text>
+	</string>
+	<string id="st_addon_laser_descr">
+		<text>Надежный компаньон для тех, кто ценит точность и надежность в мире стрелковых искусств.</text>
+	</string>
+	<string id="st_detach_laser">
+		<text>Отсоединить ЛЦУ</text>
+	</string>
+	<string id="st_attach_laser_to">
+		<text>Присоединить ЛЦУ к</text>
+	</string>
+	<string id="st_addon_tactical_torch">
+		<text>Тактический фонарик</text>
+	</string>
+	<string id="st_addon_tactical_torch_descr">
+		<text>Тактический фонарик.</text>
+	</string>
+	<string id="st_detach_tactical_torch">
+		<text>Отсоединить тактический фонарик</text>
+	</string>
+	<string id="st_attach_tactical_torch_to">
+		<text>Присоединить тактический фонарик к</text>
+	</string>
+	<string id="st_backpack_full">
+		<text>Рюкзак переполнен!</text>
+	</string>
+	<string id="ui_inv_inventory_capacity">
+		<text>Вместительность</text>
+	</string>
+	<string id="ui_inventory_capacity">
+		<text>Вместительность:</text>
+	</string>
+	<string id="st_liters">
+		<text>л</text>
+	</string>
+	<string id="st_alt_aim_switched_on">
+		<text>Режим прицеливания: Мушка</text>
+	</string>
+	<string id="st_alt_aim_switched_off">
+		<text>Режим прицеливания: Оптика</text>
+	</string>
+	<string id="ui_mm_svp_mouse_sense">
+		<text>Чувст. мыши в 3D прицелах</text>
+	</string>
+	<string id="ui_mm_grass_shadows_dintance">
+		<text>Радиус теней от травы</text>
+	</string>
+	<string id="ui_mm_grass_shadows_dintance_hint">
+		<text>Данная опция позволяет отрегулировать радиус отрисовки теней от травы. Понижая значение, можно выиграть какое-то количество FPS.\n \n %c[pda_yellow] • Нагрузка: Средняя</text>
+	</string>
+	<string id="ui_inv_outfit_artefacts_count">
+		<text>Ячейки артефактов</text>
+	</string>
+	<string id="ui_inv_outfit_inventory_capacity">
+		<text>Вместительность</text>
+	</string>
+	<string id="st_saves_locked">
+		<text>Сохранения заблокированы</text>
 	</string>
 </string_table>
