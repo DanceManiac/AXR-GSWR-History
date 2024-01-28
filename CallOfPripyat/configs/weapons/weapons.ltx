@@ -965,7 +965,8 @@ fragment_speed				= 100
 explode_duration		 = 5		;подолжительность взрыва (с)
 
 ;звуки
-snd_explode = weapons\f1_explode
+snd_explode = base_snd_expl_f1_explode
+
 ;wallmarks
 wallmark_section		= explosion_marks
 
@@ -1042,7 +1043,7 @@ wallmark_section		 = explosion_marks
 explode_duration		 = 5		;подолжительность взрыва (с)
 
 ;звуки
-snd_explode = weapons\f1_explode
+snd_explode = base_snd_expl_f1_explode
 
 ;свойства которые читаются, но не используются
 inv_name		= ammo-vog-25p
@@ -1122,7 +1123,7 @@ wm_size						= 0.1 ;0.05
 explode_duration			 = 5		;подолжительность взрыва (с)
 
 ;звуки
-snd_explode = weapons\f1_explode
+snd_explode = base_snd_expl_f1_explode
 
 ;свойства которые читаются, но не используются
 inv_name		= ammo-m209
@@ -1207,7 +1208,8 @@ explode_duration		 = 5		;подолжительность взрыва (с)
 ;wallmarks
 wallmark_section		= explosion_marks
 ;звуки
-snd_explode = weapons\f1_explode
+snd_explode = base_snd_expl_f1_explode
+
 immunities_sect			= explosive_fuelcan_immunities_sect
 
 [explosive_fuelcan_immunities_sect]
@@ -1282,7 +1284,8 @@ explode_duration		 = 5		;подолжительность взрыва (с)
 wallmark_section		= explosion_marks
 
 ;звуки
-snd_explode = weapons\f1_explode
+snd_explode = base_snd_expl_f1_explode
+
 immunities_sect			= explosive_tank_immunities_sect
 
 [explosive_tank_immunities_sect]
@@ -1353,7 +1356,8 @@ explode_duration		 = 5		;подолжительность взрыва (с)
 ;wallmarks
 wallmark_section		 = explosion_marks
 ;звуки
-snd_explode = weapons\f1_explode
+snd_explode = base_snd_expl_f1_explode
+
 immunities_sect			= explosive_barrel_low_immunities_sect
 
 ;time_to_explode			= 0.f
@@ -1413,7 +1417,8 @@ explode_duration		 = 2		;подолжительность взрыва (с)
 ;wallmarks
 wallmark_section		 = explosion_marks
 ;звуки
-snd_explode = weapons\t_rgd5_explosion
+snd_explode = base_snd_expl_grenade_explossion
+
 immunities_sect			= explosive_explosive_grenade_immunities_sect
 
 ;time_to_explode			= 0.f
@@ -1501,7 +1506,8 @@ explode_duration		 = 5		;подолжительность взрыва (с)
 ;wallmarks
 wallmark_section		 = explosion_marks
 ;звуки
-snd_explode = weapons\rpg7_explode
+snd_explode = base_snd_expl_rpg_explossion
+
 immunities_sect			= explosive_hide_immunities_sect
 
 ;time_to_explode			= 0.f
@@ -1573,7 +1579,8 @@ explode_duration		 = 2		;подолжительность взрыва (с)
 ;wallmarks
 wallmark_section		 = explosion_marks
 ;звуки
-snd_explode = weapons\f1_explode_
+snd_explode = base_snd_expl_f1_explode_
+
 immunities_sect			= explosive_barrel_low_immunities_sect
 
 ;time_to_explode			= 0.f
@@ -1646,7 +1653,8 @@ explode_duration		 = 5		;подолжительность взрыва (с)
 
 
 ;звуки
-snd_explode = weapons\f1_explode
+snd_explode = base_snd_expl_f1_explode
+
 immunities_sect			= explosive_barrel_immunities_sect
 ;wallmarks
 wallmark_section		= explosion_marks
@@ -1718,7 +1726,8 @@ explode_duration		 = 5		;подолжительность взрыва (с)
 
 
 ;звуки
-snd_explode = weapons\f1_explode
+snd_explode = base_snd_expl_f1_explode
+
 immunities_sect			= explosive_mobiltank_immunities_sect
 ;wallmarks
 wallmark_section		= explosion_marks
@@ -1790,7 +1799,8 @@ fragment_speed				= 200
 explode_duration		 = 5		;подолжительность взрыва (с)
 
 ;звуки
-snd_explode = weapons\f1_explode
+snd_explode = base_snd_expl_f1_explode
+
 immunities_sect			= dinamit_immunities_sect
 ;condition_to_explode        =0.f
 ;wallmarks
@@ -2120,6 +2130,46 @@ inv_grid_height		= 1
 inv_grid_x			= 17
 inv_grid_y			= 3
 grenade_vel 		= 32 ;76
+
+[wpn_addon_red_laser]:identity_immunities,red_laser
+GroupControlSection	= spawn_group
+discovery_dependency =
+$spawn				= "weapons\addons\laser_designator" ; option for Level Editor
+class				= WP_LASER
+cform           	= skeleton
+visual          	= dynamics\weapons\wpn_upgrade\wpn_silencer.ogf
+description			= st_addon_laser_descr
+$prefetch 			= 32
+slot = -1
+cost				= 200
+inv_name			= st_addon_laser
+inv_name_short		= st_addon_laser
+inv_weight			= 0.1
+
+inv_grid_width		= 1
+inv_grid_height		= 1
+inv_grid_x			= 18
+inv_grid_y			= 1
+
+[wpn_addon_tactical_torch]:identity_immunities,tactical_torch
+GroupControlSection	= spawn_group
+discovery_dependency =
+$spawn				= "weapons\addons\wpn_addon_tactical_torch" ; option for Level Editor
+class				= WP_TORCH
+cform           	= skeleton
+visual          	= dynamics\weapons\wpn_upgrade\wpn_silencer.ogf
+description			= st_addon_tactical_torch_descr
+$prefetch 			= 32
+slot = -1
+cost				= 200
+inv_name			= st_addon_tactical_torch
+inv_name_short		= st_addon_tactical_torch
+inv_weight			= 0.1
+
+inv_grid_width		= 1
+inv_grid_height		= 1
+inv_grid_x			= 18
+inv_grid_y			= 1
 
 ;;;;;;;;;;;;;Advanced scope settings;;;;;;;;;;;;;;;;
 
