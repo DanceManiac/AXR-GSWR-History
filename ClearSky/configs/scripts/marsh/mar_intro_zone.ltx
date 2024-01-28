@@ -3,7 +3,7 @@ active = sr_idle@scene_1_spawn
 
 [sr_idle@scene_1_spawn]
 ;lvl
-on_info = {+mar_lvl_sim} sr_idle@test, {+mar_intro_start} sr_idle@scene_1_time %=disable_ui =spawn_object(mar_intro_lebedev_1:mar_intro_scene_1_lebedev:0:249.3) =spawn_object(mar_intro_kalancha:mar_intro_scene_1_kalancha:0:163.0) =spawn_object(mar_intro_actor:mar_intro_scene_1_actor:0:0.0) =disable_level_changer(311:mar_disabled_level_changer) =disable_level_changer(312:mar_disabled_level_changer) =disable_level_changer(313:mar_disabled_level_changer)%
+on_info = {+mar_lvl_sim} sr_idle@test, {+mar_intro_start} sr_idle@scene_1_time %=hide_actor_weapon =disable_ui =spawn_object(mar_intro_lebedev_1:mar_intro_scene_1_lebedev:0:249.3) =spawn_object(mar_intro_kalancha:mar_intro_scene_1_kalancha:0:163.0) =spawn_object(mar_intro_actor:mar_intro_scene_1_actor:0:0.0) =disable_level_changer(311:mar_disabled_level_changer) =disable_level_changer(312:mar_disabled_level_changer) =disable_level_changer(313:mar_disabled_level_changer)%
 
 [sr_idle@scene_1_time]
 on_timer = 40000 | sr_idle@scene_2_spawn %=run_postprocess(mar_fade)%
@@ -28,7 +28,7 @@ on_info = {+mar_lvl_sim} sr_idle@test, {+mar_intro_scene_2_end} sr_idle@scene_2_
 
 [sr_idle@scene_2_end]
 ;lvl
-on_info = {+mar_lvl_sim} sr_idle@test, {+mar_intro_scene_2_cameff_end} sr_idle@scene_3_barman_wait_1 %=enable_ui =give_inited_task(storyline:mar_story_talk_with_barman:csky)%
+on_info = {+mar_lvl_sim} sr_idle@test, {+mar_intro_scene_2_cameff_end} sr_idle@scene_3_barman_wait_1 %=show_actor_weapon =enable_ui =give_inited_task(storyline:mar_story_talk_with_barman:csky)%
 
 ;-----------------------------------------------------------------------
 
@@ -91,8 +91,8 @@ on_info = {+mar_tutorial_kill_boars_done} sr_idle@tutorial_surge %+mar_tutorial_
 on_timer = 8000 | sr_idle@tutorial_surge
 
 [sr_idle@tutorial_surge]
-on_timer = 1000 | sr_idle@tutorial_warn_wait %=activate_surge(6)% 
-on_info = {+mar_tutorial_help_reversed} sr_idle@tutorial_warn_wait ;2nd iteration
+on_timer = 1000 | sr_idle@tutorial_warn_wait %=activate_surge(1)% 
+on_info = {+mar_tutorial_help_reversed} sr_idle@tutorial_warn_wait ;2nd iteration 
 
 [sr_idle@tutorial_warn_wait]
 on_timer = 5000 | %=play_sound(mar_csky_leader_starting_surge:csky:mar_csky_commander_name)%
@@ -103,11 +103,11 @@ on_info = {+mar_tutorial_surge_warned} sr_idle@tutorial_final_wait ;2nd iteratio
 on_info = {+mar_tutorial_return_to_base_reversed} sr_idle@tutorial_final_time_1
 
 [sr_idle@tutorial_final_time_1]
-on_timer = 4500 | sr_idle@tutorial_final_time_2 %=update_weather(true) =teleport_actor(mar_intro_scene_2_actor_walk:mar_intro_scene_2_actor_look) +mar_tutorial_returned_to_base%
+on_timer = 4500 | sr_idle@tutorial_final_time_2 %=stop_surge =update_weather(true) =teleport_actor(mar_intro_scene_2_actor_walk:mar_intro_scene_2_actor_look) +mar_tutorial_returned_to_base%
 on_info = {+mar_tutorial_returned_to_base} sr_idle@tutorial_final_time_2 ;2nd iteration
 
 [sr_idle@tutorial_final_time_2]
-on_timer = 4000 | sr_idle@scene_4_signal %=run_cam_effector_global(scenario_cam\Marsh\camera_mar_04_on_foot:3) +mar_tutorial_returned_got_on_feet%
+on_timer = 4000 | sr_idle@scene_4_signal %=create_and_start_surge_custom_timer =run_cam_effector_global(scenario_cam\Marsh\camera_mar_04_on_foot:3) +mar_tutorial_returned_got_on_feet%
 on_info = {+mar_tutorial_returned_got_on_feet} sr_idle@scene_4_signal
 
 ;-----------------------------------------------------------------------

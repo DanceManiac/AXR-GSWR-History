@@ -1,6 +1,14 @@
 --'*************************************************************************************
 --' ƒескриптор обычного задани€
 --'*************************************************************************************
+
+local Warning = false
+local currentPPEfactor = 0.001
+local surge_shock_pp_eff = 1
+local earthquake_cam_eff = 2
+local sleep_cam_eff = 3
+local sleep_fade_pp_eff	= 4
+
 local task_types = {
 	storyline = 0,
 	additional = 1,
@@ -55,14 +63,19 @@ function CGeneralTask:__init(task_ini, id, type)
 	self.base_id		= id
 	self.id				= id
 	self.name			= utils.cfg_get_string(task_ini, id, "name", nil, false, "", tostring(id))
-	--self.icon			= utils.cfg_get_string(task_ini, id, "icon", nil, false, "", tostring(id))
-	self.icon			= "ui_pda2_mtask_overlay"
+	local suffix 		= "_icon"
+	if string.sub(utils.cfg_get_string(task_ini, id, "icon", nil, false, "", tostring(id)), -#suffix) ~= suffix then
+		self.icon		= "ui_pda2_mtask_overlay"
+	else
+		self.icon		= utils.cfg_get_string(task_ini, id, "icon", nil, false, "", tostring(id))
+	end
 
 	self.spot			= utils.cfg_get_string(task_ini, id, "spot", nil, false, "", nil)
 	self.faction_target = utils.cfg_get_string(task_ini, id, "faction", nil, false, "", nil)
 	self.base_prior		= utils.cfg_get_number(task_ini, id, "prior", nil, false, 0)
 	self.prior			= self.base_prior
 	self.text			= utils.cfg_get_string(task_ini, id, "text", nil, false, "", "NO_TEXT")
+	self.task_difficult	= utils.cfg_get_string(task_ini, id, "task_difficult", nil, false, "", "none")
 	self.description	= utils.cfg_get_string(task_ini, id, "description", nil, false, "", "NO_TEXT")
 	self.board			= sim_board.get_sim_board()
 	self.auto_name		= utils.cfg_get_bool(task_ini, id, "auto_name", nil, false, true)
@@ -70,6 +83,7 @@ function CGeneralTask:__init(task_ini, id, type)
 	self.entity_id 		= nil
 	self.support_attack	= utils.cfg_get_bool(task_ini, id, "support_attack", nil, false, true)
 	self.play_regard	= utils.cfg_get_string(task_ini, id, "play_regard", nil, false, "", "")
+	
 	--' ”слови€ выполнени€ и провала квеста
 	local i = 0
 	self.condlist = {}
@@ -93,6 +107,23 @@ function CGeneralTask:__init(task_ini, id, type)
 	self.status = "normal"
 	self.actor_helped = false
 end
+
+function CGeneralTask.get_task_difficult_icon(difficult)
+	local icon_name = nil
+	
+	if difficult == "easy" then
+		icon_name = "task_icon_easy"
+	elseif difficult == "normal" then
+		icon_name = "task_icon_normal"
+	elseif difficult == "hard" then
+		icon_name = "task_icon_hard"
+	else
+		icon_name = "none"
+	end
+		
+	return icon_name
+end
+
 --' ¬ыдача квеста
 function CGeneralTask:give_task(community)
 	--callstack()
@@ -151,6 +182,10 @@ function CGeneralTask:give_task(community)
 
 	t:set_icon_name(self.icon)
 
+	if self.task_difficult ~= "none" then
+		t:set_difficult_icon_name(CGeneralTask.get_task_difficult_icon(self.task_difficult))
+	end
+	
 	if (type=="take_reward") then
 		t:set_description("")
 	else
@@ -1342,9 +1377,6 @@ function CStorylineTask:get_inited_task(obj, faction, entity_id)
 		local sid = tonumber(self.target_story_ids)
 		if(sid) then
 			self.target = id_by_sid(sid)
-			if not(self.target) then
-				abort("Target for storyline task doesnt exist. Story id [%s]", tostring(self.target_story_ids))
-			end
 		else
 			local gulag = nil
 			local param1, param2 = utils.parse_target(self.target_story_ids)
@@ -1353,10 +1385,8 @@ function CStorylineTask:get_inited_task(obj, faction, entity_id)
 			if(param2) then
 				gulag = xr_gulag.get_gulag_by_name(param2)
 			end
-			if(gulag~=nil) then
+			if(gulag~=nil and self.target ~=nil) then
 				self.target = gulag:idNPCOnJob(param1)
-			else
-				abort("Target job is nil.")
 			end
 		end
 --[[
@@ -1370,9 +1400,6 @@ function CStorylineTask:get_inited_task(obj, faction, entity_id)
 	end
 	self.target = self.target.id
 ]]
-	if self.target == nil then
-		abort("wrong target for storyline quest: %s", tostring(self.target_story_ids))
-	end
 	self.entity_id = entity_id
 	return self
 end
@@ -2101,6 +2128,20 @@ end
 class "CHideFromSurgeTask" (task_objects.CGeneralTask)
 function CHideFromSurgeTask:__init(task_ini, id, type) super (task_ini, id, type)
 	self.target_cond	= xr_logic.parse_condlist(nil, "task_manager", "target_cond", utils.cfg_get_string(task_ini, id, "target_cond", nil, false, "", "true"))
+	self.mSteps 		= {} --/массив шагов выполнени€ выброса
+	self.hitFactor		= 0
+	self.effector_set	= false
+	self.second_message_given = false
+	self.blowout_sounds={begin01  = sound_object("ambient\\blowout\\blowout_begin"), 
+						 begin02  = sound_object("ambient\\blowout\\blowout_begin_02"), 
+						 impact01 = sound_object("ambient\\blowout\\blowout_impact"), 
+						 impact02 = sound_object("ambient\\blowout\\blowout_impact_02"), 
+						 wave01	  = sound_object("ambient\\blowout\\blowout_wave_01"), 
+						 wave02	  = sound_object("ambient\\blowout\\blowout_wave_02_short"), 
+						 wave03	  = sound_object("ambient\\blowout\\blowout_wave_03_short"), 
+						 wave04	  = sound_object("ambient\\blowout\\blowout_wave_04"),
+						 siren	  = sound_object("ambient\\blowout\\blowout_siren")
+							}
 end
 -- Check quest target
 function CHideFromSurgeTask:check_target()
@@ -2147,6 +2188,8 @@ function CHideFromSurgeTask:check_task(tm)
 	end
 	self.check_time = time_global()
 	local diff_sec = math.ceil(game.get_game_time():diffSec(self.inited_time)/level.get_time_factor())
+	local diff_game_sec = math.ceil(game.get_game_time():diffSec(self.inited_time)/2)
+
 	local tbl = self.hide_tbl
 		local nearest_cover_dist = 0
 		if game_graph():vertex(tbl[1].m_game_vertex_id):level_id()~=alife():level_id() then
@@ -2168,7 +2211,7 @@ function CHideFromSurgeTask:check_task(tm)
 		end
 	end
 
-	function blowout_hit_with_pp_and_cam_effectors(blowout_hit, cam_effector_id, pp_effector_id)
+	--[[function blowout_hit_with_pp_and_cam_effectors(blowout_hit, cam_effector_id, pp_effector_id)
 		xr_sound.set_sound_play(db.actor:id(), blowout_hit)
 		level.add_cam_effector("camera_effects\\shell_shock.anm", cam_effector_id, false, "")
 		level.add_pp_effector("snd_shock.ppe", pp_effector_id, false)
@@ -2180,7 +2223,7 @@ function CHideFromSurgeTask:check_task(tm)
 		xr_surge_hide.start_surge = false
 		xr_surge_hide.phase = 0
 		xr_surge_hide.surge_activated = false
-	end
+	end]]--
 
 	if(self.t==nil) then
 		self.t = db.actor and db.actor:get_task(tostring(self.entity_id), false) -- "true" used to search only for not finished tasks
@@ -2191,80 +2234,131 @@ function CHideFromSurgeTask:check_task(tm)
 		self.t:change_map_location(self.spot, self.target)
 	end
 	local surge_time = self.wait_time/10-40
+	local rnd_sound=math.ceil(math.random(4000)/1000)
+		
 	if(diff_sec>=surge_time) then
 		local _delta = self.check_time-self.effector_started_time
-		if(self.effector_started_time==-1) then
-			level.set_weather_fx("fx_surge_day_3")
-			level.add_pp_effector("blink.ppe", 200210, false)
-			level.add_pp_effector("snd_shock.ppe", 200208, true)
-			level.set_pp_effector_factor(200208, 0, 10)
-			self.effector_started_time = 0
-		elseif(self.effector_started_time==0) then
-			self.effector_started_time = self.check_time
-			level.set_pp_effector_factor(200208, 1, 0.0075)
-			level.add_cam_effector("camera_effects\\earthquake.anm", 200209, true, "")
-			xr_sound.play_sound_looped(db.actor:id(), "surge_earthquake_sound")
-		elseif not(self.disable_ui) and (_delta>=15000) then
-			level.set_weather("[default]", false)
-			xr_surge_hide.weather_surge = true
-			xr_surge_hide.start_surge = false
-			local sr = db.storage[self.target]
-			if not(sr and sr.object:inside(db.actor:position())) then
-				xr_effects.disable_ui(nil, nil)
-				level.add_pp_effector("mar_surge.ppe", 200211, false)
-			end
-			self:kill_unhided_npc()
-			self.disable_ui = true
-		elseif not(self.kill_em_all) and (_delta>=20000) then
-			self.kill_em_all = true
-			local sr = db.storage[self.target]
-			if not(sr and sr.object:inside(db.actor:position())) then
-				if level.name()=="marsh" or level.name()=="marsh_nvidia" then
-					level.remove_pp_effector(200208)
-					level.remove_cam_effector(200209)
-					xr_sound.stop_sound_looped(db.actor:id())
-					end_surge("reversed")
+-- старт выброса ----------------------------------------------------------------------------
+			if (diff_sec>=0) and (self.mSteps['wBegin']==nil) and (self.effector_started_time==-1) then -- выброс только началс€
+				if (level.get_time_hours() >= 5 and level.get_time_hours() <= 22) then
+					level.set_weather_fx("fx_blowout_day")
 				else
-					xr_effects.kill_actor()
-					end_surge("fail")
+					level.set_weather_fx("fx_blowout_night")
 				end
+				if (rnd_sound % 2) ~= 0 then
+					self:play_blowout_sound("begin01")
+				else
+					self:play_blowout_sound("begin02")
+				end
+				self.mSteps['wBegin']=true
+				self.effector_started_time = 0
+				--news_manager.send_tip(db.actor, "—тарт выброса", 0, "help_play", 5000)
 			end
-		elseif(_delta>=35000) then
-			xr_effects.enable_ui(nil, nil)
-			level.remove_pp_effector(200208)
-			xr_sound.stop_sound_looped(db.actor:id())
-			end_surge("complete")
-		elseif(_delta>=32500) then
-			level.remove_cam_effector(200209)
-			level.add_cam_effector("camera_effects\\earthquake.anm", 200209, false, "")
-			level.set_pp_effector_factor(200208, 0.001, 0.8)
+		-- blowout предупреждение -------------------------------------------------------------------------
+			if (diff_sec>=30) and (Warning==true) and (self.mSteps['wSiren']==nil) then -- сирена
+				self:play_siren_sound()
+				self.mSteps['wSiren']=true
+				--news_manager.send_tip(db.actor, "—ирена", 0, "help_play", 5000)
+			end
+		-- звук начала выброса -------------------------------------------------------------------------
+		-- дл€ катсцены на болотах ---------------------------------------------------------------------
+			if (diff_sec>=47) and (self.mSteps['wImpact']==nil) and (level.name()=="marsh") and not has_alife_info("mar_tutorial_returned_to_base") then
+				if (rnd_sound % 2) ~= 0 then
+					self:play_blowout_sound("impact01")
+				else
+					self:play_blowout_sound("impact02")
+				end
+				xr_effects.disable_ui(nil, nil)
+				level.add_cam_effector("camera_effects\\shell_shock.anm", 20080501, false, "")
+				level.add_pp_effector("snd_shock.ppe", surge_shock_pp_eff, false)
+				level.set_pp_effector_factor(surge_shock_pp_eff, 0, 1)
+				level.add_pp_effector("mar_surge.ppe", 200211, false)
+				level.remove_pp_effector(surge_shock_pp_eff)
+				level.remove_cam_effector(earthquake_cam_eff)
+				xr_sound.stop_sound_looped(db.actor:id(), "blowout_rumble")
+				xr_sound.stop_sound_looped(db.actor:id(), "surge_earthquake_sound_looped")
+				end_surge("reversed")
+			end
+		-- звук начала стандартного выброса --------------------------------------------------------------
+			if (diff_sec>=47) and (self.mSteps['wImpact']==nil) and not(level.name()=="marsh") then -- толчек
+				if (rnd_sound % 2) ~= 0 then
+					self:play_blowout_sound("impact01")
+				else
+					self:play_blowout_sound("impact02")
+				end
+				level.add_cam_effector("camera_effects\\shell_shock.anm", 20080501, false, "")
+				level.add_pp_effector("snd_shock.ppe", surge_shock_pp_eff, false)
+				level.set_pp_effector_factor(surge_shock_pp_eff, 0, 1)
+				self.mSteps['wImpact']=true
+				--news_manager.send_tip(db.actor, "«вук начала выброса", 0, "help_play", 5000)
+			end
+		-- старт грохота-------------------------------------------------------------------------------
+			if (diff_sec>=48)and (self.mSteps['wRumble']==nil) and not(self.blowout_sound) then
+				--xr_sound.play_sound_looped(db.actor:id(), "blowout_rumble")
+				--xr_sound.set_volume_sound_looped(db.actor:id(), "blowout_rumble", 0.25)
+				self.blowout_sound = true
+				self.mSteps['wRumble']=true
+				--news_manager.send_tip(db.actor, "—тарт грохота", 0, "help_play", 5000)
+			end
+			-- плавное изменение силы грохота -------
+			if (diff_sec>=48) and (diff_sec<=73) and (self.mSteps['wRumble']~=nil) and (self.blowout_sound) then
+				--xr_sound.set_volume_sound_looped(db.actor:id(), "blowout_rumble", fade(diff_game_sec,48*5,73*5,0.25,1))
+				--news_manager.send_tip(db.actor, "»зменение силы грохота", 0, "help_play", 5000)
+			end
+		-- предваритеольное - первое землетр€сение -------------------------------------------------------------------------
+			if (diff_sec>=78) and (self.mSteps['wQuake20']==nil) then
+				self.effector_started_time = self.check_time
+				xr_sound.set_sound_play(db.actor:id(), "blowout_begin")
+				level.add_cam_effector("camera_effects\\earthquake_20.anm", earthquake_cam_eff, true, "")
+				xr_surge_hide.phase = 4
+				self.mSteps['wQuake20']=true
+				--news_manager.send_tip(db.actor, "первое землетр€сение", 0, "help_play", 5000)
+			end
+		-- сообщение "скоро выброс" ---------------------------------------------------------------------------------------
+			if(diff_sec>=84) and not(self.second_message_given) then
+				self.second_message_given = true
+				news_manager.send_tip(db.actor, "¬нимание! ¬ыброс вот-вот начнЄтс€, ищите надЄжное убежище!", 0, "help_play", 5000)
+			end
+		-- перва€ волна выброса --------------------------------------------------------------------------------------------
+			if(diff_sec>=100) and (diff_sec<=150) then
+				self:StartWave("fWave",diff_sec,diff_game_sec)
+				--news_manager.send_tip(db.actor, "ѕерва€ волна", 0, "help_play", 5000)
+			end
+		-- втора€ волна выброса --------------------------------------------------------------------------------------------
+			if(diff_sec>=160) and (diff_sec<=216) then
+				self:StartWave("sWave",diff_sec,diff_game_sec)
+				--news_manager.send_tip(db.actor, "¬тора€ волна", 0, "help_play", 5000)
+			end
+		-- звуки землетр€сени€ и громыхани€ на выходе ----------------------------------------------------------------------
+			if (diff_sec>=200) and (diff_sec<=215) and (self.mSteps['wRumble']~=nil) and (self.blowout_sound) and not(self.disable_ui) then
+				--xr_sound.set_volume_sound_looped(db.actor:id(), "blowout_rumble", fade(diff_game_sec,200*5,215*5,1,0))
+				--xr_sound.set_volume_sound_looped(db.actor:id(), "surge_earthquake_sound_looped", fade(diff_game_sec,200*5,215*5,1,0))
+				--news_manager.send_tip(db.actor, "землетр€сение и громыхание на выходе", 0, "help_play", 5000)
+				level.remove_cam_effector(earthquake_cam_eff)
+				xr_effects.enable_ui(nil, nil)
+				end_surge("complete")
+			end
+			-- стоп звуков --------------------------------------------------------------------------------------------------
+			if (diff_sec>=215) and (self.mSteps['wRumble']==true) and (self.blowout_sound) and not(self.kill_em_all) then
+				level.remove_pp_effector(surge_shock_pp_eff)
+				level.remove_cam_effector(earthquake_cam_eff)
+				xr_sound.stop_sound_looped(db.actor:id(), "blowout_rumble")
+				xr_sound.stop_sound_looped(db.actor:id(), "surge_earthquake_sound_looped")
+				self.mSteps['wRumble']=false
+				--news_manager.send_tip(db.actor, "—топ звуков", 0, "help_play", 5000)
+			end
+		-- "выброс закончилс€" ----------------------------------------------------------------------------------------------
+			if (diff_sec>=217) and (self.mSteps['wAfterSurge']==nil) then
+				xr_sound.set_sound_play(db.actor:id(), "blowout_hit_3")
+				self.mSteps['wAfterSurge']=true
+				--news_manager.send_tip(db.actor, "¬ыброс закончилс€", 0, "help_play", 5000)
+			end
+		-- конец выброса перенести на волну----------------------------------------------------------------------------------------------------
+			if(diff_sec>=216) and not(self.ui_disabled) then -- конец выброса
+				self.ui_disabled = true
+				--news_manager.send_tip(db.actor, " онец выброса", 0, "help_play", 5000)
+			end
 		end
-	elseif(diff_sec==7) and (surge_time>13) then
-        blowout_hit_with_pp_and_cam_effectors("blowout_wave_1", 20080502, 20080402)
-	elseif(diff_sec==13) and (surge_time>19) then
-		blowout_hit_with_pp_and_cam_effectors("blowout_wave_2", 20080503, 20080403)
-	elseif(diff_sec==19) and (surge_time>31) then
-		blowout_hit_with_pp_and_cam_effectors("blowout_wave_3", 20080504, 20080404)
-		level.set_weather_fx("fx_surge_day_2")
-	elseif(diff_sec==31) and (surge_time>35) then
-		blowout_hit_with_pp_and_cam_effectors("blowout_hit_1", 20080505, 20080405)
-	elseif(diff_sec==35) and (surge_time>39) then
-		blowout_hit_with_pp_and_cam_effectors("blowout_hit_2", 20080506, 20080406)
-	elseif(diff_sec==39) and (surge_time>44) then
-		blowout_hit_with_pp_and_cam_effectors("blowout_hit_1", 20080507, 20080407)
-	elseif(diff_sec==44) and (surge_time>57) then
-		blowout_hit_with_pp_and_cam_effectors("blowout_hit_3", 20080511, 20080411)
-		level.add_pp_effector("agr_u_fade.ppe", 20080601, false)
-		xr_surge_hide.phase = 4
-	elseif(diff_sec==57) and (surge_time>65) then
-		xr_surge_hide.phase = 5
-	elseif(diff_sec==65) and (surge_time>71) then
-		blowout_hit_with_pp_and_cam_effectors("blowout_wave_1", 20080508, 20080408)
-	elseif(diff_sec==71) and (surge_time>77) then
-		blowout_hit_with_pp_and_cam_effectors("blowout_wave_2", 20080509, 20080409)
-	elseif(diff_sec==77) then
-		blowout_hit_with_pp_and_cam_effectors("blowout_wave_3", 20080510, 20080410)
-	end
 	function blowout_hit_with_pp_and_cam_effectors(blowout_hit, cam_effector_id, pp_effector_id)
 		xr_sound.set_sound_play(db.actor:id(), blowout_hit)
 		level.add_cam_effector("camera_effects\\shell_shock.anm", cam_effector_id, false, "")
@@ -2277,13 +2371,26 @@ function CHideFromSurgeTask:check_task(tm)
 		xr_surge_hide.start_surge = false
 		xr_surge_hide.phase = 0
 		xr_surge_hide.surge_activated = false
+		if(self.blowout_sound) then
+			xr_sound.stop_sound_looped(db.actor:id(), "blowout_rumble")
+		end
+		if(self.second_message_given) then
+			xr_sound.stop_sound_looped(db.actor:id(), "surge_earthquake_sound_looped")
+		end
+		level.remove_pp_effector(surge_shock_pp_eff)
+		level.remove_cam_effector(earthquake_cam_eff)
+		self.effector_set 			= false
+		self.second_message_given 	= false
+		self.ui_disabled  			= false
+		self.blowout_sound			= false
+		self.hitFactor				= 0
 	end
 	if (self.blowout_rumble_level < 1) and  (xr_surge_hide.phase > 1) and (xr_surge_hide.phase < 4 or xr_surge_hide.phase == 5) then
 		self.blowout_rumble_level = self.blowout_rumble_level + 0.015
-		xr_sound.set_volume_sound_looped(db.actor:id(), "blowout_rumble", self.blowout_rumble_level)
+		--xr_sound.set_volume_sound_looped(db.actor:id(), "blowout_rumble", self.blowout_rumble_level)
 	elseif self.blowout_rumble_level > 0 and xr_surge_hide.phase == 4 then
 		self.blowout_rumble_level = self.blowout_rumble_level - 0.11
-		xr_sound.set_volume_sound_looped(db.actor:id(), "blowout_rumble", self.blowout_rumble_level)
+		--xr_sound.set_volume_sound_looped(db.actor:id(), "blowout_rumble", self.blowout_rumble_level)
 	end
 	if(db.storage[self.target]) and (db.storage[self.target].object:inside(db.actor:position())) then
 		if(self.name=="hide_from_surge_name") then
@@ -2295,6 +2402,171 @@ function CHideFromSurgeTask:check_task(tm)
 		end
 	end
 end
+
+function CHideFromSurgeTask:play_blowout_sound(id)
+	local snd_obj=self.blowout_sounds[id]
+	if snd_obj ~= nil and snd_obj:playing() then
+		snd_obj:stop()
+	end
+	if snd_obj ~= nil then
+		snd_obj:play(db.actor)
+		snd_obj.volume = 1
+	end
+end
+	
+--]] -----------------------------------------------------------------------------------------------
+--/											Sp: New Functions
+--]] -----------------------------------------------------------------------------------------------
+function CHideFromSurgeTask:play_siren_sound()
+	local snd_obj=self.blowout_sounds["siren"]
+	local snd_position
+	if snd_obj ~= nil and snd_obj:playing() then
+		snd_obj:stop()
+	end
+	if(level.name()=="zaton") then
+		snd_position=vector():set(115,8,184)
+	elseif(level.name()=="jupiter") then
+		snd_position=vector():set(-50,16,198)
+	else
+		snd_position=vector():set(147,15,-187)
+	end
+	if snd_obj ~= nil then
+		snd_obj:play_at_pos(db.actor, snd_position)
+		snd_obj.volume = 1
+	end
+end
+
+local wTime = 0
+function CHideFromSurgeTask:StartWave(wName, dSec, dGameSec)
+	if (self.mSteps['fWave']==nil) and wName=="fWave" then
+		wTime = 105
+		self.mSteps['fWave']=true
+	end
+	if (self.mSteps['sWave']==nil) and  wName=="sWave" then
+		wTime = 165
+		self.mSteps['sWave']=true
+	end
+	if (dSec==215) then
+		self.effector_set=false
+	end
+	-- последовательна€ смена интенсивности землетр€сений 1->2->3->4 --------------------------------------------------
+	if (dSec==wTime) then
+		xr_sound.play_sound_looped(db.actor:id(), "surge_earthquake_sound_looped")
+		level.remove_cam_effector(earthquake_cam_eff)
+		level.add_cam_effector("camera_effects\\earthquake_40.anm", earthquake_cam_eff, true, "")
+	end
+	if (dSec==wTime+4) then
+		level.remove_cam_effector(earthquake_cam_eff)
+		level.add_cam_effector("camera_effects\\earthquake_60.anm", earthquake_cam_eff, true, "")
+	end
+	if (dSec==wTime+8) then
+		level.remove_cam_effector(earthquake_cam_eff)
+		level.add_cam_effector("camera_effects\\earthquake_80.anm", earthquake_cam_eff, true, "")
+	end
+	if (dSec==wTime+10) then
+		level.remove_cam_effector(earthquake_cam_eff)
+		level.add_cam_effector("camera_effects\\earthquake.anm", earthquake_cam_eff, true, "")
+	end
+	-- процес хиттинга -----------------------------------------------------------------------------------
+	if (dSec>=104) and (dSec<=210) and not(self.effector_set) then
+		level.add_pp_effector("psychic.ppe", surge_shock_pp_eff, true)
+		level.set_pp_effector_factor(surge_shock_pp_eff, 0.001)
+		self.effector_set=true
+	end
+	if (dSec>=wTime+4) and (dSec<=wTime+20) and (self.effector_set) then
+		self.hitFactor=fade(dGameSec,(wTime+4)*5,(wTime+20)*5,0.3,1)
+	end
+	if (dSec>=wTime+20) and (dSec<=wTime+40) and (self.effector_set) then
+		self.hitFactor=fade(dGameSec,(wTime+20)*5,(wTime+40)*5,1,0.3)
+	end
+	-- setting effector
+	local PPEfactor
+	local hitPower
+	local sr = db.storage[self.target]
+	if not(sr and sr.object:inside(db.actor:position())) then
+		PPEfactor = self.hitFactor
+		hitPower = self.hitFactor/7	--TODO а не маловато ли?
+		if PPEfactor < 0.001 then PPEfactor = 0.001 end
+	else
+		PPEfactor = 0.002
+		hitPower = 0
+	end
+	currentPPEfactor = currentPPEfactor+(PPEfactor - currentPPEfactor) * 0.1	
+	if(self.effector_set) then
+		level.set_pp_effector_factor(surge_shock_pp_eff, currentPPEfactor)
+		if (not(self.ui_disabled)) then
+			local h = hit()
+			h.power = hitPower
+			h.impulse = 0.0
+			h.direction = vector():set(0,0,1)
+			h.draftsman = db.actor
+			h:bone("bip01_spine") -- чтобы учитывалась брон€ TODO под сомнением!
+			h.type = hit.telepatic
+			db.actor:hit(h)
+			h.type = hit.radiation
+			db.actor:hit(h)
+		end
+	end
+	if wName=="sWave" and (dSec==wTime+20) then
+		self:kill_unhided_npc()
+		xr_surge_hide.weather_surge = true
+		xr_surge_hide.start_surge = false
+		if not(sr and sr.object:inside(db.actor:position())) then
+			xr_effects.disable_ui(nil, nil)
+			level.add_pp_effector("mar_surge.ppe", 200211, false)
+				if level.name()=="marsh" or level.name()=="marsh_nvidia" then
+					level.remove_pp_effector(200208)
+					level.remove_cam_effector(200209)
+					xr_sound.stop_sound_looped(db.actor:id())
+					end_surge("reversed")
+				else
+					xr_effects.kill_actor()
+					end_surge("fail")
+				end
+		end
+	end
+	-- последовательна€ смена интенсивности землетр€сений 4->3->2->1->0---------------------------------------------------------------------
+	if (dSec==wTime+30) then
+		level.remove_cam_effector(earthquake_cam_eff)
+		level.add_cam_effector("camera_effects\\earthquake_80.anm", earthquake_cam_eff, true, "")
+	end
+	if (dSec==wTime+35) then
+		level.remove_cam_effector(earthquake_cam_eff)
+		level.add_cam_effector("camera_effects\\earthquake_60.anm", earthquake_cam_eff, true, "")
+	end
+	if (dSec==wTime+40) then
+		level.remove_cam_effector(earthquake_cam_eff)
+		level.add_cam_effector("camera_effects\\earthquake_40.anm", earthquake_cam_eff, true, "")
+	end
+	if (dSec==wTime+45) then
+		level.remove_cam_effector(earthquake_cam_eff)
+		level.add_cam_effector("camera_effects\\earthquake_20.anm", earthquake_cam_eff, true, "")
+	end
+end
+
+function fade(currentTime,startTime,endTime,startValue,endValue)
+	local totalFadeTime=endTime-startTime
+	local totalFadeValue=endValue-startValue
+	local elapsedFadeTime=currentTime-startTime
+	local currentValue=(totalFadeValue*elapsedFadeTime)/totalFadeTime+startValue
+	if (totalFadeValue<0) then
+		if (currentValue>startValue) then
+			currentValue=startValue
+		end
+		if (currentValue<endValue) then
+			currentValue=endValue
+		end
+	else
+		if (currentValue>endValue) then
+			currentValue=endValue
+		end
+		if (currentValue<startValue) then
+			currentValue=startValue
+		end
+	end
+	return currentValue
+end
+
 -- Kill all npc who haven't been hidden
 function CHideFromSurgeTask:give_task(community)
 	xr_sound.play_sound_looped(db.actor:id(), "blowout_rumble")

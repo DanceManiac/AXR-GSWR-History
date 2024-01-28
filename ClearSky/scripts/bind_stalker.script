@@ -308,7 +308,7 @@ function actor_binder:update(delta)
 					--printf("weapon_hide1 = [%s]", tostring(weapon_hide))
 								if self.weapon_hide == false then
 										--printf("PL:HIDE_W1 ---> self.weapon_hide = [%s] weapon_hide = [%s]", tostring(self.weapon_hide), tostring(weapon_hide))
-												self.object:hide_weapon()
+												self.object:hide_weapon(1)
 												self.weapon_hide = true
 						--printf("PL:HIDE_W2 ---> self.weapon_hide = [%s] weapon_hide = [%s]", tostring(self.weapon_hide), tostring(weapon_hide))
 								end
@@ -316,7 +316,7 @@ function actor_binder:update(delta)
 					--printf("weapon_hide3 = [%s]", tostring(weapon_hide))
 								if self.weapon_hide == true then
 										--printf("PL:RESTORE_W1 ---> self.weapon_hide = [%s] weapon_hide = [%s]", tostring(self.weapon_hide), tostring(weapon_hide))
-												self.object:restore_weapon()
+												self.object:restore_weapon(1)
 												self.weapon_hide = false
 						--printf("PL:RESTORE_W2 ---> self.weapon_hide = [%s] weapon_hide = [%s]", tostring(self.weapon_hide), tostring(weapon_hide))
 								end
@@ -408,11 +408,12 @@ function actor_binder:update(delta)
 	end
 
 	xr_s.on_actor_update(delta)
+	
 			--' end  --
 	if xr_surge_hide.start_surge then
 		if not xr_surge_hide.weather_surge then
 			xr_surge_hide.weather_surge = true
-			level.set_weather("default_cloudy", true)
+			--level.set_weather("fx_blowout_day", true)
 		end
 		local diff_sec = math.ceil(game.get_game_time():diffSec(xr_surge_hide.initialization_time)/level.get_time_factor())
 		local time_before_lag_noosphere = 0
@@ -448,6 +449,16 @@ function actor_binder:update(delta)
 	end
 	if guiders.teleported_to_another_level and not guiders.level_changed then
 		guiders.action_teleport_to_point()
+	end
+	
+	if xr_surge_hide.surge_activated then
+		if not game.get_saves_lock_status() then
+			game.set_lock_saves(true)
+		end
+	else
+		if game.get_saves_lock_status() then
+			game.set_lock_saves(false)
+		end	
 	end
 end
 ----------------------------------------------------------------------------------------------------------------------

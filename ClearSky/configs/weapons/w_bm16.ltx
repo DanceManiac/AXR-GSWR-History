@@ -30,6 +30,20 @@ holder_fov_modifier		= 0.7     ; во сколько раз увеличивается eye_fov
 cost					= 200
 weapon_class			= shotgun
 
+misfire_probability        = 0.005 ;вероятность осечки при максимальном износе  !!!old - now not working
+;изношенность, при которой появляется шанс осечки
+misfire_start_condition		= 0.6
+;изношеность при которой шанс осечки становится константным
+misfire_end_condition		= 0.1
+;шанс осечки при изношености больше чем misfireStartCondition
+misfire_start_prob	     	= 0.002
+;шанс осечки при изношености больше чем misfireEndCondition
+misfire_end_prob	     	= 0.03
+;увеличение изношености при одиночном выстреле
+condition_shot_dec      	= 0.0065
+;увеличение изношености при выстреле очередью
+condition_queue_shot_dec	= 0.0065
+
 ammo_limit		 		= 60
 ammo_current		 	= 10
 ammo_elapsed		 	= 0
@@ -62,9 +76,6 @@ zoom_cam_max_angle_horz     = 5.0
 zoom_cam_step_angle_horz    = 3.5
 
 fire_dispersion_condition_factor = 10	;увеличение дисперсии в процентах при максимальном износе
-misfire_probability 			= 0.0	;вероятность осечки при максимальном износе
-misfire_condition_k				= 0.05
-condition_shot_dec 				= 0.003 	;увеличение износа при каждом выстреле
 ;-------------------------------------------------------------------------------
 
 hand_dependence 		= 1
@@ -153,11 +164,12 @@ scope_zoom_factor	    			= 55
 ;звуки
 snd_draw				            = weapons\generic_draw
 snd_holster			            = weapons\generic_holster
-snd_shoot			            = weapons\n_bm16_shot
+snd_shoot			            = snd_shoot_bm16
+snd_shoot_actor         		= weapons\n_bm16_shot
 snd_empty			            = weapons\generic_empty
 snd_reload			            = weapons\bm16_reload_lr		;reload both
-snd_shoot_duplet					= weapons\n_bm16_shot
-snd_shoot_1			            = weapons\n_bm16_shot
+snd_shoot_duplet					= snd_shoot_bm16
+snd_shoot_1			            = snd_shoot_bm16
 
 snd_reload_1		            = weapons\bm16_reload_l		;reload left
 
@@ -232,3 +244,9 @@ gl_hud_offset_rot					= 0,0,0
 
 lean_hud_offset_pos				= 0,0,0
 lean_hud_offset_rot				= 0,0,0
+
+hud_collision_enabled			= true
+hud_collision_offset_pos		= 0,-0.5,0
+hud_collision_offset_pos_16x9		= 0,-0.5,0
+hud_collision_offset_rot		= -0.8,0,0
+hud_collision_offset_rot_16x9		= -0.8,0,0

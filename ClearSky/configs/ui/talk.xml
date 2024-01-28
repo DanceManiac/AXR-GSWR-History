@@ -40,14 +40,8 @@
   </button_exit>
 
   <frame_top x="198" y="0" width="630" height="543">
-    <auto_static x="0" y="0" width="630" height="197">
-      <texture>ui_dlg_top</texture>
-    </auto_static>
-    <auto_static x="25" y="197" width="580" height="327">
-      <texture>ui_dlg_middle</texture>
-    </auto_static>
-    <auto_static x="12" y="347" width="33" height="220">
-      <texture>ui_dlg_left_app</texture>
+    <auto_static x="0" y="0" width="679" height="523" stretch="1">
+      <texture>ui_dlg_top_middle</texture>
     </auto_static>
   </frame_top>
   
@@ -62,10 +56,13 @@
 
 
   <question_item x="0" y="0" width="527" height="20" min_height="13">
-		<content_text x="0" y="3" width="510" height="20">
+    <num_text x="0" y="3" width="10" height="20">
+		<text font="letterica18" color="ui_2"/>
+	</num_text>
+	<content_text x="20" y="3" width="490" height="20" offset="3">
 		<text font="letterica18" color="ui_2"  align="l" complex_mode="1"/>
-		<text_color>
-			<t r="231" g="168" b="12"/> <e color="ui_2"/> <h color="ui_1"/>
+	<text_color>
+		<t r="231" g="168" b="12"/> <e color="ui_2"/> <h color="ui_1"/>
     </text_color>
 		</content_text>
 	</question_item>
