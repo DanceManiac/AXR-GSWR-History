@@ -1022,7 +1022,7 @@
             </phrase>
             <phrase id="3">
                 <text>escape_trader_start_dialog_3</text>
-                <next>31</next>
+                <!--next>31</next-->
                 <next>32</next>
             </phrase>
             <phrase id="31">

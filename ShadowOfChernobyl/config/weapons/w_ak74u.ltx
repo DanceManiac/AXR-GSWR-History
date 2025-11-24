@@ -73,7 +73,7 @@ control_inertion_factor			= 1.09f
 cam_relax_speed         		= 6;0.3		;скорость возврата в исходное положение
 cam_dispersion          		= 0.3		;увеличения угла (в градусах) с каждым выстрелом
 cam_dispersion_inc			= 0.20;0.15		;увеличениe cam_dispersion с каждым выстрелом
-cam_dispertion_frac			= 0.9		;ствол будет подыматься на cam_dispersion*cam_dispertion_frac +- cam_dispersion*(1-cam_dispertion_frac)
+cam_dispersion_frac			= 0.9		;ствол будет подыматься на cam_dispersion*cam_dispersion_frac +- cam_dispersion*(1-cam_dispersion_frac)
 cam_max_angle				= 9.0		;максимальный угол отдачи
 cam_max_angle_horz			= 30.0		;(degree) maximum shot horizontal degree 
 cam_step_angle_horz			= 1.25;1.1		;(degree) size of step camera moved in horizontal position while shooting
@@ -161,10 +161,11 @@ silencer_y 				= -3
 ;sounds (name of the sound, volume (0.0 - 1.0), delay (sec))
 snd_draw					= weapons\ak74_draw
 snd_holster					= weapons\generic_holster
-snd_shoot					= weapons\ak74u_shot_0
-snd_shoot1					= weapons\ak74u_shot_1
-snd_shoot2					= weapons\ak74u_shot_2
-snd_shoot3					= weapons\ak74u_shot_3
+snd_shoot               	= snd_shoot_ak74u_0
+snd_shoot1               	= snd_shoot_ak74u_1
+snd_shoot2               	= snd_shoot_ak74u_2
+snd_shoot3               	= snd_shoot_ak74u_3
+snd_shoot_actor				= weapons\ak74u_shot_0
 snd_empty					= weapons\gen_empty, 0.5
 snd_reload					= weapons\ak74u_reload, 0.7, 0.75
 snd_shoot_grenade			= weapons\gen_grenshoot
@@ -228,5 +229,10 @@ zoom_offset			= -0.137700,0.033800,-0.115100
 zoom_rotate_x		= -0.005000
 zoom_rotate_y		= 0.017900
 
-
 zoom_hide_crosshair	= true						;to hide crosshair in zoom 
+
+hud_collision_enabled			= true
+hud_collision_offset_pos		= 0,-0.5,0
+hud_collision_offset_pos_16x9		= 0,-0.5,0
+hud_collision_offset_rot		= -0.8,0,0
+hud_collision_offset_rot_16x9		= -0.8,0,0

@@ -62,7 +62,7 @@ control_inertion_factor		= 1.4f
 cam_relax_speed        		= 5.2;0.25	;скорость возврата в исходное положение
 cam_dispersion         		= 0.25	;увеличения угла (в градусах) с каждым выстрелом
 cam_dispersion_inc		= 0.1	;увеличениe cam_dispersion с каждым выстрелом
-cam_dispertion_frac		= 1.0	;ствол будет подыматься на cam_dispersion*cam_dispertion_frac +- cam_dispersion*(1-cam_dispertion_frac)
+cam_dispersion_frac		= 1.0	;ствол будет подыматься на cam_dispersion*cam_dispersion_frac +- cam_dispersion*(1-cam_dispersion_frac)
 cam_max_angle			= 8.2	;максимальный угол отдачи
 cam_max_angle_horz		= 6.0	;(degree) maximum shot horizontal degree 
 cam_step_angle_horz		= 0.5;0.4	;(degree) size of step camera moved in horizontal position while shooting
@@ -141,7 +141,7 @@ scope_zoom_factor	    	= 50						; fov for zoom mode
 
 ;zoom_enabled				= true
 ;scope_zoom_factor	    	= 15		;SUSAT 4X
-;scope_texture				= wpn\wpn_crosshair_l85
+;scope_texture				= wpn_crosshair_l85
 
 scope_name 					= wpn_addon_scope_susat
 scope_x 					= 78
@@ -156,7 +156,8 @@ grenade_launcher_y 			= 30
 ;звуки
 snd_draw					= weapons\ak74_draw
 snd_holster					= weapons\generic_holster
-snd_shoot					= weapons\t_sig550_shot      ;test_shoot ;was ak74_shoot
+snd_shoot					= snd_shoot_sig550
+snd_shoot_actor 			= weapons\t_sig550_shot
 snd_empty					= weapons\gen_empty, 0.5
 snd_reload					= weapons\sig550_reload, 0.7, 0.35
 snd_shoot_grenade			= weapons\gen_grenshoot
@@ -245,5 +246,9 @@ grenade_normal_zoom_offset			= -0.135400,0.011700,-0.131000
 grenade_normal_zoom_rotate_x		= -0.012300
 grenade_normal_zoom_rotate_y		= -0.000100
 
-
+hud_collision_enabled			= true
+hud_collision_offset_pos		= 0,-0.5,0
+hud_collision_offset_pos_16x9		= 0,-0.5,0
+hud_collision_offset_rot		= -0.8,0,0
+hud_collision_offset_rot_16x9		= -0.8,0,0
 
