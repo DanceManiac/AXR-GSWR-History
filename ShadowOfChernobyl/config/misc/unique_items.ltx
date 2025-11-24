@@ -7,7 +7,7 @@ inv_name_short					= novice_outfit_name_m
 description						= novice_outfit_description_m
 health_restore_speed			= 0.0006
 satiety_restore_speed			= 0.001
-bleeding_restore_speed			= -0.006
+bleeding_restore_speed			= 0.006; Hrust - исправлено негативное влияние на кровотечение
 power_restore_speed				= 0.003
 inv_grid_x						= 12
 inv_grid_y						= 21
@@ -44,6 +44,7 @@ bones_koeff_protection			= gilet_antigas_damage ; TODO Нужна защита от пуль
 inv_grid_x						= 18
 inv_grid_y						= 21
 nightvision_sect				= effector_nightvision_bad
+shader_nightvision_sect			= shader_nightvision_1
 ; TODO Уменьшить износ
 
 [outfit_specnaz_m1]:specops_outfit	;Модифицированный армейский бронекостюм
@@ -51,7 +52,7 @@ $spawn							= "outfit\uniq\outfit_specnaz_m1"
 inv_name						= specnaz_outfit_name_m1
 inv_name_short					= specnaz_outfit_name_m1
 description						= specnaz_outfit_description_m1
-bleeding_restore_speed			= -0.006
+bleeding_restore_speed			= 0.006; Hrust - исправлено негативное влияние на кровотечение
 inv_grid_x						= 18
 inv_grid_y						= 24
 ; TODO Уменьшить износ
@@ -88,6 +89,7 @@ shock_protection 				= 0.9
 inv_grid_x						= 12
 inv_grid_y						= 24
 nightvision_sect				= effector_nightvision_bad
+shader_nightvision_sect			= shader_nightvision_1
 ; TODO Уменьшить износ
 
 [outfit_exo_m1]:exo_outfit	;Модифицированный экзоскелет
@@ -98,6 +100,7 @@ description						= exo_outfit_description_m1
 inv_grid_x						= 14
 inv_grid_y						= 24
 nightvision_sect				= effector_nightvision_good
+shader_nightvision_sect			= shader_nightvision_2
 ; TODO Уменьшить износ
 
 
@@ -123,7 +126,7 @@ inv_name_short					= wpn-abakan_m1
 fire_dispersion_base			= 0.12
 scope_status					= 1
 scope_zoom_factor				= 20
-scope_texture					= wpn\wpn_crosshair
+scope_texture					= wpn_crosshair
 condition_shot_dec 				= 0.0001
 inv_grid_x						= 0
 inv_grid_y						= 20
@@ -217,7 +220,7 @@ inv_name						= wpn-lr300_m1
 inv_name_short					= wpn-lr300_m1
 rpm								= 300
 fire_dispersion_base			= 0.09
-scope_texture					= wpn\wpn_crosshair_l85
+scope_texture					= wpn_crosshair_l85
 scope_status					= 1
 silencer_status					= 1
 condition_shot_dec 				= 0.00005
@@ -290,7 +293,7 @@ description						= enc_weapons1_wpn-val_m1
 inv_name						= wpn-val_m1
 inv_name_short					= wpn-val_m1
 scope_status					= 2
-scope_texture					= wpn\wpn_crosshair
+scope_texture					= wpn_crosshair
 condition_shot_dec 				= 0.00005
 inv_grid_x						= 5
 inv_grid_y						= 31
@@ -350,7 +353,7 @@ inv_name						= wpn-sig_m2
 inv_name_short					= wpn-sig_m2
 scope_status					= 1
 scope_zoom_factor				= 20
-scope_texture					= wpn\wpn_crosshair_l85
+scope_texture					= wpn_crosshair_l85
 condition_shot_dec 				= 0.00005
 inv_grid_x						= 0
 inv_grid_y						= 22

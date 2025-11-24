@@ -56,6 +56,64 @@
 		<text align="c" font="graffiti22" r="225" g="225" b="250" a="255" />
 	</quick_info>
 
+	<hud_info>
+		<position x="0" y="0" />
+		<item_name x="0" y1="0.44" y2="0.48" y3="0.55" />
+		<font font="graffiti19" />
+	</hud_info>
+
+	<indicator_booster_psy x="20" y="710" width="31" height="41">
+		<texture>ui_inGame2_shield_Psy</texture>
+	</indicator_booster_psy>
+    <indicator_booster_radia x="62" y="710" width="31" height="41">
+		<texture>ui_inGame2_shield_Radiation</texture>
+	</indicator_booster_radia>
+    <indicator_booster_chem x="104" y="710" width="31" height="41">
+		<texture>ui_inGame2_shield_biological</texture>
+	</indicator_booster_chem>
+    <indicator_booster_wound x="146" y="710" width="31" height="41">
+		<texture>ui_inGame2_shield_blood</texture>
+	</indicator_booster_wound>
+    <indicator_booster_weight x="188" y="710" width="31" height="41">
+		<texture>ui_inGame2_shield_force</texture>
+	</indicator_booster_weight>
+    <indicator_booster_health x="230" y="710" width="31" height="41">
+		<texture>ui_inGame2_shield_health</texture>
+	</indicator_booster_health>
+    <indicator_booster_power x="272" y="710" width="31" height="41">
+		<texture>ui_inGame2_shield_stamina</texture>
+	</indicator_booster_power>
+    <indicator_booster_rad x="314" y="710" width="31" height="41">
+		<texture>ui_inGame2_shield_radiation_cleanup</texture>
+	</indicator_booster_rad>
+
+	<indicator_booster_satiety x="20" y="660" width="24" height="41">
+		<texture>ui_inGame2_shield_Satiety</texture>
+	</indicator_booster_satiety>
+	<indicator_booster_thirst x="62" y="660" width="24" height="41">
+		<texture>ui_inGame2_shield_Thirst</texture>
+	</indicator_booster_thirst>
+	<indicator_booster_psy_health x="104" y="660" width="24" height="41">
+		<texture>ui_inGame2_shield_Psy_Health</texture>
+	</indicator_booster_psy_health>
+	<indicator_booster_intoxication x="146" y="660" width="24" height="41">
+		<texture>ui_inGame2_shield_Intoxication</texture>
+	</indicator_booster_intoxication>
+	<indicator_booster_sleepeness x="188" y="660" width="24" height="41">
+		<texture>ui_inGame2_shield_Sleepeness</texture>
+	</indicator_booster_sleepeness>
+	<indicator_booster_alcoholism x="230" y="660" width="24" height="41">
+		<texture>ui_inGame2_shield_Alcoholism</texture>
+	</indicator_booster_alcoholism>
+	<indicator_booster_hangover x="272" y="660" width="24" height="41">
+		<texture>ui_inGame2_shield_Hangover</texture>
+	</indicator_booster_hangover>
+	<indicator_booster_narcotism x="314" y="660" width="24" height="41">
+		<texture>ui_inGame2_shield_Narcotism</texture>
+	</indicator_booster_narcotism>
+	<indicator_booster_withdrawal x="356" y="660" width="24" height="41">
+		<texture>ui_inGame2_shield_Withdrawal</texture>
+	</indicator_booster_withdrawal>
 	
 	<icons_scroll_view  x="955" y="100" width="65" height="455" right_ident="2" always_show_scroll="0" vert_interval="18" inverse_dir="1" flip_vert="0"/>
 
@@ -70,6 +128,14 @@
 	<wound_static x="0" y="0" width="64" height="64">
 		<texture>ui_hud_icon_drop</texture>
 	</wound_static>
+	
+	<frostbite_static x="0" y="0" width="64" height="64">
+		<texture>ui_hud_icon_frostbite</texture>
+	</frostbite_static>
+
+	<heating_static x="0" y="0" width="64" height="64">
+		<texture>ui_hud_icon_heating</texture>
+	</heating_static>
 
 	<starvation_static x="0" y="0" width="64" height="64">
 		<texture>ui_hud_icon_eat</texture>
@@ -91,6 +157,9 @@
 		<texture>ui_hud_icon_artefact</texture>
 	</artefact_static>
 
+	<disk_io x="1000" y="750" width="16" height="16" stretch="1">
+		<texture>ui\ui_disk_io</texture>
+	</disk_io>
 
 	<flashing_icons>
 		<flashing_icon x="13" y="210" width="48" height="29" type="pda" light_anim="ui_slow_blinking_alpha">
@@ -98,7 +167,7 @@
 		</flashing_icon>
 	</flashing_icons>
 
-	<pick_up_item x="437" y="400" width="150" height="100"/>
+	<pick_up_item  x="512" y="478" scale="1"/>
 
 	<artefact_panel x="130" y="710" width="730" height="50" cell_width="50" cell_height="50" scale="0.75"/>
 	
