@@ -4,7 +4,6 @@
 #define ISAMPLE 0
 #endif
 
-uniform float3x4	m_v2w;
 uniform	Texture2D	s_half_depth;
 
 #include "ssao.ps"
@@ -21,7 +20,7 @@ struct	_input
 
 float4 main ( _input I 
 #ifdef	MSAA_OPTIMIZATION	
-	,uint	iSample	: SV_SAMPLEINDEX;
+	,uint	iSample	: SV_SAMPLEINDEX
 #endif	//	MSAA_OPTIMIZATION	
 ) : SV_Target0
 {

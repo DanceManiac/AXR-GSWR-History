@@ -3,7 +3,7 @@ active = sr_idle@scene_1_spawn
 
 [sr_idle@scene_1_spawn]
 ;lvl
-on_info = {+mar_lvl_sim} sr_idle@test, {+mar_intro_start} sr_idle@scene_1_time %=disable_ui =spawn_object(mar_intro_lebedev_1:mar_intro_scene_1_lebedev:0:249.3) =spawn_object(mar_intro_kalancha:mar_intro_scene_1_kalancha:0:163.0) =spawn_object(mar_intro_actor:mar_intro_scene_1_actor:0:0.0) =disable_level_changer(311:mar_disabled_level_changer) =disable_level_changer(312:mar_disabled_level_changer) =disable_level_changer(313:mar_disabled_level_changer)%
+on_info = {+mar_lvl_sim} sr_idle@test, {+mar_intro_start} sr_idle@scene_1_time %=hide_actor_weapon =disable_ui =spawn_object(mar_intro_lebedev_1:mar_intro_scene_1_lebedev:0:249.3) =spawn_object(mar_intro_kalancha:mar_intro_scene_1_kalancha:0:163.0) =spawn_object(mar_intro_actor:mar_intro_scene_1_actor:0:0.0) =disable_level_changer(311:mar_disabled_level_changer) =disable_level_changer(312:mar_disabled_level_changer) =disable_level_changer(313:mar_disabled_level_changer)%
 
 [sr_idle@scene_1_time]
 on_timer = 40000 | sr_idle@scene_2_spawn %=run_postprocess(mar_fade)%
@@ -28,7 +28,7 @@ on_info = {+mar_lvl_sim} sr_idle@test, {+mar_intro_scene_2_end} sr_idle@scene_2_
 
 [sr_idle@scene_2_end]
 ;lvl
-on_info = {+mar_lvl_sim} sr_idle@test, {+mar_intro_scene_2_cameff_end} sr_idle@scene_3_barman_wait_1 %=enable_ui =give_inited_task(storyline:mar_story_talk_with_barman:csky)%
+on_info = {+mar_lvl_sim} sr_idle@test, {+mar_intro_scene_2_cameff_end} sr_idle@scene_3_barman_wait_1 %=show_actor_weapon =enable_ui =give_inited_task(storyline:mar_story_talk_with_barman:csky)%
 
 ;-----------------------------------------------------------------------
 
