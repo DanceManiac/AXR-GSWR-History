@@ -34,5 +34,5 @@ float4 main	(p_flat I, float4 pos2d : SV_Position): SV_Target
 	
 	float3 final = lerp(t_svp, t_base, t_base.a); // Сетку с вьюпортом
 	
-	return float4(final.r, final.g, final.b, m_hud_params.x);
+	return float4(final.r, final.g, final.b, m_hud_params.x * m_blender_mode.z);
 }

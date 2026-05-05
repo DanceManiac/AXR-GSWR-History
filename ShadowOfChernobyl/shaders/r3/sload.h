@@ -140,7 +140,7 @@ float4 tbase( float2 tc )
 	#endif
 
 		// Apply Parallax TC
-		I.tcdh = final_tc;
+		I.tcdh.xy = final_tc;
 
 	}
 

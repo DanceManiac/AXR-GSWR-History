@@ -160,14 +160,12 @@ function keep_item(npc, item)
 		return
 	end
 	
-	if (item:is_antigas_filter() and mfs_functions.ReadOutfitFiltersEnabled()) then
-		set_charge_level(item)
-		return
-	end
-	
-	--if ((item:is_detector() and mfs_functions.ReadDetectorsUseBatteryEnabled()) // For future
-	--or (item:is_anomaly_detector() and mfs_functions.ReadAnomalyDetectorsUseBatteryEnabled()) 
-	if (item:is_torch() and mfs_functions.ReadTorchUseBatteryEnabled()) then
+	local is_charable_item = (item:is_antigas_filter() and mfs_functions.ReadOutfitFiltersEnabled())
+			--or (item:is_detector() and mfs_functions.ReadDetectorsUseBatteryEnabled())
+			--or (item:is_anomaly_detector() and mfs_functions.ReadAnomalyDetectorsUseBatteryEnabled())
+			or (item:is_torch() and mfs_functions.ReadTorchUseBatteryEnabled())
+		
+	if is_charable_item then
 		set_charge_level(item)
 		return
 	end
@@ -178,19 +176,17 @@ function keep_item(npc, item)
 	end
 
     local item_id = item:id()
+	
     local item_in_slot = npc:item_in_slot(1)
-    if item_in_slot ~= nil and
-       item_in_slot:id() == item_id
-    then
+    if item_in_slot ~= nil and item_in_slot:id() == item_id then
         item:unload_magazine()
     --' Тут надо уменьшить кондишн оружия
 		item:set_condition((math.random(15)+75)/100)
         return true
     end
+	
     item_in_slot = npc:item_in_slot(2)
-    if item_in_slot ~= nil and
-       item_in_slot:id() == item_id
-    then
+    if item_in_slot ~= nil and item_in_slot:id() == item_id then
         item:unload_magazine()
     --' Тут надо уменьшить кондишн оружия
 		item:set_condition((math.random(15)+75)/100)
