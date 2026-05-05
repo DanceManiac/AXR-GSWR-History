@@ -35,6 +35,7 @@ function PsiStormManager:__init()
 end
 
 function PsiStormManager:initialize()
+	self.lw = level_weathers.get_weather_manager()
 	self.surge_manager = surge_manager.get_surge_manager()
 	self.ini = ini_file("misc\\surge_manager.ltx")
 	self.game_time_factor=level.get_time_factor()
@@ -283,7 +284,25 @@ end
 --                                  UPDATE
 -- ###############################################################################################
 
+function PsiStormManager:update_weather_manager()
+    -- Получаем разницу во времени до пси-шторма
+    local g_time = game.get_game_time()
+    local diff_s = math.floor(self._delta - g_time:diffSec(self.last_psi_storm_time))
+    
+    -- Если до выброса меньше 7200 секунд (2 часа) и больше 0 секунд
+    if diff_s > 0 and diff_s < 7200 then
+        -- Активируем pre_blowout период в менеджере погоды
+        self.lw.pre_blowout_period = true
+        -- printf("DBG_SURGE: Pre-blowout period ACTIVATED. Time to surge: %s seconds", diff_s)
+    else
+        -- Деактивируем, если время вышло или выброс прошел
+        self.lw.pre_blowout_period = false
+    end
+end
+
 function PsiStormManager:update()
+	self:update_weather_manager()
+
 	if(device().precache_frame > 1) then
 		return
 	end
@@ -384,6 +403,7 @@ function PsiStormManager:update()
 				if life_time>=20 and vortex.hit==false then
 					self:kill_crows_at_pos(vortex.sound_pos)
 					self:spawn_artefact(vortex.sound_pos)
+					game.set_devices_psy_factor(game.get_devices_psy_factor() + 0.1)
 					if (cover==nil or not(db.storage[cover].object:inside(db.actor:position()))) then
 						self:vortex_actor_hit(vortex)
 					end

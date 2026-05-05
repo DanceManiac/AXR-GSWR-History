@@ -679,6 +679,10 @@ end
 function on_actor_withdrawal()
 end
 
+--' Обморожение
+function on_actor_frostbite()
+end
+
 --' іадиация
 function on_actor_radiation()
 

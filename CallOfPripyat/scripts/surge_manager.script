@@ -180,7 +180,25 @@ function CSurgeManager:get_nearest_cover()
 	end
 end
 
+function CSurgeManager:update_weather_manager()
+    -- Получаем разницу во времени до выброса
+    local g_time = game.get_game_time()
+    local diff_s = math.floor(self._delta - g_time:diffSec(self.last_surge_time))
+    
+    -- Если до выброса меньше 7200 секунд (2 часа) и больше 0 секунд
+    if diff_s > 0 and diff_s < 7200 then
+        -- Активируем pre_blowout период в менеджере погоды
+        self.lw.pre_blowout_period = true
+        -- printf("DBG_SURGE: Pre-blowout period ACTIVATED. Time to surge: %s seconds", diff_s)
+    else
+        -- Деактивируем, если время вышло или выброс прошел
+        self.lw.pre_blowout_period = false
+    end
+end
+
 function CSurgeManager:update()
+	self:update_weather_manager()
+
 	if (device().precache_frame > 1) then
 		return
 	end
