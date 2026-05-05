@@ -1,0 +1,42 @@
+<window>
+	<compass_panel>
+		<!--Фон компаса-->
+		<background x="537" y="40" width="350" height="32" stretch="1" alignment="c">
+			<texture>mfs_team\ui\compass\compass</texture>
+		</background>
+		
+		<directions offset_y="20" fade_near="0.15">
+			<north str_id="ui_st_compass_n" angle="0" r="255" g="100" b="100" a="255"/>
+			<northeast str_id="ui_st_compass_ne" angle="0.785398" enabled="0"/>
+			<east str_id="ui_st_compass_e" angle="1.570796"/>
+			<southeast str_id="ui_st_compass_se" angle="2.356194" enabled="0"/>
+			<south str_id="ui_st_compass_s" angle="3.141593"/>
+			<southwest str_id="ui_st_compass_sw" angle="-2.356194" enabled="0"/>
+			<west str_id="ui_st_compass_w" angle="-1.570796"/>
+			<northwest str_id="ui_st_compass_nw" angle="-0.785398" enabled="0"/>
+		</directions>
+
+		<!--Контейнер точек-->
+		<points_frame x="537" y="40" width="350" height="16" points_width="12" points_height="12" stretch="1" alignment="c"/>
+
+		<!--Компас-->
+		<compass x="537" y="40" width="350" height="32" heading="1" alignment="c">
+			<texture>mfs_team\ui\compass\compass</texture>
+		</compass>
+
+		<!--Панель опасности-->
+		<danger_panel x="537" y="40" width="350" height="32" stretch="1" alignment="c">
+			<texture>mfs_team\ui\compass\compass</texture>
+		</danger_panel>
+
+		<!--Текст расстояния до ближайшей точки-->
+		<point_dist width="0" height="20" alignment="c">
+			<text x="5" y="-7" font="letterica16" color="ui_7" align="c" vert_align="c"/>
+		</point_dist>
+
+		<!--Текст названия ближайшей точки-->
+		<point_name width="100" height="20" alignment="c">
+			<text x="5" y="-20" font="letterica16" color="ui_7" align="c" vert_align="c"/>
+		</point_name>
+	</compass_panel>
+</window>

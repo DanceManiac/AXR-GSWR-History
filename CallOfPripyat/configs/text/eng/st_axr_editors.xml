@@ -261,4 +261,16 @@
 	<string id="st_editor_imgui_choose_pp_effect">
 		<text>Choose Effect</text>
 	</string>
+	<string id="st_editor_imgui_draw_markers">
+		<text>Draw markers</text>
+	</string>
+	<string id="st_hud_editor_bones_transform">
+		<text>Bones transform</text>
+	</string>
+	<string id="st_hud_editor_bones_trans_fmode">
+		<text>Safety parameters</text>
+	</string>
+	<string id="st_hud_editor_bones_firemode">
+		<text>fire mode</text>
+	</string>
 </string_table>

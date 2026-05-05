@@ -164,7 +164,7 @@
         </level_changer_left_up_spot>
 
 
-        <treasure hint="st_ui_pda_secret">
+        <treasure hint="st_ui_pda_secret" compass_avail="1">
                 <level_map spot="treasure_spot" pointer="quest_pointer"/>
                 <mini_map  spot="treasure_spot_mini"/>
         </treasure>
@@ -461,7 +461,7 @@
 
 
         <!-- Отряды -->
-  <alife_presentation_squad_friend>
+  <alife_presentation_squad_friend compass_avail="1">
 <!--	<level_map spot="alife_presentation_squad_friend_spot"/> -->
     <mini_map spot="alife_presentation_squad_friend_spot_mini"/>
   </alife_presentation_squad_friend>
@@ -472,7 +472,7 @@
     <texture r="0" g="255" b="0">ui_minimap_squad_leader</texture>
   </alife_presentation_squad_friend_spot_mini>
 
-  <alife_presentation_squad_neutral>
+  <alife_presentation_squad_neutral compass_avail="1">
 <!--    <level_map spot="alife_presentation_squad_neutral_spot"/> -->
     <mini_map spot="alife_presentation_squad_neutral_spot_mini"/>
   </alife_presentation_squad_neutral>
@@ -484,7 +484,7 @@
   </alife_presentation_squad_neutral_spot_mini>
 
 
-  <alife_presentation_squad_enemy>
+  <alife_presentation_squad_enemy compass_avail="1">
 <!--    <level_map spot="alife_presentation_squad_enemy_spot"/> -->
 	<mini_map spot="alife_presentation_squad_enemy_spot_mini"/>
   </alife_presentation_squad_enemy>
@@ -551,7 +551,7 @@
   </alife_presentation_friend_squad_attack_point_spot_mini>
 -->
 	<!-- Сюжетные задания -->
-	<storyline_task_location>
+	<storyline_task_location compass_avail="1">
 	    <level_map spot="storyline_task_spot" pointer="quest_pointer2"/>
 	    <mini_map spot="storyline_task_spot_mini" pointer="quest_pointer2"/>
 	</storyline_task_location>
@@ -571,7 +571,7 @@
 	    <texture_above>storyline_task_spot_above</texture_above>
 	</storyline_task_spot_mini>
 	<!-- Второстепенные задания -->
-	<secondary_task_location>
+	<secondary_task_location compass_avail="1">
 		<level_map spot="secondary_task_spot" pointer="quest_pointer"/>
 		<mini_map spot="secondary_task_spot_mini" pointer="quest_pointer"/>
 	</secondary_task_location>
@@ -675,7 +675,7 @@
 
 
         <!-- level_spot -->
-        <ui_pda2_mechanic_location hint="st_ui_pda_legend_mechanic">
+        <ui_pda2_mechanic_location hint="st_ui_pda_legend_mechanic" compass_avail="1">
                 <level_map spot="ui_pda2_mechanic_location_spot"/>
                 <mini_map spot="ui_pda2_mechanic_location_mini_spot"/>
         </ui_pda2_mechanic_location>
@@ -686,7 +686,7 @@
                 <texture>ui_inGame2_PDA_icon_Stalker_machanik_small</texture>
         </ui_pda2_mechanic_location_mini_spot>
 
-        <ui_pda2_trader_location hint="st_ui_pda_legend_trader">
+        <ui_pda2_trader_location hint="st_ui_pda_legend_trader" compass_avail="1">
                 <level_map spot="ui_pda2_trader_location_spot"/>
 				<mini_map spot="ui_pda2_trader_location_mini_spot" pointer="quest_pointer"/>
         </ui_pda2_trader_location>
@@ -697,7 +697,7 @@
                 <texture>ui_inGame2_PDA_icon_Stalker_Trader_small</texture>
         </ui_pda2_trader_location_mini_spot>
 
-        <ui_pda2_scout_location hint="st_ui_pda_legend_scout">
+        <ui_pda2_scout_location hint="st_ui_pda_legend_scout" compass_avail="1">
                 <level_map spot="ui_pda2_scout_location_spot"/>
                 <mini_map spot="ui_pda2_scout_location_mini_spot"/>
         </ui_pda2_scout_location>
@@ -708,7 +708,7 @@
                 <texture>ui_inGame2_PDA_icon_Stalker_guide_small</texture>
         </ui_pda2_scout_location_mini_spot>
 
-        <ui_pda2_quest_npc_location hint="st_ui_pda_legend_vip">
+        <ui_pda2_quest_npc_location hint="st_ui_pda_legend_vip" compass_avail="1">
                 <level_map spot="ui_pda2_quest_npc_location_spot"/>
                 <mini_map spot="ui_pda2_quest_npc_location_mini_spot"/>
         </ui_pda2_quest_npc_location>
@@ -719,7 +719,7 @@
                 <texture>ui_inGame2_PDA_icon_Stalker_VIP</texture>
         </ui_pda2_quest_npc_location_mini_spot>
 
-        <ui_pda2_medic_location hint="st_ui_pda_legend_medic">
+        <ui_pda2_medic_location hint="st_ui_pda_legend_medic" compass_avail="1">
                 <level_map spot="ui_pda2_medic_location_spot"/>
                 <mini_map spot="ui_pda2_medic_location_mini_spot"/>
         </ui_pda2_medic_location>
@@ -730,7 +730,7 @@
                 <texture>ui_inGame2_PDA_icon_Stalker_Medic_small</texture>
         </ui_pda2_medic_location_mini_spot>
 
-        <ui_pda2_actor_box_location hint="st_ui_pda_actor_box">
+        <ui_pda2_actor_box_location hint="st_ui_pda_actor_box" compass_avail="1">
                 <level_map spot="ui_pda2_actor_box_location_spot"/>
                 <mini_map spot="ui_pda2_actor_box_location_mini_spot"/>
         </ui_pda2_actor_box_location>
@@ -741,7 +741,7 @@
                 <texture>ui_inGame2_PDA_icon_Actor_Box_small</texture>
         </ui_pda2_actor_box_location_mini_spot>
 
-        <ui_pda2_actor_sleep_location hint="st_ui_pda_sleep_place">
+        <ui_pda2_actor_sleep_location hint="st_ui_pda_sleep_place" compass_avail="1">
                 <level_map spot="ui_pda2_actor_sleep_location_spot"/>
                 <mini_map spot="ui_pda2_actor_sleep_location_mini_spot"/>
         </ui_pda2_actor_sleep_location>
