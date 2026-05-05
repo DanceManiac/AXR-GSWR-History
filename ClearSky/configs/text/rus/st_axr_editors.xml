@@ -166,7 +166,7 @@
 		<text>Квестовые предметы</text>
 	</string>
 	<string id="st_spawner_devices">
-		<text>Девайсы</text>
+		<text>Устройства</text>
 	</string>
 	<string id="st_spawner_other_items">
 		<text>Другое</text>
@@ -260,5 +260,17 @@
 	</string>
 	<string id="st_editor_imgui_choose_pp_effect">
 		<text>Выбор эффекта</text>
+	</string>
+	<string id="st_editor_imgui_draw_markers">
+		<text>Показывать маркеры</text>
+	</string>
+	<string id="st_hud_editor_bones_transform">
+		<text>Трансформация костей</text>
+	</string>
+	<string id="st_hud_editor_bones_trans_fmode">
+		<text>Настройки предохранителя</text>
+	</string>
+	<string id="st_hud_editor_bones_firemode">
+		<text>режим стрельбы</text>
 	</string>
 </string_table>

@@ -228,4 +228,7 @@
 	<string id="kb_quick_grenade">
 		<text>Быстрый бросок гранаты</text>
 	</string>
+	<string id="kb_switch_nv">
+		<text>ПНВ прицела</text>
+	</string>
 </string_table>

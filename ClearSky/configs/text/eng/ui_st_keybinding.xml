@@ -228,4 +228,7 @@
 	<string id="kb_quick_grenade">
 		<text>Quck grenade throw</text>
 	</string>
+	<string id="kb_switch_nv">
+		<text>Scope nightvision</text>
+	</string>
 </string_table>
