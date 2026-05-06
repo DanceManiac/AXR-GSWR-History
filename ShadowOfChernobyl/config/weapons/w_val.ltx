@@ -60,7 +60,7 @@ control_inertion_factor		= 1.04f
 cam_relax_speed         	= 5	;скорость возврата в исходное положение
 cam_dispersion          	= 0.3	;увеличения угла (в градусах) с каждым выстрелом
 cam_dispersion_inc		= 0.05	;увеличениe cam_dispersion с каждым выстрелом
-cam_dispertion_frac		= 1.0	;ствол будет подыматься на cam_dispersion*cam_dispertion_frac +- cam_dispersion*(1-cam_dispertion_frac)
+cam_dispersion_frac		= 1.0	;ствол будет подыматься на cam_dispersion*cam_dispersion_frac +- cam_dispersion*(1-cam_dispersion_frac)
 cam_max_angle			= 7.0	;максимальный угол отдачи
 cam_max_angle_horz		= 10.0	;(degree) maximum shot horizontal degree 
 cam_step_angle_horz		= 0.5;0.4	;(degree) size of step camera moved in horizontal position while shooting
@@ -133,7 +133,7 @@ grenade_launcher_status		= 0
 zoom_enabled				= true
 scope_zoom_factor		    = 50
 scope_name 					= wpn_addon_scope
-scope_texture				= wpn\wpn_crosshair
+scope_texture				= wpn_crosshair
 scope_x 					= 37						; offset in inventory icon
 scope_y 					= 0
 ;звуки
@@ -171,3 +171,8 @@ zoom_offset			= -0.132450,0.054700,-0.080700
 zoom_rotate_x		= 0.024500
 zoom_rotate_y		= 0.017200
 
+hud_collision_enabled			= true
+hud_collision_offset_pos		= 0,-0.5,0
+hud_collision_offset_pos_16x9		= 0,-0.5,0
+hud_collision_offset_rot		= -0.8,0,0
+hud_collision_offset_rot_16x9		= -0.8,0,0

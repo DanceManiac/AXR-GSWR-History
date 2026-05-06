@@ -81,7 +81,7 @@
 	</red_mini_spot>
 
 
-	<eliminate_lager_location>
+	<eliminate_lager_location compass_avail="1">
 		<level_map spot="eliminate_lager_spot"		pointer="quest_pointer"/>
 		<mini_map spot="eliminate_lager_spot_mini"	pointer="quest_pointer"/>
 	</eliminate_lager_location>
@@ -94,7 +94,7 @@
 		<texture_above r="0" g="255" b="0">ui_mini_sn_spot_above</texture_above>
 	</eliminate_lager_spot_mini>
 
-	<defend_lager_location>
+	<defend_lager_location compass_avail="1">
 		<level_map spot="defend_lager_spot"		pointer="quest_pointer"/>
 		<mini_map spot="defend_lager_spot_mini"	pointer="quest_pointer"/>
 	</defend_lager_location>
@@ -107,7 +107,7 @@
 		<texture_above r="0" g="255" b="0">ui_mini_sn_spot_above</texture_above>
 	</defend_lager_spot_mini>
 
-	<artefact_location>
+	<artefact_location compass_avail="1">
 		<level_map spot="artefact_spot"		pointer="quest_pointer"/>
 		<mini_map spot="artefact_spot_mini"	pointer="quest_pointer"/>
 	</artefact_location>
@@ -120,7 +120,7 @@
 		<texture_above r="0" g="255" b="0">ui_mini_sn_spot_above</texture_above>
 	</artefact_spot_mini>
 
-	<kill_stalker_location>
+	<kill_stalker_location compass_avail="1">
 		<level_map spot="kill_stalker_spot"		pointer="quest_pointer"/>
 		<mini_map spot="kill_stalker_spot_mini"	pointer="quest_pointer"/>
 	</kill_stalker_location>
@@ -133,7 +133,7 @@
 		<texture_above r="0" g="255" b="0">ui_mini_sn_spot_above</texture_above>
 	</kill_stalker_spot_mini>
 
-	<monster_part_location>
+	<monster_part_location compass_avail="1">
 		<level_map spot="monster_part_spot"		pointer="quest_pointer"/>
 		<mini_map spot="monster_part_spot_mini"	pointer="quest_pointer"/>
 	</monster_part_location>
@@ -146,7 +146,7 @@
 		<texture_above r="0" g="255" b="0">ui_mini_sn_spot_above</texture_above>
 	</monster_part_spot_mini>
 
-	<find_item_location>
+	<find_item_location compass_avail="1">
 		<level_map spot="find_item_spot"		pointer="quest_pointer"/>
 		<mini_map spot="find_item_spot_mini"	pointer="quest_pointer"/>
 	</find_item_location>
@@ -223,7 +223,7 @@
 	</anomaly_zone_mini_spot>
 	
 	
-	<level_changer>
+	<level_changer compass_avail="1">
 		<level_map spot="level_changer_spot" pointer="quest_pointer"/>
 		<mini_map  spot="level_changer_spot_mini"/>
 	</level_changer>
@@ -235,7 +235,7 @@
 	</level_changer_spot_mini>
 
 
-	<treasure>
+	<treasure compass_avail="1">
 		<level_map spot="treasure_spot" pointer="quest_pointer"/>
 		<mini_map  spot="treasure_spot_mini"/>
 	</treasure>
