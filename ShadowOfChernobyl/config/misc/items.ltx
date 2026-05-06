@@ -1,3 +1,85 @@
+#include "items_animations.ltx"
+
+[booster]:identity_immunities
+GroupControlSection	= spawn_group
+discovery_dependency =
+;$spawn 				= "food and drugs\booster"
+$prefetch 			= 8
+class				= II_FOOD
+cform				= skeleton
+visual				= dynamics\devices\dev_aptechka\dev_aptechka_low.ogf
+description			= default
+inv_name			= default
+inv_name_short		= default
+inv_weight			= 0.01
+
+inv_grid_width		= 1
+inv_grid_height		= 1
+inv_grid_x			= 3
+inv_grid_y			= 18
+cost				= 1
+
+; eatable item
+eat_health			= 0
+eat_satiety			= 0
+eat_power			= 0
+eat_max_power		= 0
+eat_radiation		= 0
+eat_alcohol			= 0
+wounds_heal_perc	= 0
+eat_portions_num	= 1
+eat_thirst			= 0
+eat_intoxication	= 0
+eat_sleepeness		= 0
+eat_alcoholism		= 0
+eat_hangover		= 0
+eat_narcotism		= 0
+eat_withdrawal		= 0
+eat_drugs			= 0
+eat_psy_health		= 0
+eat_frostbite		= 0
+
+boost_time				= 0.0
+boost_max_weight		= 0.0
+boost_health_restore	= 0.0
+boost_power_restore		= 0.0
+boost_radiation_restore	= 0.0
+boost_bleeding_restore	= 0.0
+
+boost_radiation_protection	= 0.0
+boost_telepat_protection 	= 0.0
+boost_chemburn_protection 	= 0.0
+
+boost_burn_immunity			= 0.0
+boost_shock_immunity		= 0.0
+boost_radiation_immunity	= 0.0
+boost_telepat_immunity		= 0.0
+boost_chemburn_immunity 	= 0.0
+boost_strike_immunity		= 0.0
+boost_wound_immunity		= 0.0
+boost_explosion_immunity	= 0.0
+boost_fire_wound_immunity	= 0.0
+
+boost_satiety_restore		= 0.0
+boost_thirst_restore		= 0.0
+boost_psy_health_restore	= 0.0
+boost_intoxication_restore	= 0.0
+boost_sleepeness_restore	= 0.0
+boost_alcohol_restore		= 0.0
+boost_alcoholism_restore	= 0.0
+boost_hangover_restore		= 0.0
+boost_drugs_restore			= 0.0
+boost_narcotism_restore		= 0.0
+boost_withdrawal_restore	= 0.0
+boost_frostbite_restore		= 0.0
+boost_time_factor 			= 0.0
+
+irradiation_coef			= 0.0005
+irradiation_zone_power		= 0.0
+rotting_factor				= 0.0
+
+;use_sound			= characters_voice\multiplayer\team_1\voice_roger_3
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;	FOOD
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -27,7 +109,7 @@ bone_name				= bip01_r_hand
 position_offset			 = 0.0,0.0,0.0
 angle_offset			 = 1.570790,1.570790,3.92699
 
-[bread]:identity_immunities
+[bread]:booster
 GroupControlSection	= spawn_group
 discovery_dependency =
 $spawn 				= "food and drugs\bread"
@@ -60,10 +142,7 @@ angle_offset			 = 1.570790,1.570790,3.92699
 ; eatable item
 eat_health = 0.05
 eat_satiety = 0.2
-eat_power = 0
-eat_radiation = 0
-wounds_heal_perc = 0
-eat_portions_num = -1
+eat_portions_num = 1
 
 ; food item
 slot				= 4
@@ -73,7 +152,7 @@ animation_slot		= 4
 hud = wpn_vodka_hud
 
 
-[kolbasa]:identity_immunities
+[kolbasa]:booster
 GroupControlSection	= spawn_group
 discovery_dependency =
 $spawn 				= "food and drugs\kolbasa"
@@ -106,10 +185,7 @@ angle_offset			 = 1.570790,1.570790,3.92699
 ; eatable item
 eat_health = 0.1
 eat_satiety = 0.3
-eat_power = 0
-eat_radiation = 0
-wounds_heal_perc = 0
-eat_portions_num = -1
+eat_portions_num = 1
 
 ; food item
 slot				= 4
@@ -144,7 +220,7 @@ bone_name				= bip01_r_hand
 position_offset			 = 0.0,0.0,0.0
 angle_offset			 = 1.570790,1.570790,3.92699
 
-[conserva]:identity_immunities
+[conserva]:booster
 GroupControlSection	= spawn_group
 discovery_dependency =
 $spawn 				= "food and drugs\conserva"
@@ -167,10 +243,7 @@ cost				= 100
 ; eatable item
 eat_health = 0.15
 eat_satiety = 0.4
-eat_power = 0
-eat_radiation = 0
-wounds_heal_perc = 0
-eat_portions_num = -1
+eat_portions_num = 1
 
 ; food item
 slot				= 4
@@ -215,7 +288,7 @@ bone_name				= bip01_r_hand
 position_offset			 = 0.0,0.0,0.0
 angle_offset			 = 1.570790,1.570790,3.92699
 
-[vodka]:identity_immunities
+[vodka]:booster
 GroupControlSection	= spawn_group
 discovery_dependency =
 $spawn 				= "food and drugs\vodka"
@@ -252,11 +325,9 @@ slot				= 4
 ; eatable item
 eat_health		= 0.01
 eat_satiety		= 0.01
-eat_power		= 0
 eat_radiation	= -0.3
 eat_alcohol		= 0.1
-wounds_heal_perc 	= 0
-eat_portions_num 	= -1
+eat_portions_num 	= 1
 
 ; food item
 slot				= 4
@@ -312,7 +383,7 @@ auto_attach				= false
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;	MEDICAL
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-[antirad]:identity_immunities
+[antirad]:booster
 GroupControlSection	= spawn_group
 discovery_dependency =
 $spawn 			= "food and drugs\antirad"
@@ -333,11 +404,7 @@ inv_grid_y			= 12
 cost				= 300
 
 ; eatable item
-eat_health = 0
-eat_satiety = 0
-eat_power = 0
 eat_radiation = -1.0
-wounds_heal_perc = 0
 eat_portions_num = 1
 
 ; food item
@@ -347,7 +414,7 @@ animation_slot		= 4
 hud = wpn_vodka_hud
 
 
-[medkit]:identity_immunities
+[medkit]:booster
 GroupControlSection	= spawn_group
 discovery_dependency =
 $spawn 				= "food and drugs\medkit"
@@ -368,8 +435,6 @@ cost				= 150
 
 ; eatable item
 eat_health			= 0.6
-eat_satiety			= 0
-eat_power			= 0.0
 eat_radiation		= -0.1
 wounds_heal_perc	= 0.3
 eat_portions_num	= 1
@@ -381,7 +446,7 @@ animation_slot		= 4
 ;hud item
 hud = wpn_vodka_hud
 
-[medkit_army]:identity_immunities
+[medkit_army]:booster
 GroupControlSection	= spawn_group
 discovery_dependency =
 $spawn 				= "food and drugs\medkit_army"
@@ -402,8 +467,6 @@ cost				= 220
 
 ; eatable item
 eat_health			= 1.0
-eat_satiety			= 0
-eat_power			= 0.0
 eat_radiation		= -0.1
 wounds_heal_perc	= 1.0
 eat_portions_num	= 1
@@ -415,7 +478,7 @@ animation_slot		= 4
 ;hud item
 hud = wpn_vodka_hud
 
-[medkit_scientic]:identity_immunities
+[medkit_scientic]:booster
 GroupControlSection	= spawn_group
 discovery_dependency =
 $spawn 				= "food and drugs\medkit_scientic"
@@ -436,8 +499,6 @@ cost				= 200
 
 ; eatable item
 eat_health			= 1.0
-eat_satiety			= 0
-eat_power			= 0.0
 eat_radiation		= -1.0
 wounds_heal_perc	= 0.3
 eat_portions_num	= 1
@@ -464,12 +525,7 @@ inv_grid_x			= 19 ;19 ;11
 inv_grid_y			= 7 ;7  ;0
 inv_weight			= 0.3
 
-eat_health			= 0
-eat_satiety			= 0
 eat_power			= 1.0
-eat_alcohol			= 0
-eat_radiation		= 0
-wounds_heal_perc	= 0
 eat_portions_num	= 1
 eat_max_power		= 0.2
 
@@ -479,7 +535,7 @@ attach_bone_name		= bip01_r_hand
 auto_attach				= false
 
 
-[bandage]:identity_immunities
+[bandage]:booster
 GroupControlSection	= spawn_group
 discovery_dependency =
 $spawn 				= "food and drugs\bandage"
@@ -501,9 +557,6 @@ cost				= 20
 
 ; eatable item
 eat_health = 	0.1
-eat_satiety = 	0
-eat_power = 	0.0
-eat_radiation = 0.0
 wounds_heal_perc = 1.0
 eat_portions_num = 1	;100
 
@@ -582,6 +635,10 @@ inv_grid_height		= 1
 inv_grid_x			= 16
 inv_grid_y			= 12
 
+;Заряд
+max_charge_level		= 1.0 	;; Максимальный уровень заряда
+uncharge_speed			= 0.025 ;; Скорость разрядки
+
 ;вещью нельзя торговать
 can_trade			= true
 
@@ -600,6 +657,9 @@ snd_night_vision_on			= weapons\nv_start
 snd_night_vision_off		= weapons\nv_off
 snd_night_vision_idle		= weapons\nv_loop
 snd_night_vision_broken		= weapons\nv_off
+
+snd_turn_on			= mfs_team\item_use\inv_torch
+snd_turn_off			= mfs_team\item_use\inv_torch
 
 night_vision_recharge_time			= 6		;(c) время зарядки аккамулятора
 night_vision_recharge_time_min		= 2		;(c) мин. время зарядки аккамулятора, после которого уст-во уже может работать
@@ -635,6 +695,9 @@ cost				= 500	;30
 ;belt				= true;
 default_to_ruck		= false
 
+;Заряд
+max_charge_level		= 1.0 	;; Максимальный уровень заряда
+uncharge_speed			= 0.015  ;; Скорость разрядки
 
 ;описание распознаваемых детектором зон
 zone_class_1		= zone_mosquito_bald
@@ -688,6 +751,10 @@ buzzer				= zone_mosquito_bald       ;detectors\DA-2_alarm_loop
 ef_detector_type	= 1
 
 night_vision_particle		= damage_fx\heli_burn
+
+;Заряд
+max_charge_level		= 1.0 	;; Максимальный уровень заряда
+uncharge_speed			= 0.01  ;; Скорость разрядки
 
 ;описание распознаваемых детектором зон
 zone_class_1		= zone_mosquito_bald
@@ -744,6 +811,9 @@ buzzer				= zone_mosquito_bald       ;detectors\DA-2_alarm_loop
 ef_detector_type	= 1
 night_vision_particle		= damage_fx\heli_burn
 
+;Заряд
+max_charge_level		= 1.0 	;; Максимальный уровень заряда
+uncharge_speed			= 0.0075  ;; Скорость разрядки
 
 ;описание распознаваемых детектором зон
 zone_class_1		= zone_mosquito_bald
@@ -809,3 +879,133 @@ anim_hide			= vodka_4
 anim_play			= vodka_5
 anim_prepare		= vodka_5
 anim_eat			= vodka_3
+
+;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;M.F.S. Team;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;
+
+[torch_battery]:booster
+GroupControlSection	= spawn_group
+discovery_dependency =
+$spawn 				= "devices\torch_battery"
+$prefetch 			= 8
+class				= II_BATTE
+cform				= skeleton
+visual				= dynamics\equipments\battery.ogf
+description			= st_battery_descr
+
+inv_name			= st_battery
+inv_name_short			= st_battery
+inv_weight			= 0.025
+
+inv_grid_width			= 1
+inv_grid_height			= 1
+inv_grid_x			= 1
+inv_grid_y			= 37
+
+cost				= 25
+
+attach_angle_offset		= 0.440521, 1.378287, -0.644026
+attach_position_offset	= 0.104196, -0.010821, 0.076969
+attach_bone_name		= bip01_r_hand
+auto_attach				= false
+
+// should be deleted after update
+bone_name				= bip01_r_hand
+position_offset			 = 0.0,0.0,0.0
+angle_offset			 = 1.570790,1.570790,3.92699
+
+; eatable item
+eat_portions_num = 1
+charge_level = 1.0
+
+; food item
+slot				= -1
+animation_slot		= 4
+
+;hud item
+hud = wpn_vodka_hud
+
+[antigas_filter]:booster
+GroupControlSection	= spawn_group
+discovery_dependency =
+$spawn 				= "devices\antigas_filter"
+$prefetch 			= 8
+class				= D_FILTER
+cform				= skeleton
+visual				= mfs_team\items\itm_devices\antigas_filter.ogf
+description			= st_filter_descr
+
+inv_name			= st_filter
+inv_name_short			= st_filter
+inv_weight			= 0.25
+
+inv_grid_width			= 1
+inv_grid_height			= 1
+inv_grid_x			= 3
+inv_grid_y			= 37
+
+cost				= 250
+
+attach_angle_offset		= 0.440521, 1.378287, -0.644026
+attach_position_offset	= 0.104196, -0.010821, 0.076969
+attach_bone_name		= bip01_r_hand
+auto_attach				= false
+
+// should be deleted after update
+bone_name				= bip01_r_hand
+position_offset			 = 0.0,0.0,0.0
+angle_offset			 = 1.570790,1.570790,3.92699
+
+; eatable item
+eat_portions_num = 1
+filter_condition = 1.0
+
+; food item
+slot				= -1
+animation_slot		= 4
+
+;hud item
+hud = wpn_vodka_hud
+
+[repair_kit]:booster
+GroupControlSection	= spawn_group
+discovery_dependency =
+$spawn 				= "devices\repair_kit"
+$prefetch 			= 8
+class				= D_REPKIT
+cform				= skeleton
+visual				= physics\box\box_metall_01.ogf
+description			= st_repair_kit_descr
+
+inv_name			= st_repair_kit
+inv_name_short			= st_repair_kit
+inv_weight			= 0.5
+
+inv_grid_width			= 2
+inv_grid_height			= 1
+inv_grid_x			= 8
+inv_grid_y			= 18
+
+cost				= 750
+
+attach_angle_offset		= 0.440521, 1.378287, -0.644026
+attach_position_offset	= 0.104196, -0.010821, 0.076969
+attach_bone_name		= bip01_r_hand
+auto_attach				= false
+
+// should be deleted after update
+bone_name				= bip01_r_hand
+position_offset			 = 0.0,0.0,0.0
+angle_offset			 = 1.570790,1.570790,3.92699
+
+; eatable item
+eat_portions_num = 1
+restore_condition = 0.5
+
+; food item
+slot				= -1
+animation_slot		= 4
+
+;hud item
+hud = wpn_vodka_hud

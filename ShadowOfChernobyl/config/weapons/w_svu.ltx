@@ -40,7 +40,7 @@ cam_relax_speed         	= 4.25	;скорость возврата в исходное положение
 cam_relax_speed_ai         	= 120.75	;скорость возврата в исходное положение
 cam_dispersion          	= 2.5	;увеличени€ угла (в градусах) с каждым выстрелом
 cam_dispersion_inc		= 0.5	;увеличениe cam_dispersion с каждым выстрелом
-cam_dispertion_frac		= 1.0	;ствол будет подыматьс€ на cam_dispersion*cam_dispertion_frac +- cam_dispersion*(1-cam_dispertion_frac)
+cam_dispersion_frac		= 1.0	;ствол будет подыматьс€ на cam_dispersion*cam_dispersion_frac +- cam_dispersion*(1-cam_dispersion_frac)
 cam_max_angle			= 12.0	;максимальный угол отдачи
 cam_max_angle_horz		= 3.0	;(degree) maximum shot horizontal degree 
 cam_step_angle_horz		= 0.6	;(degree) size of step camera moved in horizontal position while shooting
@@ -128,14 +128,15 @@ silencer_status			= 0
 grenade_launcher_status	= 0
 zoom_enabled			= true
 
-scope_texture			= wpn\wpn_crosshair
+scope_texture			= wpn_crosshair
 zoom_enabled			= true
 scope_zoom_factor	    = 15		;ѕ—ќ-1 4X
 
 ;звуки
 snd_draw				= weapons\svu_draw
 snd_holster				= weapons\generic_holster
-snd_shoot				= weapons\t_svu_shot         ;svu_shoot
+snd_shoot               = snd_shoot_svu
+snd_shoot_actor			= weapons\t_svu_shot
 snd_empty				= weapons\gen_empty, 0.5
 snd_reload				= weapons\svu_reload
 snd_close				= weapons\generic_close
@@ -166,4 +167,8 @@ zoom_offset				= -0.070000,0.000000,0.000000
 zoom_rotate_x			= 0.020000
 zoom_rotate_y			= -0.040000
 
-
+hud_collision_enabled			= true
+hud_collision_offset_pos		= 0,-0.5,0
+hud_collision_offset_pos_16x9		= 0,-0.5,0
+hud_collision_offset_rot		= -0.8,0,0
+hud_collision_offset_rot_16x9		= -0.8,0,0

@@ -61,7 +61,7 @@ control_inertion_factor		= 1.07f
 cam_relax_speed        		= 6.5;0.2	;скорость возврата в исходное положение
 cam_dispersion         		= 0.2	;увеличения угла (в градусах) с каждым выстрелом
 cam_dispersion_inc		= 0.05	;увеличениe cam_dispersion с каждым выстрелом
-cam_dispertion_frac		= 0.4	;ствол будет подыматься на cam_dispersion*cam_dispertion_frac +- cam_dispersion*(1-cam_dispertion_frac)
+cam_dispersion_frac		= 0.4	;ствол будет подыматься на cam_dispersion*cam_dispersion_frac +- cam_dispersion*(1-cam_dispersion_frac)
 cam_max_angle			= 6.0	;максимальный угол отдачи
 cam_max_angle_horz		= 9.0	;(degree) maximum shot horizontal degree 
 cam_step_angle_horz		= 0.5;0.3	;(degree) size of step camera moved in horizontal position while shooting
@@ -160,7 +160,8 @@ scope_zoom_factor	    = 50
 ;звуки
 snd_draw			= weapons\generic_draw
 snd_holster			= weapons\generic_holster
-snd_shoot			= weapons\t_mp53_shot       ;lr300_shoot
+snd_shoot           = snd_shoot_mp5
+snd_shoot_actor     = weapons\t_mp53_shot
 snd_empty			= weapons\gen_empty, 0.5
 snd_reload			= weapons\mp5_reload, 0.7, 0.3
 
@@ -202,3 +203,8 @@ zoom_offset			= -0.103000,0.007100,-0.065100
 zoom_rotate_x		= -0.012800
 zoom_rotate_y		= 0.000400
 
+hud_collision_enabled			= true
+hud_collision_offset_pos		= 0,-0.5,0
+hud_collision_offset_pos_16x9		= 0,-0.5,0
+hud_collision_offset_rot		= -0.8,0,0
+hud_collision_offset_rot_16x9		= -0.8,0,0

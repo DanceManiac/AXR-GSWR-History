@@ -1,13 +1,14 @@
 <?xml version='1.0' encoding="UTF-8"?>
 <window>
 
-	<left_character_icon x="15" y="32" width="150" height="220"  stretch="1">
+	<left_character_icon x="15" y="32" width="143" height="220"  stretch="1">
 		<texture>ui_charinfo_left</texture>
-		<texture_offset x="-11" y="0"/>
+		<texture_offset x="-5" y="0"/>
 	</left_character_icon>
 	
-	<right_character_icon x="850" y="32" width="150" height="220" stretch="1">
+	<right_character_icon x="850" y="32" width="143" height="220" stretch="1">
 		<texture>ui_charinfo_right</texture>
+		<texture_offset x="2" y="0"/>
 	</right_character_icon>
 	
 	<top_background x=0 y=0 width=1024 height=128>
@@ -42,9 +43,12 @@
 	<answers_list x="20" y="46" width="557" height="377" right_ident="0" always_show_scroll="0"/>
 
 
-	<question_item x="0" y="0" width="557" height="20" min_height="13">
-		<content_text x="0" y="0" width="550" height="20">
-		<text font="letterica18" r="255" g="232" b="208" align="l"/>
+	<question_item x="15" y="2" width="557" height="20" min_height="13" icon_width="15" icon_height="17" text_offset_after_icon="3">
+		<num_text x="0" y="2" width="8" height="20">
+			<text font="letterica18" color="ui_2"/>
+		</num_text>
+		<content_text x="15" y="0" width="550" height="20" offset="2">
+		<text font="letterica18" r="255" g="232" b="208" complex_mode="1" align="l"/>
 		<text_color>
 			<t r="231" g="168" b="12"/> <e r="255" g="232" b="208"/> <h r="255" g="255" b="255"/>
 		</text_color>

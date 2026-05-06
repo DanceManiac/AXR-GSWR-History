@@ -1,5 +1,5 @@
 [postprocess_base]
-ppe_file		= radiation.ppe
+pp_eff_name		= radiation.ppe
 duality_h		= .015
 duality_v		= .015
 blur			= 1
@@ -11,7 +11,7 @@ noise_color		= 255,255,255,70
 ;noise_color		= 200,180,50,0
 
 [postprocess_anomaly]
-ppe_file		= radiation.ppe
+pp_eff_name		= radiation.ppe
 duality_h		= 0
 duality_v		= 0
 blur			= 1
@@ -28,50 +28,77 @@ noise_color		= 155,155,155,70
 ; New zone postprocess
 ;---------------------------------------------------------------------
 [postprocess_new]
-ppe_file		= radiation.ppe
+pp_eff_cyclic	= 1
+pp_eff_overlap  = true
+
+pp_eff_name		= radiation.ppe
 radius_min		= 0.5
 radius_max		= 1.1
 
 
 [postprocess_rad]
-ppe_file		= radiation.ppe
+pp_eff_cyclic	= 1
+pp_eff_overlap  = true
+
+pp_eff_name		= radiation.ppe
 radius_min		= 0.1
 radius_max		= 0.9
 
 [postprocess_psi]
-ppe_file		= radiation.ppe
+pp_eff_cyclic	= 1
+pp_eff_overlap  = true
+
+pp_eff_name		= radiation.ppe
 radius_min		= 0.5
 radius_max		= 1.1
 
 
 [postprocess_death]
-ppe_file		= radiation.ppe
+pp_eff_cyclic	= 1
+pp_eff_overlap  = true
+
+pp_eff_name		= radiation.ppe
 radius_min		= 0.5
 radius_max		= 1.1
 
 [postprocess_flame]
-ppe_file		= radiation.ppe
+pp_eff_cyclic	= 1
+pp_eff_overlap  = true
+
+pp_eff_name		= radiation.ppe
 radius_min		= 0.5
 radius_max		= 0.8
 
 [postprocess_fuzz]
-ppe_file		= radiation.ppe
+pp_eff_cyclic	= 1
+pp_eff_overlap  = true
+
+pp_eff_name		= radiation.ppe
 radius_min		= 0.5
 radius_max		= 0.8
 
 [postprocess_gravi]
-ppe_file		= radiation.ppe
+pp_eff_cyclic	= 1
+pp_eff_overlap  = true
+
+pp_eff_name		= radiation.ppe
 radius_min		= 0.3
 radius_max		= 1.0
 
 [postprocess_electra]
-ppe_file		= radiation.ppe
+pp_eff_cyclic	= 1
+pp_eff_overlap  = true
+
+pp_eff_name		= radiation.ppe
 radius_min		= 0.5
 radius_max		= 0.9
 
 
 [mosquito_bald]
-ppe_file		= radiation.ppe
+pp_eff_cyclic	= 1
+pp_eff_overlap  = true
+
+pp_eff_name		= radiation.ppe
 radius_min		= 0.2
 radius_max		= 2.7
 ;---------------------------------------------------------------------
@@ -188,3 +215,29 @@ pp_eff_cyclic = 1
 [effector_nightvision_good]
 pp_eff_name = nightvision_good.ppe
 pp_eff_cyclic = 1
+
+[effector_intoxication]
+pp_eff_name	 = mfs_team\post_effects\intoxication.ppe
+pp_eff_cyclic	= 1
+
+[effector_sleepeness]
+pp_eff_name	 = mfs_team\post_effects\sleepeness.ppe
+pp_eff_cyclic	= 1
+
+[effector_drugs]
+pp_eff_name	 = mfs_team\post_effects\drugs.ppe
+pp_eff_cyclic	= 1
+
+cam_eff_name	= camera_effects\drunk.anm
+cam_eff_cyclic	= 1
+
+[switch_torch]:effector_monster_hit
+
+cam_eff_name	= items_animations_addon\headlamp.anm
+
+[effector_frostbite]
+cam_eff_name	= camera_effects\earthquake_00.anm
+cam_eff_cyclic	= 1
+
+[use_backpack]:effector_monster_hit
+cam_eff_name	= camera_effects\items_animations_addon\hoc_anm\hoc_backpack_in.anm
