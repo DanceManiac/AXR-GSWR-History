@@ -151,13 +151,12 @@ end
 function keep_item(npc, item)
     local section = item:section()
 	printf("keep_item:item ["..item:name().."] npc_name ["..npc:name().."]")
+	
     if section == "bolt" then
-    	printf("1")
         return
     end
 
     if always_keep_item[section] == true then
-		printf("2")
         return
     end
 	
@@ -166,14 +165,12 @@ function keep_item(npc, item)
 		return
 	end
 	
-	if (item:is_antigas_filter() and mfs_functions.ReadOutfitFiltersEnabled()) then
-		set_charge_level(item)
-		return
-	end
+	local is_charable_item = (item:is_antigas_filter() and mfs_functions.ReadOutfitFiltersEnabled())
+			or (item:is_detector() and mfs_functions.ReadDetectorsUseBatteryEnabled())
+			or (item:is_anomaly_detector() and mfs_functions.ReadAnomalyDetectorsUseBatteryEnabled())
+			or (item:is_torch() and mfs_functions.ReadTorchUseBatteryEnabled())
 	
-	if ((item:is_detector() and mfs_functions.ReadDetectorsUseBatteryEnabled()) 
-	or (item:is_anomaly_detector() and mfs_functions.ReadAnomalyDetectorsUseBatteryEnabled()) 
-	or (item:is_torch() and mfs_functions.ReadTorchUseBatteryEnabled())) then
+	if is_charable_item then
 		set_charge_level(item)
 		return
 	end
@@ -185,45 +182,25 @@ function keep_item(npc, item)
 
     local item_id = item:id()
     local item_in_slot = npc:item_in_slot(1)
-    if item_in_slot ~= nil and item_in_slot:id() == item_id
-    then
-	--[[	if level.name() == "y_arena" then
-			 item:unload_magazine()
-			 npc:drop_item(item_in_slot)
-			 alife():release(alife():object(item_in_slot:id()),true)
-			 return
-		end]]--
-
-        --item:unload_magazine()
+    if item_in_slot ~= nil and item_in_slot:id() == item_id then
 		--' Тут надо уменьшить кондишн оружия
 		item:set_condition((math.random(15)+65)/100)
-		printf("3")
         return
     end
+	
     item_in_slot = npc:item_in_slot(2)
-    if item_in_slot ~= nil and item_in_slot:id() == item_id
-    then
-	--[[	if level.name() == "y_arena" then
-			 item:unload_magazine()
-			 npc:drop_item(item_in_slot)
-			 alife():release(alife():object(item_in_slot:id()),true)
-			 return
-		end]]--
-        --item:unload_magazine()
+    if item_in_slot ~= nil and item_in_slot:id() == item_id then
 		--' Тут надо уменьшить кондишн оружия
 		item:set_condition((math.random(15)+65)/100)
-		printf("4")
         return
     end
---  npc:mark_item_dropped(item)
+
     local item_in_slot = npc:item_in_slot(3)
-    if item_in_slot ~= nil and item_in_slot:id() == item_id
-    then
-		printf("5")
+    if item_in_slot ~= nil and item_in_slot:id() == item_id then
 		return
 	end
+	
 	if not npc:marked_dropped(item) then
-		printf("6")
 		printf("releasing object ["..item:name().."]")
 		alife():release(alife():object(item:id()), true)
 	end

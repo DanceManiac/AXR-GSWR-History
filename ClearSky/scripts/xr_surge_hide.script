@@ -419,7 +419,7 @@ end
 
 function update()
 	if has_alife_info("mar_tutorial_returned_to_base") and not surge_activated then
-		if not level.name()=="agroprom_underground" and not level.name()=="limansk" and not level.name()=="stancia_2" then
+		if not (level.name()=="agroprom_underground") and not (level.name()=="limansk") and not (level.name()=="stancia_2") then
 			activate_surge(1)
 		end
 	end

@@ -2325,7 +2325,7 @@ function CHideFromSurgeTask:check_task(tm)
 				--news_manager.send_tip(db.actor, "Первая волна", 0, "help_play", 5000)
 			end
 		-- вторая волна выброса --------------------------------------------------------------------------------------------
-			if(diff_sec>=160) and (diff_sec<=216) then
+			if(diff_sec>=160) and (diff_sec<=190) then
 				self:StartWave("sWave",diff_sec,diff_game_sec)
 				--news_manager.send_tip(db.actor, "Вторая волна", 0, "help_play", 5000)
 			end
@@ -2365,18 +2365,23 @@ function CHideFromSurgeTask:check_task(tm)
 		level.add_pp_effector("snd_shock.ppe", pp_effector_id, false)
 		level.set_pp_effector_factor(pp_effector_id, 0, 1.5)
 	end
+	
 	function end_surge(last_check_task)
 		self.last_check_task = last_check_task
 		xr_surge_hide.surge_finished = true
 		xr_surge_hide.start_surge = false
 		xr_surge_hide.phase = 0
 		xr_surge_hide.surge_activated = false
+		self:cleanup_all_effects()
+		
 		if(self.blowout_sound) then
 			xr_sound.stop_sound_looped(db.actor:id(), "blowout_rumble")
 		end
+		
 		if(self.second_message_given) then
 			xr_sound.stop_sound_looped(db.actor:id(), "surge_earthquake_sound_looped")
 		end
+		
 		level.remove_pp_effector(surge_shock_pp_eff)
 		level.remove_cam_effector(earthquake_cam_eff)
 		self.effector_set 			= false
@@ -2385,6 +2390,7 @@ function CHideFromSurgeTask:check_task(tm)
 		self.blowout_sound			= false
 		self.hitFactor				= 0
 	end
+	
 	if (self.blowout_rumble_level < 1) and  (xr_surge_hide.phase > 1) and (xr_surge_hide.phase < 4 or xr_surge_hide.phase == 5) then
 		self.blowout_rumble_level = self.blowout_rumble_level + 0.015
 		--xr_sound.set_volume_sound_looped(db.actor:id(), "blowout_rumble", self.blowout_rumble_level)
@@ -2541,6 +2547,7 @@ function CHideFromSurgeTask:StartWave(wName, dSec, dGameSec)
 	if (dSec==wTime+45) then
 		level.remove_cam_effector(earthquake_cam_eff)
 		level.add_cam_effector("camera_effects\\earthquake_20.anm", earthquake_cam_eff, true, "")
+		xr_sound.stop_sound_looped(db.actor:id(), "surge_earthquake_sound_looped")
 	end
 end
 
@@ -2573,6 +2580,7 @@ function CHideFromSurgeTask:give_task(community)
 	xr_sound.set_volume_sound_looped(db.actor:id(), "blowout_rumble", self.blowout_rumble_level)
 	task_objects.CGeneralTask.give_task(self, community)
 end
+
 -- Kill all npc who haven't been hidden
 function CHideFromSurgeTask:kill_unhided_npc()
 	local h = hit()
@@ -2598,6 +2606,31 @@ function CHideFromSurgeTask:kill_unhided_npc()
 	end
 ]]
 end
+
+function CHideFromSurgeTask:cleanup_all_effects()
+    if self.blowout_sound then
+        xr_sound.stop_sound_looped(db.actor:id(), "blowout_rumble")
+    end
+    xr_sound.stop_sound_looped(db.actor:id(), "surge_earthquake_sound_looped")
+
+    level.remove_cam_effector(earthquake_cam_eff)
+    level.remove_cam_effector(20080501)
+    level.remove_cam_effector(200209)
+
+    level.remove_pp_effector(surge_shock_pp_eff)
+    level.remove_pp_effector(200211)
+    level.remove_pp_effector(200208)
+
+    level.set_weather_fx("")
+
+    self.effector_set = false
+    self.second_message_given = false
+    self.ui_disabled = false
+    self.blowout_sound = false
+    self.hitFactor = 0
+    currentPPEfactor = 0.001
+end
+
 -- Save quest
 function CHideFromSurgeTask:save(package)
 	set_save_marker(package, "save", false, "CHideFromSurgeTask")
@@ -2681,6 +2714,7 @@ function CEliminateSquadTask:init_task(squad, faction)
 	self.community = faction
 	self.prior = self.base_prior --'+ smart.sim_prior[faction]
 end
+
 --' Получить этот же квест, но инициализированный
 function CEliminateSquadTask:get_inited_task(squad, faction, entity_id)
 	local task = CEliminateSquadTask(self.task_ini, self.base_id, self.type)
@@ -2688,6 +2722,7 @@ function CEliminateSquadTask:get_inited_task(squad, faction, entity_id)
 	task.entity_id = entity_id
 	return task
 end
+
 --' Проверка текущего выполнения квеста
 function CEliminateSquadTask:check_task(tm)
 	--' Квест считается выполненым когда отряд уничтожен
@@ -2696,6 +2731,7 @@ function CEliminateSquadTask:check_task(tm)
 	end
 	return
 end
+
 function CEliminateSquadTask:give_task(community)
 	task_objects.CGeneralTask.give_task(self, community)
 	-- if self.task_type == task.storyline then
@@ -2703,8 +2739,10 @@ function CEliminateSquadTask:give_task(community)
 		-- self.board.smarts[self.target].smrt:hide()
 	-- end
 end
+
 --' Деактивация квеста
 function CEliminateSquadTask:deactivate_task(task)
+	self:cleanup_all_effects()
 	task_objects.CGeneralTask.deactivate_task(self,task)
 	-- if self.task_type == task.storyline then
 		-- self.board.smarts[self.target].smrt.active_task_spot = nil
@@ -2723,6 +2761,7 @@ function CEliminateSquadTask:deactivate_task(task)
 		end
 	end
 end
+
 -- Save quest
 function CEliminateSquadTask:save(package)
 	set_save_marker(package, "save", false, "CEliminateSquadTask")
@@ -2731,6 +2770,7 @@ function CEliminateSquadTask:save(package)
 	package:w_stringZ(tostring(self.src_obj))
 	set_save_marker(package, "save", true, "CEliminateSquadTask")
 end
+
 -- Load quest
 function CEliminateSquadTask:load(reader)
 	set_save_marker(reader, "load", false, "CEliminateSquadTask")

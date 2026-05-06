@@ -206,7 +206,6 @@ function load(obj, packet)
 	end
 	set_save_marker(packet, "load", true, "trade_manager")
 end
-
 ----------- NOT TO DELETE!!!!!!!!! called from engine
 function get_buy_discount(npc_id)
 	local str = utils.cfg_get_string(trade_manager[npc_id].config, "trader", "discounts", nil, false, "", "")
