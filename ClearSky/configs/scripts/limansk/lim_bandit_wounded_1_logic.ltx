@@ -32,7 +32,7 @@ wounded = wounded
 def_state_moving1 = walk
 def_state_moving2 = walk
 def_state_moving3 = walk
-def_state_standing = wait
+def_state_standing = wounded_heavy
 on_info = {+lim_bandit_health_restore} walker@wait2 %=restore_health%
 on_info2 = {=hit_by_actor} %+lim_bandit_away%
 on_info3 = {!health_le(0.3)} walker@wait2 %+lim_bandit_health_restore%

@@ -226,11 +226,11 @@ function CRandomTask:load(reader)
 			obj:load(reader)
 			printf("LOADING TASK [%s] status [%s] e_id [%s]", obj.base_id, obj.status, tostring(obj.entity_id))
 			self.inited_tasks[id] = obj
-			if(obj.status=="selected") then
+			if(obj.status~="normal") then
 				self.task_info[tostring(obj.entity_id)] = obj
-			end
-			if(t=="eliminate_smart") or (t=="capture_smart") or (t=="defend_smart") or (t=="defend_smart_delay") then
-				self.tasks_by_smarts[obj.target] = obj
+				if(t=="eliminate_smart") or (t=="capture_smart") or (t=="defend_smart") or (t=="defend_smart_delay") then
+					self.tasks_by_smarts[obj.target] = obj
+				end
 			end
 		end
 	end
@@ -436,7 +436,7 @@ function CRandomTask:select_task(type, obj, faction)
 	--' Если для этого объекта уже есть инициализированный таск - нужно выдать его.
 	if self.inited_tasks[key] ~= nil then
 		if type == "recover_item" then
-			if not self.inited_tasks[key]:check_target(obj, faction) or self.inited_tasks[key].status ~= "normal" then
+			if not self.inited_tasks[key]:check_target(obj, faction) then
 				return
 			end
 		end
@@ -603,7 +603,7 @@ end
 
 --' Регистрируем нового выдавателя наград
 function CRandomTask:register_rewarder(npc_id, community)
---	printf("register rewarder %s for %s", npc_id, community)
+	printf("register rewarder %s for %s", npc_id, community)
 	self.rewarders[community] = npc_id
 end
 --' Регистрируем нового выдавателя квестов

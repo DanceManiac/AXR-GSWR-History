@@ -37,6 +37,20 @@ ammo_limit              = 300
 ammo_current            = 200
 ammo_elapsed            = 100
 
+misfire_probability        = 0.005 ;вероятность осечки при максимальном износе  !!!old - now not working
+;изношенность, при которой появляется шанс осечки
+misfire_start_condition		= 0.6
+;изношеность при которой шанс осечки становится константным
+misfire_end_condition		= 0.1
+;шанс осечки при изношености больше чем misfireStartCondition
+misfire_start_prob	     	= 0.002
+;шанс осечки при изношености больше чем misfireEndCondition
+misfire_end_prob	     	= 0.03
+;увеличение изношености при одиночном выстреле
+condition_shot_dec      	= 0.001
+;увеличение изношености при выстреле очередью
+condition_queue_shot_dec	= 0.0012
+
 ammo_mag_size           = 100
 ammo_class              = ammo_pkm_100
 grenade_class           = ammo_m209
@@ -78,9 +92,6 @@ cam_max_angle_horz      = 15.0                ;(degree) maximum shot horizontal 
 cam_step_angle_horz     = 1.8                    ;(degree) size of step camera moved in horizontal position while shooting
 
 fire_dispersion_condition_factor = 5        ;увеличение дисперсии в процентах при максимальном износе
-misfire_probability     = 0.001        ;вероятность осечки при максимальном износе
-misfire_condition_k     = 0.01
-condition_shot_dec      = 0.0001 ;увеличение износа при каждом выстреле
 ;-------------------------------------------------------------------------------
 
 position                = -0.027, -0.097, 0.042
@@ -156,18 +167,17 @@ zoom_enabled            = false                                                ;
 ;звуки
 snd_draw                = weapons\ak74_draw
 snd_holster             = weapons\generic_holster
-snd_shoot                                        = weapons\pkm_shot
+snd_shoot                                        = snd_shoot_pkm
+snd_shoot_actor                                    = weapons\pkm_shot
 ;snd_shoot1                                        = weapons\pkm_shot
 ;snd_shoot2                                        = weapons\pkm_shot
 ;snd_shoot3                                        = weapons\pkm_shot
-
 
 snd_empty               = weapons\gen_empty, 0.5
 snd_reload              = weapons\sig550_reload, 0.7, 0.35
 snd_shoot_grenade       = weapons\gen_grenshoot
 snd_reload_grenade      = weapons\gen_grenload, 1.0, 0.8
 snd_switch              = weapons\groza_switch, 1.0, 0.5
-
 
 ;настройки для глушителя
 silencer_hit_power      = 0.55, 0.55, 0.55, 0.55
@@ -234,6 +244,12 @@ lean_hud_offset_rot        = 0,0,0
 
 aim_hud_offset_pos_16x9   = -0.032000,-0.185000,0.102500
 aim_hud_offset_rot_16x9  = 1.300000,8.400014,-6.450007
+
+hud_collision_enabled			= true
+hud_collision_offset_pos		= 0,-0.5,0
+hud_collision_offset_pos_16x9		= 0,-0.5,0
+hud_collision_offset_rot		= -0.8,0,0
+hud_collision_offset_rot_16x9		= -0.8,0,0
 
 
 ;********************************************************

@@ -311,7 +311,11 @@ end
 ----------------
 function main ()
     local process = PostProcess (ini_file ("scripts\\proba.ltx"))
-    level.set_weather_fx ("fx_surge_day_3")
+	if (level.get_time_hours() >= 5 and level.get_time_hours() <= 22) then
+		level.set_weather_fx("fx_blowout_day")
+	else
+		level.set_weather_fx("fx_blowout_night")
+	end
         local prev_time        = time_global ()
         while 1 do
                         wait ();
