@@ -165,7 +165,7 @@
         </level_changer_left_up_spot>
 
 
-        <treasure>
+        <treasure compass_avail="1">
                 <level_map spot="treasure_spot" pointer="quest_pointer"/>
                 <mini_map  spot="treasure_spot_mini"/>
         </treasure>
@@ -484,7 +484,7 @@
 
 
         <!-- Отряды -->
-  <alife_presentation_squad_friend>
+  <alife_presentation_squad_friend compass_avail="1">
     <level_map spot="alife_presentation_squad_friend_spot"/>
     <mini_map spot="alife_presentation_squad_friend_spot_mini"/>
   </alife_presentation_squad_friend>
@@ -495,7 +495,7 @@
     <texture r="0" g="255" b="0">ui_mmap_squad_leader</texture>
   </alife_presentation_squad_friend_spot_mini>
 
-  <alife_presentation_squad_neutral>
+  <alife_presentation_squad_neutral compass_avail="1">
     <level_map spot="alife_presentation_squad_neutral_spot"/>
     <mini_map spot="alife_presentation_squad_neutral_spot_mini"/>
   </alife_presentation_squad_neutral>
@@ -507,7 +507,7 @@
   </alife_presentation_squad_neutral_spot_mini>
 
 
-  <alife_presentation_squad_enemy>
+  <alife_presentation_squad_enemy compass_avail="1">
     <level_map spot="alife_presentation_squad_enemy_spot"/>
     <!-- <mini_map spot="alife_presentation_squad_enemy_spot_mini"/> -->
   </alife_presentation_squad_enemy>
@@ -574,7 +574,7 @@
   </alife_presentation_friend_squad_attack_point_spot_mini>
 
   <!-- Случайные задания -->
-        <secondary_task_location>
+        <secondary_task_location compass_avail="1">
                 <level_map spot="secondary_task_spot" pointer="quest_pointer2"/>
                 <mini_map spot="secondary_task_spot_mini" pointer="quest_pointer2"/>
         </secondary_task_location>
@@ -605,7 +605,7 @@
         </secondary_mini_ac_border> -->
 
 
-        <primary_task_location>
+        <primary_task_location compass_avail="1">
                 <level_map spot="primary_task_spot"        pointer="quest_pointer"/>
                 <mini_map spot="primary_task_spot_mini"        pointer="quest_pointer"/>
         </primary_task_location>
@@ -654,7 +654,7 @@
                 <texture>ui_pda2_hl_seq_quest2</texture>
         </no_spot>
 
-        <mar_story_empower_csky_location>
+        <mar_story_empower_csky_location compass_avail="1">
                 <level_map spot="mar_story_empower_csky_spot" spot_na="no_spot" spot_a ="no_spot"/>
                 <mini_map spot="mar_story_empower_csky_spot" spot_na="no_spot" spot_a ="no_spot"/>
         </mar_story_empower_csky_location>
@@ -662,7 +662,7 @@
                 <texture>ui_pda2_quest</texture>
         </mar_story_empower_csky_spot>
 
-        <mar_story_capture_levelchangers_location>
+        <mar_story_capture_levelchangers_location compass_avail="1">
                 <level_map spot="mar_story_capture_levelchangers_spot" spot_na="no_spot" spot_a ="no_spot"/>
                 <mini_map spot="mar_story_capture_levelchangers_spot" spot_na="no_spot" spot_a ="no_spot"/>
         </mar_story_capture_levelchangers_location>
@@ -670,7 +670,7 @@
                 <texture>ui_pda2_quest</texture>
         </mar_story_capture_levelchangers_spot>
 
-        <mar_capture_tower_location>
+        <mar_capture_tower_location compass_avail="1">
                 <level_map spot="mar_capture_tower_spot" spot_na="no_spot" spot_a ="no_spot" pointer="quest_pointer"/>
                 <mini_map spot="mar_capture_tower_spot" spot_na="no_spot" spot_a ="no_spot" pointer="quest_pointer"/>
         </mar_capture_tower_location>
@@ -678,7 +678,7 @@
                 <texture>ui_pda2_quest</texture>
         </mar_capture_tower_spot>
 
-        <mar_defend_tower_location>
+        <mar_defend_tower_location compass_avail="1">
                 <level_map spot="mar_defend_tower_spot" spot_na="no_spot" spot_a ="no_spot" pointer="quest_pointer"/>
                 <mini_map spot="mar_defend_tower_spot" spot_na="no_spot" spot_a ="no_spot" pointer="quest_pointer"/>
         </mar_defend_tower_location>
@@ -687,7 +687,7 @@
         </mar_defend_tower_spot>
 
 
-        <mar_capture_plant_location>
+        <mar_capture_plant_location compass_avail="1">
                 <level_map spot="mar_defend_tower_spot" spot_na="no_spot" spot_a ="no_spot" pointer="quest_pointer"/>
                 <mini_map spot="mar_defend_tower_spot" spot_na="no_spot" spot_a ="no_spot" pointer="quest_pointer"/>
         </mar_capture_plant_location>
@@ -695,53 +695,53 @@
                 <texture>ui_pda2_quest</texture>
         </mar_capture_plant_spot>
 
-        <mar_tutorial_tower_top_location>
+        <mar_tutorial_tower_top_location compass_avail="1">
                 <level_map spot="primary_task_spot"        pointer="quest_pointer"/>
                 <mini_map spot="primary_task_spot_mini"        pointer="quest_pointer"/>
         </mar_tutorial_tower_top_location>
 
-        <mar_tutorial_kill_boars_location>
+        <mar_tutorial_kill_boars_location compass_avail="1">
                 <level_map spot="primary_task_spot"        pointer="quest_pointer"/>
                 <mini_map spot="primary_task_spot_mini"        pointer="quest_pointer"/>
         </mar_tutorial_kill_boars_location>
 
-        <mar_story_talk_with_commander_3_location>
+        <mar_story_talk_with_commander_3_location compass_avail="1">
                 <level_map spot="primary_task_spot"        pointer="quest_pointer"/>
                 <mini_map spot="primary_task_spot_mini"        pointer="quest_pointer"/>
         </mar_story_talk_with_commander_3_location>
 
-        <gar_story_get_pda_location>
+        <gar_story_get_pda_location compass_avail="1">
                 <level_map spot="primary_task_spot"        pointer="quest_pointer"/>
                 <mini_map spot="primary_task_spot_mini"        pointer="quest_pointer"/>
         </gar_story_get_pda_location>
 
-        <red_go_to_military_base_location>
+        <red_go_to_military_base_location compass_avail="1">
                 <level_map spot="primary_task_spot"        pointer="quest_pointer"/>
                 <mini_map spot="primary_task_spot_mini"        pointer="quest_pointer"/>
         </red_go_to_military_base_location>
 
-        <red_bridge_wait_for_allyes_location>
+        <red_bridge_wait_for_allyes_location compass_avail="1">
                 <level_map spot="primary_task_spot"        pointer="quest_pointer"/>
                 <mini_map spot="primary_task_spot_mini"        pointer="quest_pointer"/>
         </red_bridge_wait_for_allyes_location>
 
-        <red_bridge_cover_bridge_location>
+        <red_bridge_cover_bridge_location compass_avail="1">
                 <level_map spot="primary_task_spot"        pointer="quest_pointer"/>
                 <mini_map spot="primary_task_spot_mini"        pointer="quest_pointer"/>
         </red_bridge_cover_bridge_location>
 
-        <red_bridge_cover_allyes2_location>
+        <red_bridge_cover_allyes2_location compass_avail="1">
                 <level_map spot="primary_task_spot"        pointer="quest_pointer"/>
                 <mini_map spot="primary_task_spot_mini"        pointer="quest_pointer"/>
         </red_bridge_cover_allyes2_location>
 
-        <red_bridge_wait_for_allyes_location>
+        <red_bridge_wait_for_allyes_location compass_avail="1">
                 <level_map spot="primary_task_spot"        pointer="quest_pointer"/>
                 <mini_map spot="primary_task_spot_mini"        pointer="quest_pointer"/>
         </red_bridge_wait_for_allyes_location>
 
         <!-- level_spot -->
-        <ui_pda2_mechanic_location hint="st_ui_pda_legend_mechanic">
+        <ui_pda2_mechanic_location hint="st_ui_pda_legend_mechanic" compass_avail="1">
                 <level_map spot="ui_pda2_mechanic_location_spot"/>
                 <mini_map spot="ui_pda2_mechanic_location_mini_spot"/>
         </ui_pda2_mechanic_location>
@@ -752,7 +752,7 @@
                 <texture r="11" g="178" b="248">ui_pda2_mechanic</texture>
         </ui_pda2_mechanic_location_mini_spot>
 
-        <ui_pda2_trader_location hint="st_ui_pda_legend_trader">
+        <ui_pda2_trader_location hint="st_ui_pda_legend_trader" compass_avail="1">
                 <level_map spot="ui_pda2_trader_location_spot"/>
                 <mini_map spot="ui_pda2_trader_location_mini_spot"/>
         </ui_pda2_trader_location>
@@ -763,7 +763,7 @@
                 <texture r="11" g="178" b="248">ui_pda2_trader</texture>
         </ui_pda2_trader_location_mini_spot>
 
-        <ui_pda2_scout_location hint="st_ui_pda_legend_scout">
+        <ui_pda2_scout_location hint="st_ui_pda_legend_scout" compass_avail="1">
                 <level_map spot="ui_pda2_scout_location_spot"/>
                 <mini_map spot="ui_pda2_scout_location_mini_spot"/>
         </ui_pda2_scout_location>
@@ -774,7 +774,7 @@
                 <texture r="11" g="178" b="248">ui_pda2_guide</texture>
         </ui_pda2_scout_location_mini_spot>
 
-        <ui_pda2_quest_npc_location hint="st_ui_pda_legend_vip">
+        <ui_pda2_quest_npc_location hint="st_ui_pda_legend_vip" compass_avail="1">
                 <level_map spot="ui_pda2_quest_npc_location_spot"/>
                 <mini_map spot="ui_pda2_quest_npc_location_mini_spot"/>
         </ui_pda2_quest_npc_location>

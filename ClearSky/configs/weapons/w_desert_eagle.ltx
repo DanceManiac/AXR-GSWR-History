@@ -29,6 +29,20 @@ holder_fov_modifier		= 1.0              ; во сколько раз увеличивается eye_fov
 
 cost					= 3750
 
+misfire_probability        = 0.005 ;вероятность осечки при максимальном износе  !!!old - now not working
+;изношенность, при которой появляется шанс осечки
+misfire_start_condition		= 0.6
+;изношеность при которой шанс осечки становится константным
+misfire_end_condition		= 0.1
+;шанс осечки при изношености больше чем misfireStartCondition
+misfire_start_prob	     	= 0.01
+;шанс осечки при изношености больше чем misfireEndCondition
+misfire_end_prob	     	= 0.1
+;увеличение изношености при одиночном выстреле
+condition_shot_dec      	= 0.0045
+;увеличение изношености при выстреле очередью
+condition_queue_shot_dec	= 0.0045
+
 ammo_limit		 		= 120
 ammo_current		 	= 90
 ammo_elapsed		 	= 12
@@ -74,8 +88,6 @@ cam_max_angle_horz			= 15.0		;(degree) maximum shot horizontal degree
 cam_step_angle_horz			= 1.0		;(degree) size of step camera moved in horizontal position while shooting
 
 fire_dispersion_condition_factor = 5		;увеличение дисперсии в процентах при максимальном износе
-misfire_probability 			= 0.003	    	;вероятность осечки при максимальном износе
-condition_shot_dec 			= 0.00130		;увеличение износа при каждом выстреле
 
 ;-------------------------------------------------------------------------------
 ; ttc
@@ -154,7 +166,8 @@ scope_zoom_factor	    		= 55
 ;звуки
 snd_draw							= weapons\fort_draw
 snd_holster						= weapons\generic_holster
-snd_shoot						= weapons\n_desert_eagle_shot
+snd_shoot						= snd_shoot_desert_eagle
+snd_shoot_actor         		= weapons\n_desert_eagle_shot
 snd_empty						= weapons\pistol_empty
 snd_reload						= weapons\pistol_reload, 0.8
 snd_close						= weapons\generic_close
@@ -245,6 +258,12 @@ lean_hud_offset_rot			= 0,0,0
 
 aim_hud_offset_pos_16x9				= -0.082500,0.040500,0.000000
 aim_hud_offset_rot_16x9				= 0.012500,0.022500,-0.010000
+
+hud_collision_enabled			= true
+hud_collision_offset_pos		= 0,-0.5,0
+hud_collision_offset_pos_16x9		= 0,-0.5,0
+hud_collision_offset_rot		= -0.8,0,0
+hud_collision_offset_rot_16x9		= -0.8,0,0
 
 ;********************** new *************************
 

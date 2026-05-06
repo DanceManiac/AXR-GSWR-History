@@ -1,89 +1,89 @@
-	<secondary_task_location_complex_flesh_up_ac_mp5>
+	<secondary_task_location_complex_flesh_up_ac_mp5 compass_avail="1">
 		<complex_spot spot="secondary_task_find_upgrade_complex_spot" pointer="quest_pointer2"/>
 		<mini_map     spot="secondary_task_spot_mini" pointer="quest_pointer2"/>
     </secondary_task_location_complex_flesh_up_ac_mp5>
 	
-	<secondary_task_location_complex_flesh_up_bd_mp5>
+	<secondary_task_location_complex_flesh_up_bd_mp5 compass_avail="1">
 		<complex_spot spot="secondary_task_find_upgrade_complex_spot" pointer="quest_pointer2"/>
 		<mini_map     spot="secondary_task_spot_mini" pointer="quest_pointer2"/>
     </secondary_task_location_complex_flesh_up_bd_mp5>
 	
-	<secondary_task_location_complex_flesh_up_a_novice_outfit>
+	<secondary_task_location_complex_flesh_up_a_novice_outfit compass_avail="1">
 		<complex_spot spot="secondary_task_find_upgrade_complex_spot" pointer="quest_pointer2"/>
 		<mini_map     spot="secondary_task_spot_mini" pointer="quest_pointer2"/>
     </secondary_task_location_complex_flesh_up_a_novice_outfit>
 	
-	<secondary_task_location_complex_flesh_up_ac_wincheaster1300>
+	<secondary_task_location_complex_flesh_up_ac_wincheaster1300 compass_avail="1">
 		<complex_spot spot="secondary_task_find_upgrade_complex_spot" pointer="quest_pointer2"/>
 		<mini_map     spot="secondary_task_spot_mini" pointer="quest_pointer2"/>
     </secondary_task_location_complex_flesh_up_ac_wincheaster1300>
 	
-	<secondary_task_location_complex_flesh_up_bd_wincheaster1300>
+	<secondary_task_location_complex_flesh_up_bd_wincheaster1300 compass_avail="1">
 		<complex_spot spot="secondary_task_find_upgrade_complex_spot" pointer="quest_pointer2"/>
 		<mini_map     spot="secondary_task_spot_mini" pointer="quest_pointer2"/>
     </secondary_task_location_complex_flesh_up_bd_wincheaster1300>
 	
-	<secondary_task_location_complex_flesh_up_ac_ak74u>
+	<secondary_task_location_complex_flesh_up_ac_ak74u compass_avail="1">
 		<complex_spot spot="secondary_task_find_upgrade_complex_spot" pointer="quest_pointer2"/>
 		<mini_map     spot="secondary_task_spot_mini" pointer="quest_pointer2"/>
     </secondary_task_location_complex_flesh_up_ac_ak74u>
 	
-	<secondary_task_location_complex_flesh_up_fh_scientific_outfit>
+	<secondary_task_location_complex_flesh_up_fh_scientific_outfit compass_avail="1">
 		<complex_spot spot="secondary_task_find_upgrade_complex_spot" pointer="quest_pointer2"/>
 		<mini_map     spot="secondary_task_spot_mini" pointer="quest_pointer2"/>
     </secondary_task_location_complex_flesh_up_fh_scientific_outfit>
 	
-	<secondary_task_location_complex_flesh_up_aceg_scientific_outfit>
+	<secondary_task_location_complex_flesh_up_aceg_scientific_outfit compass_avail="1">
 		<complex_spot spot="secondary_task_find_upgrade_complex_spot" pointer="quest_pointer2"/>
 		<mini_map     spot="secondary_task_spot_mini" pointer="quest_pointer2"/>
     </secondary_task_location_complex_flesh_up_aceg_scientific_outfit>
 	
-	<secondary_task_location_complex_flesh_up_bdfh_scientific_outfit>
+	<secondary_task_location_complex_flesh_up_bdfh_scientific_outfit compass_avail="1">
 		<complex_spot spot="secondary_task_find_upgrade_complex_spot" pointer="quest_pointer2"/>
 		<mini_map     spot="secondary_task_spot_mini" pointer="quest_pointer2"/>
     </secondary_task_location_complex_flesh_up_bdfh_scientific_outfit>
 	
-	<secondary_task_location_complex_flesh_up_ab_svu>
+	<secondary_task_location_complex_flesh_up_ab_svu compass_avail="1">
 		<complex_spot spot="secondary_task_find_upgrade_complex_spot" pointer="quest_pointer2"/>
 		<mini_map     spot="secondary_task_spot_mini" pointer="quest_pointer2"/>
     </secondary_task_location_complex_flesh_up_ab_svu>
 	
-	<secondary_task_location_complex_flesh_up_cd_svu>
+	<secondary_task_location_complex_flesh_up_cd_svu compass_avail="1">
 		<complex_spot spot="secondary_task_find_upgrade_complex_spot" pointer="quest_pointer2"/>
 		<mini_map     spot="secondary_task_spot_mini" pointer="quest_pointer2"/>
     </secondary_task_location_complex_flesh_up_cd_svu>
 	
-	<secondary_task_location_complex_flesh_up_abcd_svu>
+	<secondary_task_location_complex_flesh_up_abcd_svu compass_avail="1">
 		<complex_spot spot="secondary_task_find_upgrade_complex_spot" pointer="quest_pointer2"/>
 		<mini_map     spot="secondary_task_spot_mini" pointer="quest_pointer2"/>
     </secondary_task_location_complex_flesh_up_abcd_svu>
 	
-	<secondary_task_location_complex_flesh_up_ab_pkm>
+	<secondary_task_location_complex_flesh_up_ab_pkm compass_avail="1">
 		<complex_spot spot="secondary_task_find_upgrade_complex_spot" pointer="quest_pointer2"/>
 		<mini_map     spot="secondary_task_spot_mini" pointer="quest_pointer2"/>
     </secondary_task_location_complex_flesh_up_ab_pkm>
 	
-	<secondary_task_location_complex_flesh_up_cd_pkm>
+	<secondary_task_location_complex_flesh_up_cd_pkm compass_avail="1">
 		<complex_spot spot="secondary_task_find_upgrade_complex_spot" pointer="quest_pointer2"/>
 		<mini_map     spot="secondary_task_spot_mini" pointer="quest_pointer2"/>
     </secondary_task_location_complex_flesh_up_cd_pkm>
 	
-	<secondary_task_location_complex_flesh_up_abcd_pkm>
+	<secondary_task_location_complex_flesh_up_abcd_pkm compass_avail="1">
 		<complex_spot spot="secondary_task_find_upgrade_complex_spot" pointer="quest_pointer2"/>
 		<mini_map     spot="secondary_task_spot_mini" pointer="quest_pointer2"/>
     </secondary_task_location_complex_flesh_up_abcd_pkm>
 	
-	<secondary_task_location_complex_flesh_up_ac_desert_eagle>
+	<secondary_task_location_complex_flesh_up_ac_desert_eagle compass_avail="1">
 		<complex_spot spot="secondary_task_find_upgrade_complex_spot" pointer="quest_pointer2"/>
 		<mini_map     spot="secondary_task_spot_mini" pointer="quest_pointer2"/>
     </secondary_task_location_complex_flesh_up_ac_desert_eagle>
 	
-	<secondary_task_location_complex_flesh_up_bd_desert_eagle>
+	<secondary_task_location_complex_flesh_up_bd_desert_eagle compass_avail="1">
 		<complex_spot spot="secondary_task_find_upgrade_complex_spot" pointer="quest_pointer2"/>
 		<mini_map     spot="secondary_task_spot_mini" pointer="quest_pointer2"/>
     </secondary_task_location_complex_flesh_up_bd_desert_eagle>
 	
-	<secondary_task_location_complex_flesh_up_ac_spas12>
+	<secondary_task_location_complex_flesh_up_ac_spas12 compass_avail="1">
 		<complex_spot spot="secondary_task_find_upgrade_complex_spot" pointer="quest_pointer2"/>
 		<mini_map     spot="secondary_task_spot_mini" pointer="quest_pointer2"/>
     </secondary_task_location_complex_flesh_up_ac_spas12>

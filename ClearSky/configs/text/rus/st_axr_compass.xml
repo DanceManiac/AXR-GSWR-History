@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="windows-1251" ?>
+<string_table>
+	<string id="ui_st_compass_n">
+		<text>N</text>
+	</string>
+	<string id="ui_st_compass_ne">
+		<text>NE</text>
+	</string>
+	<string id="ui_st_compass_e">
+		<text>E</text>
+	</string>
+	<string id="ui_st_compass_se">
+		<text>SE</text>
+	</string>
+	<string id="ui_st_compass_s">
+		<text>S</text>
+	</string>
+	<string id="ui_st_compass_sw">
+		<text>SW</text>
+	</string>
+	<string id="ui_st_compass_w">
+		<text>W</text>
+	</string>
+	<string id="ui_st_compass_nw">
+		<text>NW</text>
+	</string>
+</string_table>

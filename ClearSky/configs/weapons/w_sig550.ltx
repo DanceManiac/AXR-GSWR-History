@@ -39,6 +39,20 @@ ammo_limit              = 210
 ammo_current            = 180
 ammo_elapsed            = 30
 
+
+misfire_probability        = 0.005 ;вероятность осечки при максимальном износе  !!!old - now not working
+;изношенность, при которой появляется шанс осечки
+misfire_start_condition		= 0.6
+;изношеность при которой шанс осечки становится константным
+misfire_end_condition		= 0.1
+;шанс осечки при изношености больше чем misfireStartCondition
+misfire_start_prob	     	= 0.003
+;шанс осечки при изношености больше чем misfireEndCondition
+misfire_end_prob	     	= 0.045
+;увеличение изношености при одиночном выстреле
+condition_shot_dec      	= 0.0010
+;увеличение изношености при выстреле очередью
+condition_queue_shot_dec	= 0.0011
 ammo_mag_size           = 30
 ammo_class              = ammo_5.56x45_ss190, ammo_5.56x45_ap
 grenade_class           = ammo_m209
@@ -89,9 +103,6 @@ zoom_cam_max_angle_horz      = 10.0
 zoom_cam_step_angle_horz     = 0.7
 
 fire_dispersion_condition_factor = 5        ;увеличение дисперсии в процентах при максимальном износе
-misfire_probability     = 0.003        ;вероятность осечки при максимальном износе
-misfire_condition_k     = 0.05
-condition_shot_dec      = 0.0002 ;увеличение износа при каждом выстреле
 ;-------------------------------------------------------------------------------
 
 
@@ -182,14 +193,14 @@ grenade_launcher_y      = 30
 ;звуки
 snd_draw                = weapons\ak74_draw
 snd_holster             = weapons\generic_holster
-snd_shoot		= weapons\n_sig550_shot
+snd_shoot				= snd_shoot_sig550
+snd_shoot_actor 		= weapons\n_sig550_shot
 
 snd_empty               = weapons\gen_empty, 0.5
 snd_reload              = weapons\sig550_reload
 snd_shoot_grenade       = weapons\gen_grenshoot
 snd_reload_grenade      = weapons\sig550_grenload
 snd_switch              = weapons\groza_switch, 1.0, 0.5
-
 
 ;настройки для глушителя
 silencer_hit_power      = 0.55, 0.55, 0.55, 0.55
@@ -285,6 +296,12 @@ gl_hud_offset_rot_16x9	= 0,0,0
 
 lean_hud_offset_pos	= 0,0,0
 lean_hud_offset_rot	= 0,0,0
+
+hud_collision_enabled			= true
+hud_collision_offset_pos		= 0,-0.5,0
+hud_collision_offset_pos_16x9		= 0,-0.5,0
+hud_collision_offset_rot		= -0.8,0,0
+hud_collision_offset_rot_16x9		= -0.8,0,0
 
 ;-----------------------------------------------------------------------------
 ; Уникальные

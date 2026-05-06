@@ -11,6 +11,8 @@ uniform float4x4 	L_dynamic_xform;
 uniform float4x4	m_plmap_xform;
 uniform float4 		m_plmap_clamp	[2];	// 0.w = factor
 
+uniform	float4		screen_res;
+
 half  	calc_fogging 	(half4 w_pos)	{ return dot(w_pos,fog_plane); 	}
 half2 	calc_detail 	(half3 w_pos)	{ 
 	float  	dtl	= distance(w_pos,eye_position)*dt_params.w;
@@ -115,11 +117,27 @@ float3	v_hemi 		(float3 n)		{	return L_hemi_color/* *(.5f + .5f*n.y) */; 		}
 float3	v_hemi_wrap	(float3 n, float w)	{	return L_hemi_color/* *(w + (1-w)*n.y) */; 		}
 float3 	v_sun 		(float3 n)		{	return L_sun_color*max(0,dot(n,-L_sun_dir_w));		}
 float3 	v_sun_wrap	(float3 n, float w)	{	return L_sun_color*(w+(1-w)*dot(n,-L_sun_dir_w));	}
-half3	p_hemi		(float2 tc) 	{
-	//half3	t_lmh 	= tex2D		(s_hemi, tc);
-	//return  dot	(t_lmh,1.h/3.h);
-	half4	t_lmh 	= tex2D		(s_hemi, tc);
-	return  t_lmh.a;
+
+half3	p_hemi(float2 tc)
+{
+	half4 t_lmh = tex2D(s_hemi, tc);
+		
+#ifdef USE_SHOC_MODE
+	half r_lmh = (1.0/3.0);
+	return dot(t_lmh.rgb, half3(r_lmh, r_lmh, r_lmh));
+#else // USE_SHOC_MODE
+	return t_lmh.a;
+#endif // USE_SHOC_MODE
+}
+
+float rand(float n)
+{
+    return frac(cos(n)*343.42);
+}
+
+float noise(float2 tc)
+{
+    return frac(sin(dot(tc, float2(12.0, 78.0) + (timers.x) )) * 43758.0)*0.25f; 
 }
 
 #endif // COMMON_H
