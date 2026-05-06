@@ -1170,6 +1170,38 @@ end
 function on_actor_satiety()
 end
 
+--' Жажда
+function on_actor_thirst()
+end
+
+--' Интоксикация
+function on_actor_intoxication()
+end
+
+--' Сонливость
+function on_actor_sleepeness()
+end
+
+--' Алкоголизм
+function on_actor_alcoholism()
+end
+
+--' Похмелье
+function on_actor_hangover()
+end
+
+--' Наркомания
+function on_actor_narcotism()
+end
+
+--' Ломки
+function on_actor_withdrawal()
+end
+
+--' Обморожение
+function on_actor_frostbite()
+end
+
 --' Радиация
 function on_actor_radiation()
 	if has_alife_info("esc_trader_newbie") then
@@ -1281,3 +1313,53 @@ quest_section["hunters_toz"]		= true
 quest_section["bar_ecolog_flash"]	= true
 quest_section["bar_tiran_pda"]		= true
 quest_section["bar_lucky_pda"]		= true
+
+local save_markers = {}
+
+-- Функции для проверки корректности сейв лоад
+function set_save_marker(p, mode, check, prefix)
+
+	-- определяем ключ маркера.
+	local result = ""
+
+	result = result .. "_" .. prefix
+
+	if check == true then
+		if save_markers[result] == nil then
+			abort("Trying to check without marker %s", result)
+		end
+
+		if mode == "save" then
+			local dif = p:w_tell() - save_markers[result]
+			printf(result..": SAVE DIF: %s", dif)
+			if dif >= 8000 then
+				printf("WARNING! may be this is problem save point")
+			end
+			if dif >= 10240 then
+--				abort("You are saving too much")
+			end
+			p:w_u16(dif)
+		else
+			local c_dif = p:r_tell() - save_markers[result]
+			local dif = p:r_u16()
+			 if dif ~= c_dif then
+			 	abort("INCORRECT LOAD [%s].[%s][%s]", result, dif, c_dif)
+			 else
+			 	printf(result..": LOAD DIF: %s", dif)
+			 end
+		end
+		return
+	end
+
+	if mode == "save" then
+		printf(result..": set save marker: %s", p:w_tell())
+		save_markers[result] = p:w_tell()
+		if p:w_tell() > 16000 then
+			abort("You are saving too much")
+		end
+	else
+		printf(result..": set load marker: %s", p:r_tell())
+		save_markers[result] = p:r_tell()
+	end
+
+end

@@ -1,7 +1,7 @@
 [wpn_fn2000]:identity_immunities
 GroupControlSection	= spawn_group
 discovery_dependency = 
-$spawn                   = "weapons\fn-2000
+$spawn                   = "weapons\fn-2000"
 $prefetch 		         = 8
 scheduled                = off                              ; option for ALife Simulator
 cform                    = skeleton
@@ -60,7 +60,7 @@ control_inertion_factor		= 1.15f
 cam_relax_speed         	= 5.6		;скорость возврата в исходное положение
 cam_dispersion          	= 0.2	;увеличения угла (в градусах) с каждым выстрелом
 cam_dispersion_inc			= 0.1	;увеличениe cam_dispersion с каждым выстрелом
-cam_dispertion_frac			= 1.0	;ствол будет подыматься на cam_dispersion*cam_dispertion_frac +- cam_dispersion*(1-cam_dispertion_frac)
+cam_dispersion_frac			= 1.0	;ствол будет подыматься на cam_dispersion*cam_dispersion_frac +- cam_dispersion*(1-cam_dispersion_frac)
 cam_max_angle				= 8.5	;максимальный угол отдачи
 cam_max_angle_horz			= 9.0	;(degree) maximum shot horizontal degree 
 cam_step_angle_horz			= 0.6	;(degree) size of step camera moved in horizontal position while shooting
@@ -133,8 +133,8 @@ silencer_status				= 0;2
 grenade_launcher_status		= 1
 zoom_enabled				= true
 
-scope_texture		= wpn\wpn_crosshair_g36
-lens_texture		= wpn\wpn_crosshair_g36_lens
+scope_texture		= wpn_crosshair_g36
+lens_texture		= wpn_crosshair_g36_lens
 lens_texture_x		= 183
 lens_texture_y		= 75
 lens_texture_w		= 648
@@ -150,7 +150,8 @@ scope_zoom_factor	    	= 33.3 			;1.8X		; fov for zoom mode
 ;звуки
 snd_draw			= weapons\generic_draw
 snd_holster			= weapons\generic_holster
-snd_shoot			= weapons\t_fn2000_shot              ;fn2000_shoot	;weapons\generic_shoot
+snd_shoot         	= snd_shoot_fn2000
+snd_shoot_actor     = weapons\t_fn2000_shot
 snd_empty			= weapons\gen_empty, 0.5
 snd_reload			= weapons\fn2000_reload, 0.8, 0.3
 snd_shoot_grenade	= weapons\gen_grenshoot
@@ -227,3 +228,9 @@ grenade_zoom_rotate_x		= -0.203700
 grenade_zoom_rotate_y		= 0.035000
 
 zoom_hide_crosshair	= true
+
+hud_collision_enabled			= true
+hud_collision_offset_pos		= 0,-0.5,0
+hud_collision_offset_pos_16x9		= 0,-0.5,0
+hud_collision_offset_rot		= -0.8,0,0
+hud_collision_offset_rot_16x9		= -0.8,0,0

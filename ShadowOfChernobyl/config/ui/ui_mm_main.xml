@@ -12,26 +12,33 @@
 		<texture>ui\ui_mm_fire</texture>
 	</fire_movie>
 
-	<shniaga_wnd x="590" y="419" width="392" height="280">
+	<shniaga_wnd x="590" y="417" width="392" height="280">
 		<buttons_region	x="110" y="0" width="164" height="280" always_show_scroll="false"/>
 		
-		<shniaga x="9" y="0" width="392" height="73">
-			<texture>ui_menu_move</texture>			
-			<magnifire x="76" y="22" width="232" height="36" stretch="1">
+		<shniaga x="9" y="2" width="240" height="73" stretch="1">
+			<texture>ui_menu_move</texture>
+			<texture_offset x="70" y="0"/>
+			<magnifire x="66" y="22" width="248" height="36" stretch="1">
 				<texture>ui\ui_magnifier</texture>
         <y_offset>0</y_offset>
 			</magnifire>
 			
+			<left_back_wheel x="14" y="0" width="57" height="73" stretch="1">
+				<texture>ui_menu_move_l</texture>
+			</left_back_wheel>
+			<right_back_wheel x="310" y="0" width="57" height="73" stretch="1">
+				<texture>ui_menu_move_r</texture>
+			</right_back_wheel>
 			<left_anim x="43" y="37" width="55" height="55" stretch="1" heading="1" alignment="c">
 				<texture>ui_menu_bigroll_l</texture>
 			</left_anim>			
-			<right_anim x="340" y="37" width="55" height="55" stretch="1" heading="1" alignment="c">
+			<right_anim x="338" y="37" width="55" height="55" stretch="1" heading="1" alignment="c">
 				<texture>ui_menu_bigroll_r</texture>
 			</right_anim>
-			<left_grating x="0" y="4" width="55" height="67">
+			<left_grating x="0" y="4" width="45" height="69" stretch="1">
 				<texture>ui_menu_grating_l</texture>
 			</left_grating>
-			<right_grating x="337" y="4" width="55" height="67">
+			<right_grating x="337" y="4" width="45" height="69" stretch="1">
 				<texture>ui_menu_grating_r</texture>
 			</right_grating>
 		</shniaga>		
@@ -108,5 +115,13 @@
 	<static_version x="15" y="740" width="100" height="30">
 		<text align="l" font="graffiti19" r="135" g="123" b="116" complex_mode="0"/>
 	</static_version>
+	
+	<mod_version x="15" y="700" width="100" height="30">
+		<text align="l" font="graffiti19" r="155" g="135" b="0" complex_mode="0"/>
+	</mod_version>
+	
+	<mfs_team_info x="15" y="720" width="100" height="30">
+		<text align="l" font="letterica18" r="155" g="135" b="0" complex_mode="0"/>
+	</mfs_team_info>
 	
 </window>

@@ -1,5 +1,5 @@
 <!-- agroprom quest locations and spots-->
-	<agr_factory_skirmish1_location hint="agr_factory_skirmish1" store="1">
+	<agr_factory_skirmish1_location hint="agr_factory_skirmish1" store="1" compass_avail="1">
 		<level_map spot="agr_factory_skirmish1_spot" pointer="quest_pointer"></level_map>
 		<mini_map  spot="agr_factory_skirmish1_spot" pointer="quest_pointer"></mini_map>
 	</agr_factory_skirmish1_location>
@@ -9,7 +9,7 @@
 	</agr_factory_skirmish1_spot>
 
 	
-	<agr_krot_location hint="agr_krot" store="1">
+	<agr_krot_location hint="agr_krot" store="1" compass_avail="1">
 		<level_map spot="agr_krot_spot" pointer="quest_pointer"></level_map>
 		<mini_map  spot="agr_krot_spot" pointer="quest_pointer"></mini_map>
 	</agr_krot_location>
@@ -19,7 +19,7 @@
 	</agr_krot_spot>
 
 
-	<agr_gunslinger_cache_location hint="agr_gunslinger_cache" store="1">
+	<agr_gunslinger_cache_location hint="agr_gunslinger_cache" store="1" compass_avail="1">
 		<level_map spot="agr_gunslinger_cache_spot" pointer="quest_pointer"></level_map>
 		<mini_map  spot="agr_gunslinger_cache_spot" pointer="quest_pointer"></mini_map>
 	</agr_gunslinger_cache_location>
@@ -29,7 +29,7 @@
 	</agr_gunslinger_cache_spot>
 
 
-	<agr_military_case_location hint="agr_military_case" store="1">
+	<agr_military_case_location hint="agr_military_case" store="1" compass_avail="1">
 		<level_map spot="agr_military_case_spot" pointer="quest_pointer"></level_map>
 		<mini_map  spot="agr_military_case_spot" pointer="quest_pointer"></mini_map>
 	</agr_military_case_location>
@@ -39,7 +39,7 @@
 	</agr_military_case_spot>
 
 
-	<agr_ratcatcher_location hint="agr_ratcatcher_swamp" store="1">
+	<agr_ratcatcher_location hint="agr_ratcatcher_swamp" store="1" compass_avail="1">
 		<level_map spot="agr_ratcatcher_spot" pointer="quest_pointer"></level_map>
 		<mini_map  spot="agr_ratcatcher_spot" pointer="quest_pointer"></mini_map>
 	</agr_ratcatcher_location>
@@ -49,7 +49,7 @@
 	</agr_ratcatcher_spot>
 
 <!--collector entrance -->
-	<agr_collector_entrance_location hint="agr_collector_entrance_hint" store="1">
+	<agr_collector_entrance_location hint="agr_collector_entrance_hint" store="1" compass_avail="1">
 		<level_map spot="agr_collector_entrance_spot" pointer="quest_pointer"></level_map>
 	</agr_collector_entrance_location>
 
@@ -58,7 +58,7 @@
 	</agr_collector_entrance_spot>
 
 <!--captains chamber -->
-	<agr_captains_chamber_location hint="agr_captains_chamber_hint" store="1">
+	<agr_captains_chamber_location hint="agr_captains_chamber_hint" store="1" compass_avail="1">
 		<level_map spot="agr_captains_chamber_spot" pointer="quest_pointer"></level_map>
 		<mini_map  spot="agr_captains_chamber_spot" pointer="quest_pointer"></mini_map>
 	</agr_captains_chamber_location>
@@ -68,7 +68,7 @@
 	</agr_captains_chamber_spot>
 	
 <!--factory-->
-	<agr_factory_location hint="agr_factory" store="1">
+	<agr_factory_location hint="agr_factory" store="1" compass_avail="1">
 		<level_map spot="agr_factory_spot" pointer="quest_pointer"></level_map>
 	</agr_factory_location>
 
@@ -76,7 +76,7 @@
 		<texture x="191" y="191" width="64" height="64">ui\ui_icons_map</texture>
 	</agr_factory_spot>
 <!--nii-->
-	<agr_nii_location hint="agr_nii" store="1">
+	<agr_nii_location hint="agr_nii" store="1" compass_avail="1">
 		<level_map spot="agr_nii_spot" pointer="quest_pointer"></level_map>
 	</agr_nii_location>
 
